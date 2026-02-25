@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMPS Unified | Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --secondary: #EC4899;
+            --dark: #0F172A;
+            --slate: #64748B;
+            --bg: #F8FAFC;
+            --border: #E2E8F0;
+            --radius-lg: 20px;
+            --radius-xl: 30px;
+            --emerald: #10B981;
+            --amber: #F59E0B;
+            --crimson: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--dark);
+            overflow: hidden;
+        }
+
+        /* Login Interface */
+        #view-login {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+        }
+
+        .login-card {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            padding: 50px;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Dashboard Layout */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--dark);
+            color: #fff;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-group-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0 10px 15px;
+        }
+
+        .nav-item {
+            padding: 14px 18px;
+            border-radius: 12px;
+            color: #94A3B8;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .top-bar {
+            height: 80px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .view-pane {
+            flex: 1;
+            padding: 30px 40px;
+            overflow-y: auto;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .stat-val {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: var(--slate);
+            font-size: 11px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--bg);
+        }
+
+        td {
+            padding: 15px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--bg);
+            font-weight: 600;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .bg-emerald {
+            background: #DCFCE7;
+            color: #166534;
+        }
+
+        .bg-amber {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .bg-indigo {
+            background: #E0E7FF;
+            color: #4338CA;
+        }
+
+        .bg-crimson {
+            background: #FEE2E2;
+            color: #B91C1C;
+        }
+
+        /* Controls */
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            margin-top: 6px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-outline {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--slate);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Role Display */
+        .role-indicator {
+            margin-top: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        /* Clock Style */
+        #live-clock {
+            font-weight: 800;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        #live-date {
+            font-size: 0.75rem;
+            color: var(--slate);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- AUTHENTICATION LAYER -->
+    <div id="view-login">
+        <div class="login-card">
+            <div class="logo" style="justify-content: center; color: var(--dark); margin-bottom: 30px;">
+                <i class="fas fa-shield-halved"></i> SMPS <b>Unified</b>
+            </div>
+            <h3 style="font-weight: 800; text-align: center;">Authorized Access</h3>
+            <p style="text-align: center; font-size: 12px; color: var(--slate); margin: 8px 0 30px 0;">Credential
+                verification required for panel entry</p>
+
+            <form id="login-form">
+                <div style="margin-bottom: 15px;">
+                    <label
+                        style="font-size: 11px; font-weight: 800; color: var(--slate); text-transform: uppercase;">Identity</label>
+                    <input type="email" id="login-email" placeholder="email@smps.edu" required>
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label
+                        style="font-size: 11px; font-weight: 800; color: var(--slate); text-transform: uppercase;">Access
+                        Key</label>
+                    <input type="password" id="login-pass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary"
+                    style="width: 100%; justify-content: center; padding: 15px;">Initialize Command</button>
+            </form>
+            <p id="login-error"
+                style="color: var(--crimson); font-size: 11px; margin-top: 15px; font-weight: 700; text-align: center;"
+                class="hidden">Access Denied: Invalid Credentials.</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="portal-container" class="app-container hidden">
+        <aside class="sidebar">
+            <div class="logo"><i class="fas fa-shield-halved"></i> SMPS <b>Unified</b></div>
+
+            <nav id="sidebar-nav">
+                <!-- Navigation items strictly injected by verified role -->
+            </nav>
+
+            <div class="role-indicator">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <div id="u-avatar"
+                        style="width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px;">
+                    </div>
+                    <div>
+                        <h4 id="u-name" style="font-size: 12px; font-weight: 700;">Name</h4>
+                        <span id="u-role-badge" class="badge bg-indigo"
+                            style="font-size: 8px; padding: 2px 6px;">Role</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline"
+                    style="width: 100%; border-color: rgba(255,255,255,0.1); color: #fff; background: transparent; font-size: 11px;"
+                    onclick="logout()">
+                    <i class="fas fa-power-off"></i> Terminate Session
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div>
+                        <h2 id="view-title" style="font-weight: 900; letter-spacing: -1px;">Command Center</h2>
+                        <p style="font-size: 11px; color: var(--slate); font-weight: 700;">SECURE CONTEXT: <span
+                                id="ctx-label" style="color: var(--primary);">UNVERIFIED</span></p>
+                    </div>
+                    <div style="border-left: 2px solid var(--bg); padding-left: 20px; text-align: right;">
+                        <div id="live-clock">00:00:00</div>
+                        <div id="live-date">February 25, 2026</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-outline" onclick="notify('System-wide scan completed. No anomalies.')"><i
+                            class="fas fa-satellite"></i> Status Scan</button>
+                    <button class="btn btn-primary" onclick="showBroadcastModal()"><i class="fas fa-bullhorn"></i>
+                        Broadcast</button>
+                </div>
+            </header>
+
+            <div class="view-pane">
+                <!-- TAB: DASHBOARD (Universal) -->
+                <div id="tab-dashboard" class="tab-content">
+                    <div class="bento-grid">
+                        <div class="card" style="grid-column: span 2;">
+                            <span class="stat-label">Active Student Nodes</span>
+                            <div class="stat-val" id="count-students">0</div>
+                            <div id="mini-student-list"
+                                style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;"></div>
+                        </div>
+                        <div class="card">
+                            <span class="stat-label">Verification Queue</span>
+                            <div class="stat-val" style="color: var(--amber);" id="count-pending">0</div>
+                            <button class="btn btn-outline" style="width: 100%; margin-top: 10px;"
+                                onclick="switchTab('attendance')">Verify All</button>
+                        </div>
+                        <div class="card">
+                            <span class="stat-label">Mentor Sync Status</span>
+                            <div class="stat-val" style="color: var(--emerald);">98.2%</div>
+                            <p style="font-size: 10px; font-weight: 700; color: var(--slate);">Latency: 14ms</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: PROJECT STATUS (Universal) -->
+                <div id="tab-projects" class="tab-content hidden">
+                    <div class="card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="font-weight: 900;">Project Tracking Hub</h3>
+                            <button class="btn btn-primary" onclick="showAddProjectModal()"><i class="fas fa-plus"></i>
+                                Add New Project</button>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Project Name</th>
+                                    <th>Lead Node</th>
+                                    <th>Technical Phase</th>
+                                    <th>Link / Repo</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="project-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB: NODE MAPPING (Admin/Super Only) -->
+                <div id="tab-mapping" class="tab-content hidden">
+                    <div class="card">
+                        <h3 style="font-weight: 900; margin-bottom: 20px;">Mentor-to-Student Mapping</h3>
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr 150px; gap: 15px; margin-bottom: 30px; background: var(--bg); padding: 20px; border-radius: 12px;">
+                            <div>
+                                <label class="stat-label">Select Student</label>
+                                <select id="map-student-sel"></select>
+                            </div>
+                            <div>
+                                <label class="stat-label">Assign Mentor</label>
+                                <select id="map-mentor-sel"></select>
+                            </div>
+                            <div style="display: flex; align-items: flex-end;">
+                                <button class="btn btn-primary" style="width: 100%;" onclick="performMapping()">Map
+                                    Node</button>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SRN / Student</th>
+                                    <th>Assigned Mentor</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mapping-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB: TEAMS (Mentor/Admin/Super) -->
+                <div id="tab-teams" class="tab-content hidden">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <div class="card">
+                                <h3 style="font-weight: 900; margin-bottom: 20px;">Team Clusters</h3>
+                                <div id="teams-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 320px;">
+                            <div class="card">
+                                <h4 class="stat-label">Unlinked Nodes</h4>
+                                <div id="unlinked-nodes" style="margin-top: 15px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: PAYLOADS (Mentor/Admin/Super) -->
+                <div id="tab-payloads" class="tab-content hidden">
+                    <div class="card">
+                        <h3 style="font-weight: 900; margin-bottom: 20px;">Dispatch Technical Payload</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <label class="stat-label">Target Entity</label>
+                                <select id="payload-target"></select>
+                            </div>
+                            <div>
+                                <label class="stat-label">Payload Complexity</label>
+                                <select>
+                                    <option>Phase 1: Research</option>
+                                    <option>Phase 2: Logic Design</option>
+                                    <option>Phase 3: Prototype</option>
+                                </select>
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <label class="stat-label">Technical Instructions</label>
+                                <textarea id="payload-text" style="height: 120px;"
+                                    placeholder="Outline the technical requirements..."></textarea>
+                            </div>
+                            <button class="btn btn-primary" style="grid-column: span 2; justify-content: center;"
+                                onclick="dispatchPayload()">Broadcast Payload</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: ATTENDANCE (Mentor/Admin/Super) -->
+                <div id="tab-attendance" class="tab-content hidden">
+                    <div class="card">
+                        <h3 style="font-weight: 900; margin-bottom: 10px;">Verification Ledger</h3>
+                        <p class="stat-label" style="margin-bottom: 20px;">Pending Sync Requests</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student Node</th>
+                                    <th>Timestamp</th>
+                                    <th>Status</th>
+                                    <th>Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-body"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="font-weight: 900; margin-bottom: 10px;">Historical Log</h3>
+                        <p class="stat-label" style="margin-bottom: 20px;">Date-by-Date Presence Analysis</p>
+                        <div style="overflow-x: auto;">
+                            <table id="attendance-history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Node SRN001</th>
+                                        <th>Node SRN002</th>
+                                        <th>Node SRN003</th>
+                                        <th>Node SRN004</th>
+                                        <th>Node SRN005</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendance-history-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: SYSTEM OVERRIDE (Super Admin Only) -->
+                <div id="tab-system" class="tab-content hidden">
+                    <div class="bento-grid">
+                        <div class="card">
+                            <h4 class="stat-label">Global Node Reset</h4>
+                            <p style="font-size: 12px; color: var(--slate); margin: 10px 0;">Wipe all temporary
+                                attendance syncs.</p>
+                            <button class="btn btn-primary" style="background: var(--crimson); width: 100%;"
+                                onclick="notify('GLOBAL WIPE INITIATED')">WIPE ALL</button>
+                        </div>
+                        <div class="card">
+                            <h4 class="stat-label">API Tunnel</h4>
+                            <p style="font-size: 12px; color: var(--slate); margin: 10px 0;">Manual database handshake.
+                            </p>
+                            <button class="btn btn-outline" style="width: 100%;">RE-SYNC</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: ADD PROJECT -->
+    <div id="project-modal" class="overlay hidden"
+        style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 3000; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="width: 500px;">
+            <h3 style="font-weight: 900; margin-bottom: 20px;">Initialize New Project</h3>
+            <div style="margin-bottom: 15px;">
+                <label class="stat-label">Project Name</label>
+                <input type="text" id="new-proj-name" placeholder="e.g. Adaptive Signal Relay">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label class="stat-label">Lead Student</label>
+                <select id="new-proj-lead"></select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label class="stat-label">Repository Link</label>
+                <input type="text" id="new-proj-repo" placeholder="github.com/...">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button class="btn btn-outline" onclick="closeModals()">Cancel</button>
+                <button class="btn btn-primary" onclick="addProject()">Add Project Node</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BROADCAST OVERLAY -->
+    <div id="broadcast-overlay" class="overlay hidden"
+        style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 3000; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="width: 500px;">
+            <h3 style="font-weight: 900; margin-bottom: 20px;">Global System Broadcast</h3>
+            <label class="stat-label">Broadcast Channel</label>
+            <select>
+                <option>General Announcement</option>
+                <option>Deadline Alert</option>
+                <option>Emergency Patch</option>
+            </select>
+            <textarea style="height: 150px; margin: 15px 0;" placeholder="Broadcast message..."></textarea>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn btn-outline" onclick="closeModals()">Cancel</button>
+                <button class="btn btn-primary"
+                    onclick="notify('Broadcast transmitted to all student nodes')">Transmit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CORE SYSTEM STATE
+        const state = {
+            user: null,
+            students: [
+                { id: 'SRN001', name: 'Sanjana G M', mentor: 'mentor@smps.edu', status: 'online', att: 'pending' },
+                { id: 'SRN002', name: 'Varshini A R', mentor: 'mentor@smps.edu', status: 'offline', att: 'verified' },
+                { id: 'SRN003', name: 'Aryan Singh', mentor: null, status: 'online', att: 'pending' },
+                { id: 'SRN004', name: 'Ishita P', mentor: null, status: 'online', att: 'verified' },
+                { id: 'SRN005', name: 'Karthik R', mentor: 'mentor@smps.edu', status: 'online', att: 'pending' }
+            ],
+            mentors: [
+                { email: 'mentor@smps.edu', name: 'Prof. Anjali Sharma' },
+                { email: 'dr.kumar@smps.edu', name: 'Dr. Rajesh Kumar' }
+            ],
+            teams: [
+                { id: 'T1', name: 'Antenna Logic Cluster', members: ['SRN001', 'SRN002'] },
+                { id: 'T2', name: 'Signal Optimization Cluster', members: ['SRN005'] }
+            ],
+            projects: [
+                { id: 'P1', name: 'Drone Detection Antenna', lead: 'Sanjana G M', phase: 'Prototype v2', repo: 'github.com/smps/drone-ant', status: 'In Progress' },
+                { id: 'P2', name: 'Signal Optimization Script', lead: 'Varshini A R', phase: 'Logic Design', repo: 'github.com/smps/sig-opt', status: 'Verified' }
+            ],
+            attendanceHistory: [
+                { date: '2026-02-24', nodes: { SRN001: 'P', SRN002: 'P', SRN003: 'A', SRN004: 'P', SRN005: 'P' } },
+                { date: '2026-02-23', nodes: { SRN001: 'P', SRN002: 'P', SRN003: 'P', SRN004: 'P', SRN005: 'A' } },
+                { date: '2026-02-22', nodes: { SRN001: 'H', SRN002: 'H', SRN003: 'H', SRN004: 'H', SRN005: 'H' } }
+            ]
+        };
+
+        const CREDENTIALS = {
+            'superadmin@smps.edu': { pass: 'admin@123', role: 'SuperAdmin', name: 'System Root' },
+            'admin@smps.edu': { pass: 'admin@123', role: 'Admin', name: 'Dr. Rajesh Kumar' },
+            'mentor@smps.edu': { pass: 'admin@123', role: 'Mentor', name: 'Prof. Anjali Sharma' }
+        };
+
+        // --- AUTH & INITIALIZATION ---
+
+        document.getElementById('login-form').onsubmit = function (e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+
+            if (CREDENTIALS[email] && CREDENTIALS[email].pass === pass) {
+                state.user = { email, ...CREDENTIALS[email] };
+                initPortal();
+            } else {
+                const err = document.getElementById('login-error');
+                err.classList.remove('hidden');
+                setTimeout(() => err.classList.add('hidden'), 3000);
+            }
+        };
+
+        function initPortal() {
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('portal-container').classList.remove('hidden');
+
+            document.getElementById('u-name').innerText = state.user.name;
+            document.getElementById('u-role-badge').innerText = state.user.role;
+            document.getElementById('u-avatar').innerText = state.user.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('ctx-label').innerText = state.user.role.toUpperCase();
+
+            startClock();
+            buildSidebar();
+            switchTab('dashboard');
+            refreshData();
+        }
+
+        function startClock() {
+            const clockEl = document.getElementById('live-clock');
+            const dateEl = document.getElementById('live-date');
+            setInterval(() => {
+                const now = new Date();
+                clockEl.innerText = now.toLocaleTimeString();
+                dateEl.innerText = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            }, 1000);
+        }
+
+        function buildSidebar() {
+            const nav = document.getElementById('sidebar-nav');
+            const role = state.user.role;
+            let html = `
+                <div class="nav-group-label">Core</div>
+                <div class="nav-item active" onclick="switchTab('dashboard')"><i class="fas fa-grid-2"></i> Dashboard</div>
+                <div class="nav-item" onclick="switchTab('projects')"><i class="fas fa-rocket"></i> Project Status</div>
+            `;
+
+            if (role === 'Mentor' || role === 'Admin' || role === 'SuperAdmin') {
+                html += `
+                    <div class="nav-group-label">Sync & Teams</div>
+                    <div class="nav-item" onclick="switchTab('teams')"><i class="fas fa-users-gear"></i> Team Clusters</div>
+                    <div class="nav-item" onclick="switchTab('payloads')"><i class="fas fa-microchip"></i> Payload Hub</div>
+                    <div class="nav-item" onclick="switchTab('attendance')"><i class="fas fa-user-check"></i> Verification</div>
+                `;
+            }
+
+            if (role === 'Admin' || role === 'SuperAdmin') {
+                html += `
+                    <div class="nav-group-label">Management</div>
+                    <div class="nav-item" onclick="switchTab('mapping')"><i class="fas fa-link"></i> Node Mapping</div>
+                `;
+            }
+
+            if (role === 'SuperAdmin') {
+                html += `
+                    <div class="nav-group-label">System</div>
+                    <div class="nav-item" onclick="switchTab('system')"><i class="fas fa-terminal"></i> Global Override</div>
+                `;
+            }
+
+            nav.innerHTML = html;
+        }
+
+        // --- TAB LOGIC ---
+
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            document.getElementById(`tab-${id}`).classList.remove('hidden');
+            document.getElementById('view-title').innerText = id.charAt(0).toUpperCase() + id.slice(1).replace('-', ' ');
+
+            const navs = document.querySelectorAll('.nav-item');
+            navs.forEach(n => { if (n.innerText.toLowerCase().includes(id.replace('-', ' '))) n.classList.add('active'); });
+
+            renderTab(id);
+        }
+
+        function renderTab(id) {
+            if (id === 'dashboard') {
+                document.getElementById('count-students').innerText = state.students.length;
+                document.getElementById('count-pending').innerText = state.students.filter(s => s.att === 'pending').length;
+                document.getElementById('mini-student-list').innerHTML = state.students.slice(0, 3).map(s => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg); border-radius:10px; font-size:12px;">
+                        <span>${s.name}</span>
+                        <span class="badge ${s.status === 'online' ? 'bg-emerald' : 'bg-crimson'}">${s.status}</span>
+                    </div>
+                `).join('');
+            }
+
+            if (id === 'projects') {
+                document.getElementById('project-table-body').innerHTML = state.projects.map(p => `
+                    <tr>
+                        <td style="font-weight: 800; color: var(--primary);">${p.name}</td>
+                        <td>${p.lead}</td>
+                        <td><span class="badge bg-indigo">${p.phase}</span></td>
+                        <td><a href="#" style="font-family: monospace; font-size: 11px; color: var(--primary);">${p.repo}</a></td>
+                        <td><span class="badge ${p.status === 'Verified' ? 'bg-emerald' : 'bg-amber'}">${p.status}</span></td>
+                        <td><button class="btn btn-outline" style="padding: 5px 10px;" onclick="notify('Tracking detail opened for ${p.id}')"><i class="fas fa-eye"></i></button></td>
+                    </tr>
+                `).join('');
+
+                const leadSel = document.getElementById('new-proj-lead');
+                leadSel.innerHTML = state.students.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+            }
+
+            if (id === 'mapping') {
+                document.getElementById('mapping-table-body').innerHTML = state.students.map(s => `
+                    <tr>
+                        <td>${s.name} <br><small style="color:var(--slate)">${s.id}</small></td>
+                        <td>${s.mentor ? state.mentors.find(m => m.email === s.mentor).name : '<span style="color:var(--crimson)">Unassigned</span>'}</td>
+                        <td><span class="badge ${s.mentor ? 'bg-emerald' : 'bg-amber'}">${s.mentor ? 'Mapped' : 'Isolated'}</span></td>
+                        <td><button class="btn btn-outline" style="padding:5px 10px;" onclick="notify('Node configuration locked.')">Config</button></td>
+                    </tr>
+                `).join('');
+
+                const sSel = document.getElementById('map-student-sel');
+                sSel.innerHTML = state.students.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('');
+                const mSel = document.getElementById('map-mentor-sel');
+                mSel.innerHTML = state.mentors.map(m => `<option value="${m.email}">${m.name}</option>`).join('');
+            }
+
+            if (id === 'teams') {
+                document.getElementById('teams-grid').innerHTML = state.teams.map(t => `
+                    <div class="card" style="border-style: dashed;">
+                        <h4 style="font-weight:800;">${t.name}</h4>
+                        <div style="margin-top:10px; display:flex; gap:5px;">
+                            ${t.members.map(m => `<div class="avatar" style="width:24px; height:24px; background:var(--primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px;" title="${m}">${m.slice(-1)}</div>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('unlinked-nodes').innerHTML = state.students.filter(s => !state.teams.some(t => t.members.includes(s.id))).map(s => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:10px; border:1px solid var(--border); border-radius:10px;">
+                        <span style="font-size:12px; font-weight:700;">${s.name}</span>
+                        <button class="btn btn-primary" style="padding:4px 8px; font-size:10px;" onclick="addToTeam('${s.id}')">Add to Cluster</button>
+                    </div>
+                `).join('');
+            }
+
+            if (id === 'attendance') {
+                document.getElementById('attendance-body').innerHTML = state.students.map(s => `
+                    <tr>
+                        <td>${s.name}</td>
+                        <td style="color:var(--slate)">Today, 09:15 AM</td>
+                        <td><span class="badge ${s.att === 'verified' ? 'bg-emerald' : 'bg-amber'}">${s.att}</span></td>
+                        <td>
+                            ${s.att === 'pending' ? `
+                                <button class="btn btn-primary" style="padding:5px 10px; background:var(--emerald);" onclick="verifyAtt('${s.id}', true)"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-primary" style="padding:5px 10px; background:var(--crimson);" onclick="verifyAtt('${s.id}', false)"><i class="fas fa-times"></i></button>
+                            ` : '<i class="fas fa-lock" style="color:var(--slate); opacity:0.3;"></i>'}
+                        </td>
+                    </tr>
+                `).join('');
+
+                document.getElementById('attendance-history-body').innerHTML = state.attendanceHistory.map(h => `
+                    <tr>
+                        <td>${h.date}</td>
+                        ${Object.values(h.nodes).map(v => `<td><span class="badge ${v === 'P' ? 'bg-emerald' : v === 'H' ? 'bg-indigo' : 'bg-crimson'}">${v}</span></td>`).join('')}
+                    </tr>
+                `).join('');
+            }
+
+            if (id === 'payloads') {
+                const pSel = document.getElementById('payload-target');
+                pSel.innerHTML = `<optgroup label="Clusters">` + state.teams.map(t => `<option>${t.name}</option>`).join('') + `</optgroup>` +
+                    `<optgroup label="Individuals">` + state.students.map(s => `<option>${s.name}</option>`).join('') + `</optgroup>`;
+            }
+        }
+
+        // --- CORE ACTIONS ---
+
+        function showAddProjectModal() { document.getElementById('project-modal').classList.remove('hidden'); }
+
+        function addProject() {
+            const name = document.getElementById('new-proj-name').value;
+            const lead = document.getElementById('new-proj-lead').value;
+            const repo = document.getElementById('new-proj-repo').value;
+
+            if (!name || !repo) return notify('Please fill all required project metadata');
+
+            state.projects.push({
+                id: 'P' + (state.projects.length + 1),
+                name, lead, phase: 'Initialization', repo, status: 'In Progress'
+            });
+
+            notify(`Project Node "${name}" Initialized.`);
+            closeModals();
+            renderTab('projects');
+        }
+
+        function verifyAtt(id, status) {
+            state.students.find(s => s.id === id).att = status ? 'verified' : 'rejected';
+            notify(`Attendance Node ${id} ${status ? 'Verified' : 'Flagged'}`);
+            renderTab('attendance');
+            renderTab('dashboard');
+        }
+
+        function performMapping() {
+            const sid = document.getElementById('map-student-sel').value;
+            const mid = document.getElementById('map-mentor-sel').value;
+            state.students.find(s => s.id === sid).mentor = mid;
+            notify(`Mapped SRN ${sid} to Mentor Hub`);
+            renderTab('mapping');
+        }
+
+        function addToTeam(sid) {
+            // Logic: Distribute to Team Alpha (T1) by default or prompt selection
+            state.teams[0].members.push(sid);
+            notify(`${sid} attached to ${state.teams[0].name}`);
+            renderTab('teams');
+        }
+
+        function dispatchPayload() {
+            const txt = document.getElementById('payload-text').value;
+            if (!txt) return;
+            notify('Payload Broadcast Successful');
+            document.getElementById('payload-text').value = '';
+        }
+
+        function notify(msg) {
+            const t = document.createElement('div');
+            t.style = "position:fixed; bottom:30px; right:30px; background:var(--dark); color:#fff; padding:15px 25px; border-radius:12px; font-weight:700; font-size:12px; z-index:9999; animation: slideIn 0.3s forwards; border-left:4px solid var(--primary);";
+            t.innerHTML = `<i class="fas fa-info-circle" style="color:var(--primary); margin-right:10px;"></i> ${msg}`;
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 500); }, 3000);
+        }
+
+        function logout() { sessionStorage.clear(); window.location.reload(); }
+        function showBroadcastModal() { document.getElementById('broadcast-overlay').classList.remove('hidden'); }
+        function closeModals() { document.querySelectorAll('.overlay').forEach(o => o.classList.add('hidden')); }
+        function refreshData() { renderTab('dashboard'); }
+
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes slideIn { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

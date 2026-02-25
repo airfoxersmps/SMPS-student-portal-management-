@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management System - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+
+        .portal-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+        <div
+            class="bg-blue-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <i class="fas fa-layer-group text-2xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Management Portal</h1>
+        <p class="text-gray-500 max-w-md mx-auto">Welcome back. Please select your access level to proceed to the
+            management dashboard.</p>
+    </div>
+
+    <!-- Navigation Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+
+        <!-- Admin Card -->
+        <a href="admin.html"
+            class="portal-card bg-white border border-gray-100 p-8 rounded-2xl shadow-sm text-center group">
+            <div
+                class="bg-blue-50 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                <i class="fas fa-user-shield text-2xl"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Admin Portal</h2>
+            <p class="text-gray-500 text-sm mb-6">Manage users, system settings, and general operations.</p>
+            <span
+                class="inline-flex items-center text-blue-600 font-medium group-hover:translate-x-1 transition-transform">
+                Enter Dashboard <i class="fas fa-arrow-right ml-2 text-xs"></i>
+            </span>
+        </a>
+
+        <!-- Mentor Card -->
+        <a href="mentor.html"
+            class="portal-card bg-white border border-gray-100 p-8 rounded-2xl shadow-sm text-center group">
+            <div
+                class="bg-blue-50 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                <i class="fas fa-chalkboard-teacher text-2xl"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Mentor Portal</h2>
+            <p class="text-gray-500 text-sm mb-6">Access student tracking, mentorship tools, and schedules.</p>
+            <span
+                class="inline-flex items-center text-blue-600 font-medium group-hover:translate-x-1 transition-transform">
+                Enter Dashboard <i class="fas fa-arrow-right ml-2 text-xs"></i>
+            </span>
+        </a>
+
+        <!-- Super Admin Card -->
+        <a href="super.html"
+            class="portal-card bg-white border border-gray-100 p-8 rounded-2xl shadow-sm text-center group">
+            <div
+                class="bg-blue-50 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                <i class="fas fa-user-gear text-2xl"></i>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Super Admin</h2>
+            <p class="text-gray-500 text-sm mb-6">Full system control, logs, and high-level configurations.</p>
+            <span
+                class="inline-flex items-center text-blue-600 font-medium group-hover:translate-x-1 transition-transform">
+                Enter Dashboard <i class="fas fa-arrow-right ml-2 text-xs"></i>
+            </span>
+        </a>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 text-gray-400 text-sm">
+        &copy; 2026 Management System. All rights reserved.
+    </footer>
+
+</body>
+
+</html>
