@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMPS Portal | Mentor Command Center</title>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --secondary: #EC4899;
+            --dark: #0F172A;
+            --slate: #64748B;
+            --bg: #F8FAFC;
+            --border: #E2E8F0;
+            --radius-lg: 20px;
+            --radius-xl: 30px;
+            --emerald: #10B981;
+            --amber: #F59E0B;
+            --crimson: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--dark);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Container Fixes */
+        .app-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Login Selection Screen */
+        #view-login {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .login-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .btn-profile {
+            width: 100%;
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--dark);
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.2s;
+            text-align: left;
+        }
+
+        .btn-profile:hover {
+            border-color: var(--primary);
+            background: var(--bg);
+            transform: translateX(5px);
+        }
+
+        .btn-profile i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 280px;
+            background: var(--dark);
+            color: #fff;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 1001;
+            height: 100%;
+        }
+
+        .nav-group-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 25px 0 10px 15px;
+        }
+
+        .nav-item {
+            padding: 14px 18px;
+            border-radius: 12px;
+            color: #94A3B8;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 40px 0 0 40px;
+            margin-left: -20px;
+            z-index: 10;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.03);
+            height: 100%;
+        }
+
+        .top-bar {
+            height: 80px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .view-pane {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .stat-val {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin: 8px 0;
+            letter-spacing: -1.5px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--slate);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th {
+            text-align: left;
+            padding: 20px;
+            color: var(--slate);
+            font-size: 11px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+            font-weight: 800;
+        }
+
+        td {
+            padding: 18px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 10px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--slate);
+        }
+
+        .mark-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .mark-btn-yes {
+            background: var(--emerald);
+        }
+
+        .mark-btn-no {
+            background: var(--crimson);
+        }
+
+        .mark-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .notif-card {
+            padding: 20px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .overlay-mask {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 6000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay-mask.active {
+            display: flex;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .bg-emerald {
+            background: #DCFCE7;
+            color: #166534;
+        }
+
+        .bg-crimson {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .bg-amber {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .bg-p {
+            background: #E0E7FF;
+            color: #4338CA;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            outline: none;
+            background: #F8FAFC;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            background: #fff;
+        }
+
+        /* Sync Hub / Chat Hub Styles */
+        .chat-hub {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            height: calc(100vh - 200px);
+            background: #fff;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .chat-nav {
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            padding: 20px 10px;
+            overflow-y: auto;
+        }
+
+        .chat-roster-item {
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-roster-item:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .chat-roster-item.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .chat-view {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        .chat-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .chat-window {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            max-width: 80%;
+            line-height: 1.4;
+        }
+
+        .bubble-me {
+            align-self: flex-end;
+            background: var(--primary);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+        }
+
+        .bubble-them {
+            align-self: flex-start;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-input-area {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #sync-error-banner {
+            background: var(--crimson);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--slate);
+        }
+
+        .student-check-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 8px;
+            background: var(--bg);
+        }
+
+        .student-check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .student-check-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-check-item input {
+            width: auto;
+            margin-top: 0;
+            cursor: pointer;
+        }
+
+        .link-anchor {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 800;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .link-anchor:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary-dark);
+        }
+
+        .submitter-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--slate);
+            display: block;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+                padding: 30px 10px;
+            }
+
+            .sidebar .logo h2,
+            .sidebar .nav-item span,
+            .sidebar .nav-group-label,
+            .sidebar .role-indicator h4 {
+                display: none;
+            }
+
+            .sidebar .nav-item {
+                justify-content: center;
+                padding: 15px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SYNC ERROR DISPLAY -->
+    <div id="sync-error-banner" class="hidden">
+        <i class="fas fa-exclamation-triangle"></i> DATABASE_ACCESS_DENIED: Critical Sync Error. Check Connection.
+    </div>
+
+    <!-- SELECT PROFILE SCREEN -->
+    <div id="view-login">
+        <div class="login-card">
+            <div class="logo" style="justify-content: center; color: var(--dark); margin-bottom: 10px;">
+                <i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary);"></i>
+            </div>
+            <h2 style="font-weight: 900; letter-spacing: -1px;">Mentor Command</h2>
+            <p style="font-size: 11px; color: var(--slate); margin-bottom: 20px;">Synchronizing Faculty Nodes...</p>
+            <div id="login-options-container" class="login-options">
+                <div style="padding: 20px;"><i class="fas fa-circle-notch fa-spin"></i> Initializing Security
+                    Protocol...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN PORTAL -->
+    <div id="portal-container" class="app-container hidden">
+        <aside class="sidebar">
+            <div class="logo" style="margin-bottom: 40px; padding-left: 15px;">
+                <h2 style="color: #fff; font-weight: 900; letter-spacing: -1px;"><i class="fas fa-shield-halved"
+                        style="color: var(--primary);"></i> SMPS Tech</h2>
+            </div>
+            <nav id="sidebar-nav">
+                <div class="nav-item active" id="nav-dashboard" onclick="App.switchTab('dashboard')"><i
+                        class="fas fa-home"></i> <span>Dashboard</span></div>
+                <div class="nav-item" id="nav-students" onclick="App.switchTab('students')"><i
+                        class="fas fa-user-group"></i> <span>My Students</span></div>
+                <div class="nav-item" id="nav-attendance" onclick="App.switchTab('attendance')"><i
+                        class="fas fa-calendar-check"></i> <span>Attendance Sync</span></div>
+                <div class="nav-item" id="nav-projects" onclick="App.switchTab('projects')"><i
+                        class="fas fa-users-gear"></i> <span>Group Clusters</span></div>
+                <div class="nav-item" id="nav-reports" onclick="App.switchTab('reports')"><i
+                        class="fas fa-file-invoice"></i> <span>Mission Reports</span></div>
+                <div class="nav-item" id="nav-tasks" onclick="App.switchTab('tasks')"><i class="fas fa-list-check"></i>
+                    <span>Student Tasks</span>
+                </div>
+                <div class="nav-item" id="nav-sync" onclick="App.switchTab('sync')"><i class="fas fa-comments"></i>
+                    <span>Sync Hub</span>
+                </div>
+                <div class="nav-item" id="nav-messages" onclick="App.switchTab('messages')"><i class="fas fa-bell"></i>
+                    <span>System Alerts</span>
+                </div>
+            </nav>
+            <div class="role-indicator"
+                style="margin-top: auto; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <div id="u-avatar"
+                        style="width: 36px; height: 36px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff;">
+                        ?</div>
+                    <div style="overflow: hidden;">
+                        <h4 id="u-name"
+                            style="font-size: 12px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            Mentor</h4>
+                        <span id="sync-status-badge" class="badge bg-emerald"
+                            style="font-size: 7px; padding: 2px 6px;">Live Sync</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline"
+                    style="width: 100%; color: #fff; background: rgba(255,255,255,0.1); border: none; font-size: 10px;"
+                    onclick="location.reload()">Switch Profile</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div>
+                    <h2 id="view-title" style="font-weight: 900; letter-spacing: -1px;">Dashboard</h2>
+                    <p id="ctx-label" style="font-size: 10px; color: var(--primary); font-weight: 800;">
+                        COMMAND_CENTRAL_V6.0</p>
+                </div>
+                <div style="text-align: right;">
+                    <div id="live-clock" style="font-weight: 900; font-size: 1.2rem;">00:00:00 AM</div>
+                    <div id="live-date" style="font-size: 10px; color: var(--slate); font-weight: 800;">SYNCING...</div>
+                </div>
+            </header>
+
+            <div class="view-pane">
+                <!-- DASHBOARD -->
+                <div id="tab-dashboard" class="tab-content">
+                    <div class="bento-grid">
+                        <div class="card">
+                            <span class="stat-label">My Students</span>
+                            <div class="stat-val" id="stat-students">0</div>
+                        </div>
+                        <div class="card">
+                            <span class="stat-label">Active Teams</span>
+                            <div class="stat-val" id="stat-projects">0</div>
+                        </div>
+                        <div class="card">
+                            <span class="stat-label">Pending Verify</span>
+                            <div class="stat-val" id="stat-pending" style="color:var(--amber);">0</div>
+                        </div>
+                        <div class="card">
+                            <span class="stat-label">Global Feed</span>
+                            <div class="stat-val" id="stat-feed">0</div>
+                        </div>
+                    </div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px;">
+                        <div class="card" style="justify-content: flex-start; min-height: 300px;">
+                            <h4
+                                style="font-weight:800; margin-bottom:20px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-list-ul color-primary"></i> Quick Roster
+                            </h4>
+                            <div id="dash-list" style="display:flex; flex-direction:column; gap:12px;">
+                                <p style="font-size: 11px; color: var(--slate);">Connecting to database nodes...</p>
+                            </div>
+                        </div>
+                        <div class="card" style="justify-content: flex-start; min-height: 300px;">
+                            <h4
+                                style="font-weight:800; margin-bottom:20px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-project-diagram color-primary"></i> Managed Tracks
+                            </h4>
+                            <div id="dash-teams" style="display:flex; flex-direction:column; gap:12px;">
+                                <p style="font-size: 11px; color: var(--slate);">No team assignments detected.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ATTENDANCE -->
+                <div id="tab-attendance" class="tab-content hidden">
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="font-weight:800;">Real-time Presence Sync</h3>
+                        <p style="font-size: 12px; color: var(--slate);">Authorize student presence logs for the central
+                            ledger.</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SRN</th>
+                                    <th>Student Name</th>
+                                    <th>Sync Time</th>
+                                    <th>Status</th>
+                                    <th>Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PROJECTS (TEAM MAKING ONLY) -->
+                <div id="tab-projects" class="tab-content hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <div>
+                            <h3 style="font-weight:800;">Group Cluster Deployment</h3>
+                            <p style="font-size: 12px; color: var(--slate);">Assign student nodes to Track Alpha or Beta
+                                team identities.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="App.showModal('project')"><i
+                                class="fas fa-users-gear"></i> Create Team Assignment</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Track</th>
+                                    <th>Team Identity</th>
+                                    <th>Project Roadmap</th>
+                                    <th>Assigned Nodes</th>
+                                    <th>Control</th>
+                                </tr>
+                            </thead>
+                            <tbody id="project-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- MISSION REPORTS (INDIVIDUAL SUBMISSIONS) -->
+                <div id="tab-reports" class="tab-content hidden">
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="font-weight:800;">Per-Node Submission Reports</h3>
+                        <p style="font-size: 12px; color: var(--slate);">Monitoring each individual student node's
+                            anchored mission reports.</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student Node</th>
+                                    <th>Track Alpha Mission Report</th>
+                                    <th>Track Beta Mission Report</th>
+                                    <th>Registry Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reports-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TASKS -->
+                <div id="tab-tasks" class="tab-content hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <div>
+                            <h3 style="font-weight:800;">Student Directives</h3>
+                            <p style="font-size: 12px; color: var(--slate);">Dispatch technical tasks and monitor
+                                completion status.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="App.showModal('task')"><i
+                                class="fas fa-paper-plane"></i> Dispatch Task</button>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Target Node</th>
+                                    <th>Instruction</th>
+                                    <th>Deadline</th>
+                                    <th>Submission Anchor</th>
+                                    <th>Sync Status</th>
+                                    <th>Control</th>
+                                </tr>
+                            </thead>
+                            <tbody id="task-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SYNC HUB (CHAT) -->
+                <div id="tab-sync" class="tab-content hidden">
+                    <div class="chat-hub">
+                        <aside class="chat-nav" id="chat-roster">
+                            <!-- Roster of assigned students -->
+                        </aside>
+                        <main class="chat-view">
+                            <div class="chat-header" id="chat-header-name">Select a Student Node</div>
+                            <div class="chat-window" id="chat-window">
+                                <p style="text-align:center; padding-top:100px; color:var(--slate); font-weight:700;">
+                                    Initiate secure sync with student nodes.</p>
+                            </div>
+                            <form id="chat-form" class="chat-input-area hidden">
+                                <input type="text" id="chat-input" placeholder="Transmit technically segment..."
+                                    required>
+                                <button type="submit" class="btn btn-primary"><i
+                                        class="fas fa-paper-plane"></i></button>
+                            </form>
+                        </main>
+                    </div>
+                </div>
+
+                <!-- MESSAGES / NOTIFICATIONS -->
+                <div id="tab-messages" class="tab-content hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <div>
+                            <h3 style="font-weight:800;">Communication Center</h3>
+                            <p style="font-size: 12px; color: var(--slate);">Manage inbound admin reviews and outbound
+                                student broadcasts.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="App.showModal('compose-notif')"><i
+                                class="fas fa-bullhorn"></i> Compose Alert</button>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+                        <div>
+                            <span class="info-label"
+                                style="font-size: 10px; font-weight: 800; color: var(--slate); text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px;">Inbound:
+                                Admin Reviews</span>
+                            <div id="notif-inbound" style="display: flex; flex-direction: column; gap: 15px;"></div>
+                        </div>
+                        <div>
+                            <span class="info-label"
+                                style="font-size: 10px; font-weight: 800; color: var(--slate); text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px;">Outbound:
+                                My Transmissions</span>
+                            <div id="notif-outbound" style="display: flex; flex-direction: column; gap: 15px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STUDENTS LIST -->
+                <div id="tab-students" class="tab-content hidden">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                        <div>
+                            <h3 style="font-weight:800;">Assigned Student Registry</h3>
+                            <p style="font-size: 12px; color: var(--slate);">Detailed profile registry of your assigned
+                                academic fleet.</p>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SRN</th>
+                                    <th>Full Name</th>
+                                    <th>Branch</th>
+                                    <th>Academic Track</th>
+                                    <th>G-Mail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL POPUP -->
+    <div id="modal-backdrop" class="overlay-mask" onclick="if(event.target.id === 'modal-backdrop') App.closeModal()">
+        <div class="login-card" style="max-width:550px; text-align:left;">
+            <div id="modal-inner"></div>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, collection, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBN4o8oj-6DhJb51sGGrcyS8d9SDX7HKWk",
+            authDomain: "students-management-2ec78.firebaseapp.com",
+            projectId: "students-management-2ec78",
+            storageBucket: "students-management-2ec78.firebasestorage.app",
+            messagingSenderId: "649634574508",
+            appId: "1:649634574508:web:d856dbe5bcc112fde0ef09"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = 'smps-v1';
+
+        const App = {
+            state: { user: null, students: [], projects: [], tasks: [], notifications: [], chats: [], activeChat: null, currentTab: 'dashboard' },
+
+            async init() {
+                // Real-time Clock
+                setInterval(() => {
+                    const clock = document.getElementById('live-clock');
+                    if (clock) clock.innerText = new Date().toLocaleTimeString('en-US', { hour12: true });
+                }, 1000);
+                document.getElementById('live-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
+
+                // Authentication Protocol
+                try {
+                    await signInAnonymously(auth);
+                    onAuthStateChanged(auth, u => {
+                        if (u) this.fetchMentors();
+                    });
+                } catch (e) {
+                    console.error("Auth Exception", e);
+                    document.getElementById('sync-error-banner').classList.remove('hidden');
+                }
+
+                document.getElementById('chat-form').onsubmit = (e) => this.sendChat(e);
+                window.App = this;
+            },
+
+            fetchMentors() {
+                const q = collection(db, 'artifacts', appId, 'public', 'data', 'mentors');
+                onSnapshot(q, snap => {
+                    const mentors = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    this.renderLogin(mentors);
+                }, err => {
+                    console.error("Sync Failure: Mentors", err);
+                    document.getElementById('sync-error-banner').classList.remove('hidden');
+                });
+            },
+
+            renderLogin(mentors) {
+                const container = document.getElementById('login-options-container');
+                if (!container) return;
+
+                if (mentors.length === 0) {
+                    container.innerHTML = '<p style="padding:20px; font-size:12px; font-weight:800; color:var(--crimson);">NO FACULTY NODES DETECTED. CONTACT ADMIN.</p>';
+                    return;
+                }
+
+                container.innerHTML = mentors.map(m => `
+                    <button class="btn-profile" onclick="App.login('${m.name}', '${m.email}')">
+                        <i class="fas fa-id-badge"></i>
+                        <div>
+                            <div style="font-weight: 900;">${m.name}</div>
+                            <div style="font-size: 10px; color: var(--slate); font-weight: 800;">${m.email}</div>
+                        </div>
+                    </button>
+                `).join('');
+            },
+
+            login(name, email) {
+                this.state.user = { name, email: email.toLowerCase() };
+                document.getElementById('view-login').classList.add('hidden');
+                document.getElementById('portal-container').classList.remove('hidden');
+                document.getElementById('u-name').innerText = name;
+                document.getElementById('u-avatar').innerText = name[0];
+                this.sync();
+            },
+
+            sync() {
+                const collections = ['students', 'projects', 'tasks', 'notifications', 'chats'];
+                collections.forEach(col => {
+                    onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', col), snap => {
+                        this.state[col] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                        this.render();
+                    }, err => {
+                        console.error(`Sync error: ${col}`, err);
+                    });
+                });
+            },
+
+            switchTab(id) {
+                this.state.currentTab = id;
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+                const target = document.getElementById(`tab-${id}`);
+                if (target) target.classList.remove('hidden');
+
+                const navBtn = document.getElementById(`nav-${id}`);
+                if (navBtn) navBtn.classList.add('active');
+
+                document.getElementById('view-title').innerText = id.charAt(0).toUpperCase() + id.slice(1).replace('-', ' ');
+                this.render();
+            },
+
+            render() {
+                const { students, projects, tasks, notifications, user, currentTab } = this.state;
+                if (!user) return;
+
+                const myStudents = students.filter(s => s.mentor?.toLowerCase() === user.email);
+                const myProjects = projects.filter(p => p.mentor?.toLowerCase() === user.email);
+                const myTasks = tasks.filter(t => myStudents.some(s => s.id === t.sid || s.srn === t.sid));
+
+                const resolveSubmitter = (nameOrId) => {
+                    const s = students.find(x => x.name === nameOrId || x.id === nameOrId || x.srn === nameOrId);
+                    return s ? `${s.name} (${s.srn})` : nameOrId;
+                };
+
+                // Stats Update
+                document.getElementById('stat-students').innerText = myStudents.length;
+                document.getElementById('stat-projects').innerText = myProjects.length;
+                document.getElementById('stat-pending').innerText = myStudents.filter(s => s.att === 'pending').length;
+                document.getElementById('stat-feed').innerText = notifications.length;
+
+                if (currentTab === 'dashboard') {
+                    document.getElementById('dash-list').innerHTML = myStudents.slice(0, 5).map(s => `
+                        <div style="padding:15px; background:#fff; border-radius:12px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <div style="font-weight:800; font-size:13px;">${s.name}</div>
+                                <div style="font-size:10px; color:var(--slate); font-weight:700;">${s.srn}</div>
+                            </div>
+                            <span class="badge ${s.att === 'verified' ? 'bg-emerald' : (s.att === 'pending' ? 'bg-amber' : 'bg-crimson')}">${s.att || 'offline'}</span>
+                        </div>
+                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No students assigned to your node.</p>';
+
+                    document.getElementById('dash-teams').innerHTML = myProjects.slice(0, 3).map(p => `
+                        <div style="padding:15px; background:#fff; border-radius:12px; border:1px dashed var(--primary);">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="font-size:10px; font-weight:800; color:var(--primary); text-transform:uppercase;">${p.teamName}</div>
+                                <span class="badge bg-p" style="font-size:8px;">Track ${p.track || 'A'}</span>
+                            </div>
+                            <div style="font-weight:900; font-size:13px; margin-top:4px;">${p.name}</div>
+                        </div>
+                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No active team clusters.</p>';
+                }
+
+                if (currentTab === 'attendance') {
+                    document.getElementById('attendance-table').innerHTML = myStudents.map(s => `
+                        <tr>
+                            <td><b>${s.srn}</b></td>
+                            <td>${s.name}</td>
+                            <td>${s.time || '--:--'}</td>
+                            <td><span class="badge ${s.att === 'verified' ? 'bg-emerald' : (s.att === 'pending' ? 'bg-amber' : 'bg-crimson')}">${(s.att || 'offline').toUpperCase()}</span></td>
+                            <td>
+                                <div style="display:flex; gap:10px;">
+                                    <button class="mark-btn mark-btn-yes" onclick="App.setAtt('${s.id}', 'verified')" title="Verify Presence"><i class="fas fa-check"></i></button>
+                                    <button class="mark-btn mark-btn-no" onclick="App.setAtt('${s.id}', 'absent')" title="Mark Absent"><i class="fas fa-times"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                if (currentTab === 'projects') {
+                    document.getElementById('project-table').innerHTML = myProjects.map(p => `
+                        <tr>
+                            <td><span class="badge bg-p">Track ${p.track || 'Alpha'}</span></td>
+                            <td><b>${p.teamName}</b></td>
+                            <td>${p.name}</td>
+                            <td>
+                                <div style="display:flex; flex-wrap:wrap; gap:4px; max-width:250px;">
+                                    ${(p.members || []).map(m => `<span class="badge" style="background:var(--bg); border:1px solid var(--border); font-size:9px;">${m}</span>`).join('')}
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline" style="padding:8px;" onclick="App.deleteItem('projects','${p.id}')"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                if (currentTab === 'reports') {
+                    document.getElementById('reports-table').innerHTML = myStudents.map(s => {
+                        // Per-person link logic
+                        const alphaProj = projects.find(p => p.track === 'Alpha' && p.members?.includes(s.name));
+                        const betaProj = projects.find(p => p.track === 'Beta' && p.members?.includes(s.name));
+
+                        return `
+                        <tr>
+                            <td><b>${s.name}</b><br><span style="font-size:10px; font-weight:800; color:var(--slate);">${s.srn}</span></td>
+                            <td>
+                                ${alphaProj?.driveLink ?
+                                `<div>
+                                        <a href="${alphaProj.driveLink}" target="_blank" class="link-anchor"><i class="fas fa-link"></i> Alpha Anchor</a>
+                                        <span class="submitter-tag">via ${resolveSubmitter(alphaProj.submittedBy)}</span>
+                                    </div>` :
+                                `<span style="font-size:10px; color:var(--slate); font-weight:700;">Awaiting Node Submission</span>`
+                            }
+                            </td>
+                            <td>
+                                ${betaProj?.driveLink ?
+                                `<div>
+                                        <a href="${betaProj.driveLink}" target="_blank" class="link-anchor"><i class="fas fa-link"></i> Beta Anchor</a>
+                                        <span class="submitter-tag">via ${resolveSubmitter(betaProj.submittedBy)}</span>
+                                    </div>` :
+                                `<span style="font-size:10px; color:var(--slate); font-weight:700;">Awaiting Node Submission</span>`
+                            }
+                            </td>
+                            <td>
+                                <span class="badge ${(alphaProj?.driveLink || betaProj?.driveLink) ? 'bg-emerald' : 'bg-amber'}">
+                                    ${(alphaProj?.driveLink || betaProj?.driveLink) ? 'Synced' : 'Pending'}
+                                </span>
+                            </td>
+                        </tr>`;
+                    }).join('');
+                }
+
+                if (currentTab === 'tasks') {
+                    document.getElementById('task-table').innerHTML = myTasks.map(t => {
+                        const s = students.find(x => x.id === t.sid || x.srn === t.sid);
+                        const submitterId = t.payload ? (s ? `${s.name} (${s.srn})` : resolveSubmitter(t.submittedBy)) : 'Assigned Student';
+
+                        return `
+                        <tr>
+                            <td><b>${s?.name || t.sid}</b></td>
+                            <td>${t.desc}</td>
+                            <td>${t.due}</td>
+                            <td>
+                                ${t.payload ?
+                                `<div>
+                                        <a href="${t.payload}" target="_blank" class="link-anchor"><i class="fas fa-file-arrow-up"></i> Mission Report</a>
+                                        <span class="submitter-tag">By: ${submitterId}</span>
+                                    </div>` :
+                                `<span style="font-size:10px; color:var(--slate); font-weight:700;">Pending Submission</span>`
+                            }
+                            </td>
+                            <td><span class="badge ${t.status === 'Done' ? 'bg-emerald' : 'bg-amber'}">${t.status}</span></td>
+                            <td>
+                                <button class="btn btn-outline" style="padding:8px;" onclick="App.deleteItem('tasks','${t.id}')"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>`;
+                    }).join('');
+                }
+
+                if (currentTab === 'sync') {
+                    this.renderRoster(myStudents);
+                    this.renderSyncWindow();
+                }
+
+                if (currentTab === 'messages') {
+                    const inbound = notifications.filter(n => n.senderRole === 'SuperAdmin');
+                    const outbound = notifications.filter(n => n.from === user.name);
+
+                    document.getElementById('notif-inbound').innerHTML = inbound.map(n => `
+                        <div class="notif-card" style="border-left-color: var(--amber)">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="badge" style="background:var(--bg);">Admin Review</span>
+                                <small style="font-weight:800; color:var(--slate); font-size:10px;">${n.time || 'System'}</small>
+                            </div>
+                            <p style="font-weight:900; font-size:15px; color:var(--dark);">${n.from}</p>
+                            <p style="font-size:13px; color:var(--slate); margin-top:8px; font-weight:600; line-height:1.5;">${n.text}</p>
+                        </div>
+                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No inbound admin reviews detected.</p>';
+
+                    document.getElementById('notif-outbound').innerHTML = outbound.map(n => `
+                        <div class="notif-card" style="border-left-color: var(--primary)">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span class="badge" style="background:var(--bg);">${n.target === 'all' ? 'Public' : 'Private'}</span>
+                                <small style="font-weight:800; color:var(--slate); font-size:10px;">${n.time || 'System'}</small>
+                            </div>
+                            <p style="font-weight:900; font-size:15px; color:var(--dark);">To: ${n.target === 'all' ? 'All Assigned Students' : n.target}</p>
+                            <p style="font-size:13px; color:var(--slate); margin-top:8px; font-weight:600; line-height:1.5;">${n.text}</p>
+                            <div style="text-align:right; margin-top:10px;">
+                                <button onclick="App.deleteItem('notifications', '${n.id}')" style="background:none; border:none; color:var(--crimson); cursor:pointer; font-size:10px; font-weight:800;">RECALL ALERT</button>
+                            </div>
+                        </div>
+                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No outbound student transmissions.</p>';
+                }
+
+                if (currentTab === 'students') {
+                    document.getElementById('student-table').innerHTML = myStudents.map(s => `
+                        <tr>
+                            <td><b>${s.srn}</b></td>
+                            <td>${s.name}</td>
+                            <td>${s.branch || '---'}</td>
+                            <td><span class="badge bg-emerald" style="color:#065F46;">${s.product || 'Standard'}</span></td>
+                            <td style="font-size:12px; color:var(--primary); font-weight:700;">${s.gmail || '---'}</td>
+                        </tr>
+                    `).join('');
+                }
+            },
+
+            // --- Chat Logic ---
+            renderRoster(assignedStudents) {
+                const roster = document.getElementById('chat-roster');
+                if (!roster) return;
+                roster.innerHTML = assignedStudents.map(s => `
+                    <div class="chat-roster-item ${this.state.activeChat === s.id ? 'active' : ''}" onclick="App.openChat('${s.id}', '${s.name}')">
+                        <div style="width:32px; height:32px; background:rgba(255,255,255,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800;">${s.name[0]}</div>
+                        <div style="overflow:hidden;">
+                            <div style="font-weight:800; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</div>
+                            <div style="font-size:9px; font-weight:600; opacity:0.7;">${s.srn}</div>
+                        </div>
+                    </div>
+                `).join('') || '<p style="padding:20px; font-size:10px; font-weight:800; color:var(--slate);">No students assigned.</p>';
+            },
+
+            openChat(id, name) {
+                this.state.activeChat = id;
+                document.getElementById('chat-header-name').innerText = `Sync Hub: ${name}`;
+                document.getElementById('chat-form').classList.remove('hidden');
+                this.render();
+            },
+
+            renderSyncWindow() {
+                const win = document.getElementById('chat-window');
+                if (!win || !this.state.activeChat) return;
+                const msgs = this.state.chats.filter(c => c.channel === this.state.activeChat);
+                win.innerHTML = msgs.map(m => `
+                    <div class="bubble ${m.sender === 'Mentor' ? 'bubble-me' : 'bubble-them'}">
+                        ${m.text}
+                    </div>
+                `).join('') || '<p style="text-align:center; padding-top:100px; color:var(--slate); font-weight:700;">Initiate secure sync with student node.</p>';
+                win.scrollTop = win.scrollHeight;
+            },
+
+            async sendChat(e) {
+                e.preventDefault();
+                const inp = document.getElementById('chat-input');
+                if (!inp.value || !this.state.activeChat) return;
+                const text = inp.value;
+                inp.value = '';
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'chats'), {
+                        channel: this.state.activeChat,
+                        sender: 'Mentor',
+                        text: text,
+                        timestamp: serverTimestamp()
+                    });
+                } catch (e) { console.error("Chat send error", e); }
+            },
+
+            showModal(type) {
+                const inner = document.getElementById('modal-inner');
+                const myStudents = this.state.students.filter(s => s.mentor?.toLowerCase() === this.state.user.email);
+                document.getElementById('modal-backdrop').classList.add('active');
+
+                if (type === 'project') {
+                    inner.innerHTML = `
+                        <h3 style="font-weight:900; letter-spacing:-1px;">Track Alpha/Beta Assignment</h3>
+                        <p style="font-size:12px; color:var(--slate); margin-bottom:20px;">Assign students to specialized project clusters for dual-track monitoring.</p>
+                        
+                        <label class="stat-label">Assign To Research Track</label>
+                        <select id="m-p-track">
+                            <option value="Alpha">Track Alpha (Primary Research)</option>
+                            <option value="Beta">Track Beta (Technical Implementation)</option>
+                        </select>
+
+                        <label class="stat-label">Team Identity Name</label>
+                        <input type="text" id="m-p-team" placeholder="e.g. Logic-Track-01">
+                        
+                        <label class="stat-label">Project Roadmap Title</label>
+                        <input type="text" id="m-p-name" placeholder="e.g. Autonomous Node Management">
+                        
+                        <label class="stat-label">Track Lead Node</label>
+                        <select id="m-p-lead">${myStudents.map(s => `<option>${s.name}</option>`).join('')}</select>
+                        
+                        <label class="stat-label">Select Group Members</label>
+                        <div class="student-check-list" id="student-checks">
+                            ${myStudents.map(s => `
+                                <div class="student-check-item">
+                                    <input type="checkbox" name="members" value="${s.name}">
+                                    <span>${s.name} (${s.srn})</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width:100%; margin-top:25px; height:55px; justify-content:center;" onclick="App.addProject()">Assign to Group</button>`;
+                } else if (type === 'task') {
+                    inner.innerHTML = `
+                        <h3 style="font-weight:900; letter-spacing:-1px;">Dispatch Directive</h3>
+                        <p style="font-size:12px; color:var(--slate); margin-bottom:20px;">Assign a specific technical task to a student node.</p>
+                        
+                        <label class="stat-label">Select Student Node</label>
+                        <select id="m-t-sid">${myStudents.map(s => `<option value="${s.id}">${s.name} (${s.srn})</option>`).join('')}</select>
+                        
+                        <label class="stat-label">Instruction Payload</label>
+                        <textarea id="m-t-desc" placeholder="Details of technical requirement..." rows="4"></textarea>
+                        
+                        <label class="stat-label">Deadline</label>
+                        <input type="text" id="m-t-due" placeholder="Today by 6:00 PM">
+                        
+                        <button class="btn btn-primary" style="width:100%; margin-top:25px; height:55px; justify-content:center;" onclick="App.addTask()">Transmit Task</button>`;
+                } else if (type === 'compose-notif') {
+                    inner.innerHTML = `
+                        <h3 style="font-weight:900; letter-spacing:-1px;">Compose Student Broadcast</h3>
+                        <p style="font-size:12px; color:var(--slate); margin-bottom:20px;">Transmit a notification to your assigned fleet.</p>
+                        
+                        <label class="stat-label">Broadcast Mode</label>
+                        <select id="m-n-mode" onchange="document.getElementById('m-n-target-wrap').style.display = this.value === 'private' ? 'block' : 'none'">
+                            <option value="public">Global: All My Assigned Students</option>
+                            <option value="private">Individual: Target Specific Student</option>
+                        </select>
+
+                        <div id="m-n-target-wrap" style="display:none;">
+                            <label class="stat-label">Target Student Node</label>
+                            <select id="m-n-target">${myStudents.map(s => `<option value="${s.srn}">${s.name} (${s.srn})</option>`).join('')}</select>
+                        </div>
+
+                        <label class="stat-label">Administrative Payload</label>
+                        <textarea id="m-n-text" placeholder="Enter notification message..." rows="5"></textarea>
+                        
+                        <button class="btn btn-primary" style="width:100%; margin-top:25px; height:55px; justify-content:center;" onclick="App.sendNotification()">Transmit Alert</button>`;
+                }
+            },
+
+            closeModal() { document.getElementById('modal-backdrop').classList.remove('active'); },
+
+            async sendNotification() {
+                const mode = document.getElementById('m-n-mode').value;
+                const target = mode === 'public' ? 'all' : document.getElementById('m-n-target').value;
+                const text = document.getElementById('m-n-text').value.trim();
+
+                if (!text) return;
+
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'notifications'), {
+                        from: this.state.user.name,
+                        senderRole: 'Mentor',
+                        text,
+                        target,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    });
+                    this.closeModal();
+                    this.notify("Student alert transmitted.");
+                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
+            },
+
+            async addProject() {
+                const teamName = document.getElementById('m-p-team').value.trim();
+                const name = document.getElementById('m-p-name').value.trim();
+                const lead = document.getElementById('m-p-lead').value;
+                const track = document.getElementById('m-p-track').value;
+
+                const memberChecks = document.querySelectorAll('input[name="members"]:checked');
+                const members = Array.from(memberChecks).map(cb => cb.value);
+
+                if (!name || !teamName || members.length === 0) {
+                    this.notify("Fill all fields and select at least one member.");
+                    return;
+                }
+
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'projects'), {
+                        teamName, name, lead, members, track, mentor: this.state.user.email, status: 'Active'
+                    });
+                    this.closeModal();
+                    this.notify("Group cluster deployed.");
+                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
+            },
+
+            async addTask() {
+                const sid = document.getElementById('m-t-sid').value;
+                const desc = document.getElementById('m-t-desc').value.trim();
+                const due = document.getElementById('m-t-due').value.trim();
+                if (!desc) return;
+
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tasks'), {
+                        sid, desc, due, status: 'Pending', createdAt: serverTimestamp()
+                    });
+                    this.closeModal();
+                    this.notify("Directive Dispatched Successfully.");
+                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
+            },
+
+            async setAtt(id, val) {
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'students', id), {
+                        att: val,
+                        verifiedBy: this.state.user.name,
+                        lastSync: new Date().toLocaleTimeString()
+                    });
+                    this.notify(`Status updated: ${val.toUpperCase()}`);
+                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
+            },
+
+            async deleteItem(col, id) {
+                if (confirm("Permanently purge this record?")) {
+                    try {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
+                        this.notify("Record purged.");
+                    } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
+                }
+            },
+
+            notify(msg) {
+                const n = document.createElement('div');
+                n.style = "position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--dark); color:#fff; padding:15px 30px; border-radius:15px; font-weight:700; font-size:13px; z-index:9999; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3);";
+                n.innerHTML = `<i class="fas fa-satellite-dish" style="margin-right:12px; color:var(--primary);"></i> ${msg}`;
+                document.body.appendChild(n);
+                setTimeout(() => n.remove(), 3000);
+            }
+        };
+
+        App.init();
+    </script>
+</body>
+
+</html>
