@@ -4,597 +4,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMPS Portal | Mentor Command Center</title>
+    <title>SMPS Tech | Mentor Command Hub</title>
     <!-- Premium Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 3D Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            --primary: #6366F1;
-            --primary-dark: #4F46E5;
-            --secondary: #EC4899;
+            --primary: #4F46E5;
+            --primary-glow: rgba(79, 70, 229, 0.3);
             --dark: #0F172A;
-            --slate: #64748B;
-            --bg: #F8FAFC;
-            --border: #E2E8F0;
+            --slate: #475569;
+            --bg: #FFFFFF;
+            --border: rgba(203, 213, 225, 0.5);
             --radius-lg: 20px;
-            --radius-xl: 30px;
+            --radius-xl: 36px;
             --emerald: #10B981;
             --amber: #F59E0B;
-            --crimson: #EF4444;
+            --rose: #F43F5E;
+            --panel-bg: #F8FAFC;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            outline: none;
         }
 
         body {
-            background-color: var(--bg);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
             color: var(--dark);
             overflow: hidden;
             height: 100vh;
-            width: 100vw;
         }
 
-        /* Container Fixes */
-        .app-container {
-            display: flex;
-            width: 100%;
-            height: 100%;
+        #canvas-container {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 30%, #ffffff 0%, #f1f4fb 70%, #e8edf7 100%);
         }
 
-        /* Login Selection Screen */
+        /* ----- LOGIN VIEW ----- */
         #view-login {
             position: fixed;
             inset: 0;
-            background: var(--dark);
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
             z-index: 5000;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            padding: 20px;
         }
 
         .login-card {
             background: #fff;
+            padding: 50px;
+            border-radius: 40px;
             width: 100%;
-            max-width: 420px;
-            padding: 40px;
-            border-radius: var(--radius-xl);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 440px;
             text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .login-options {
+        /* ----- CORE LAYOUT ----- */
+        #view-portal {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 5px;
+            height: 100vh;
+            margin-top: 40px;
+            height: calc(100vh - 40px);
+            position: relative;
+            z-index: 100;
+            overflow: hidden;
         }
 
-        .btn-profile {
-            width: 100%;
-            padding: 18px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            background: #fff;
-            color: var(--dark);
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.2s;
-            text-align: left;
-        }
-
-        .btn-profile:hover {
-            border-color: var(--primary);
-            background: var(--bg);
-            transform: translateX(5px);
-        }
-
-        .btn-profile i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        /* Sidebar Styling */
         .sidebar {
             width: 280px;
-            background: var(--dark);
-            color: #fff;
             padding: 30px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            z-index: 1001;
             height: 100%;
         }
 
-        .nav-group-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 25px 0 10px 15px;
-        }
-
-        .nav-item {
-            padding: 14px 18px;
-            border-radius: 12px;
-            color: #94A3B8;
+        .sidebar-link {
+            padding: 14px 20px;
+            border-radius: 16px;
+            color: var(--slate);
             font-weight: 700;
-            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 4px;
+            cursor: pointer;
             transition: 0.2s;
+            margin-bottom: 5px;
             font-size: 0.9rem;
         }
 
-        .nav-item:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
+        .sidebar-link:hover {
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--primary);
         }
 
-        .nav-item.active {
+        .sidebar-link.active {
             background: var(--primary);
             color: #fff;
-            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 25px -5px var(--primary-glow);
         }
 
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            background: #fff;
-            border-radius: 40px 0 0 40px;
-            margin-left: -20px;
-            z-index: 10;
-            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.03);
-            height: 100%;
+        .nav-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 25px 0 10px 15px;
         }
 
-        .top-bar {
-            height: 80px;
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-
-        .view-pane {
+        .workspace {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.2);
         }
 
+        /* ----- COMPONENTS ----- */
         .bento-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
             margin-bottom: 30px;
         }
 
         .card {
-            background: var(--bg);
+            padding: 25px;
             border-radius: var(--radius-lg);
-            padding: 24px;
+            background: #fff;
             border: 1px solid var(--border);
-            transition: 0.3s ease;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
         }
 
         .card:hover {
             border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
         }
 
-        .stat-val {
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin: 8px 0;
-            letter-spacing: -1.5px;
-        }
-
-        .stat-label {
-            font-size: 10px;
+        .info-label {
+            font-size: 9px;
             font-weight: 800;
-            color: var(--slate);
+            color: #94a3b8;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
         }
 
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
+        .info-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--dark);
+        }
+
+        .table-wrap {
             background: #fff;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid var(--border);
-            margin-top: 10px;
+            overflow: hidden;
+            margin-top: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px;
         }
 
         th {
             text-align: left;
-            padding: 20px;
-            color: var(--slate);
-            font-size: 11px;
+            padding: 18px 20px;
+            font-size: 10px;
+            font-weight: 900;
+            color: #94a3b8;
             text-transform: uppercase;
-            border-bottom: 1px solid var(--border);
-            background: var(--bg);
-            font-weight: 800;
+            border-bottom: 1.5px solid #f1f5f9;
+            background: #fafafa;
         }
 
         td {
             padding: 18px 20px;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border);
+            font-size: 13px;
             font-weight: 600;
-            color: var(--dark);
+            border-bottom: 1px solid #f1f5f9;
         }
 
-        .btn {
-            padding: 12px 20px;
-            border-radius: 12px;
+        .btn-p {
+            background: var(--primary);
+            color: #fff;
             border: none;
-            font-weight: 700;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 11px;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-            transition: 0.2s;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 10px var(--primary-glow);
-        }
-
-        .btn-outline {
-            background: #fff;
-            border: 1px solid var(--border);
-            color: var(--slate);
+        .btn-p:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px var(--primary-glow);
         }
 
         .mark-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
             color: #fff;
-            font-size: 16px;
             transition: 0.2s;
+            font-size: 14px;
         }
 
-        .mark-btn-yes {
+        .btn-yes {
             background: var(--emerald);
         }
 
-        .mark-btn-no {
-            background: var(--crimson);
+        .btn-no {
+            background: var(--rose);
         }
 
-        .mark-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .notif-card {
-            padding: 20px;
+        /* ----- ASSET HUB ----- */
+        .asset-item {
+            padding: 18px;
             background: #fff;
+            border-radius: 20px;
             border: 1px solid var(--border);
-            border-radius: 16px;
-            margin-bottom: 15px;
-            border-left: 5px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: 0.2s;
         }
 
-        .overlay-mask {
+        .asset-item:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .asset-item a {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .asset-meta {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--slate);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ----- CHECKBOX LIST ----- */
+        .check-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #F8FAFC;
+            border: 1.5px solid var(--border);
+            border-radius: 15px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+        }
+
+        .check-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .check-item label {
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* ----- MODAL ----- */
+        .modal-bg {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(4px);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
             z-index: 6000;
             display: none;
             align-items: center;
             justify-content: center;
         }
 
-        .overlay-mask.active {
+        .modal-bg.active {
             display: flex;
         }
 
-        .badge {
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            display: inline-block;
-        }
-
-        .bg-emerald {
-            background: #DCFCE7;
-            color: #166534;
-        }
-
-        .bg-crimson {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .bg-amber {
-            background: #FEF3C7;
-            color: #92400E;
-        }
-
-        .bg-p {
-            background: #E0E7FF;
-            color: #4338CA;
+        .modal-card {
+            background: #fff;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 40px;
+            padding: 40px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         input,
         select,
         textarea {
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1.5px solid var(--border);
             font-weight: 600;
             outline: none;
             background: #F8FAFC;
             margin-top: 8px;
-            transition: 0.2s;
         }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: var(--primary);
-            background: #fff;
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
         }
 
-        /* Sync Hub / Chat Hub Styles */
-        .chat-hub {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            height: calc(100vh - 200px);
-            background: #fff;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            border: 1px solid var(--border);
+        .bg-e {
+            background: #d1fae5;
+            color: #10b981;
         }
 
-        .chat-nav {
-            background: var(--bg);
-            border-right: 1px solid var(--border);
-            padding: 20px 10px;
-            overflow-y: auto;
+        .bg-a {
+            background: #fef3c7;
+            color: #f59e0b;
         }
 
-        .chat-roster-item {
-            padding: 14px 16px;
-            border-radius: 14px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: 0.2s;
+        .bg-p {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .ticker-wrap {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--dark);
+            color: #fff;
+            z-index: 1100;
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .chat-roster-item:hover {
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .chat-roster-item.active {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .chat-view {
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-        }
-
-        .chat-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            font-size: 10px;
             font-weight: 800;
-            color: var(--primary);
+            letter-spacing: 1.5px;
         }
 
-        .chat-window {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
+        .ticker-move {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            white-space: nowrap;
+            animation: ticker-scroll 60s linear infinite;
+            gap: 6rem;
         }
 
-        .bubble {
-            padding: 12px 16px;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 600;
-            max-width: 80%;
-            line-height: 1.4;
-        }
+        @keyframes ticker-scroll {
+            0% {
+                transform: translateX(100%);
+            }
 
-        .bubble-me {
-            align-self: flex-end;
-            background: var(--primary);
-            color: #fff;
-            border-bottom-right-radius: 2px;
-        }
-
-        .bubble-them {
-            align-self: flex-start;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-bottom-left-radius: 2px;
-        }
-
-        .chat-input-area {
-            padding: 20px 30px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 15px;
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
         .hidden {
             display: none !important;
         }
 
-        #sync-error-banner {
-            background: var(--crimson);
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 800;
+        #loader {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--slate);
-        }
-
-        .student-check-list {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px;
-            margin-top: 8px;
-            background: var(--bg);
-        }
-
-        .student-check-item {
+            inset: 0;
+            background: #fff;
+            z-index: 10000;
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-            font-weight: 600;
+            justify-content: center;
         }
 
-        .student-check-item:last-child {
-            border-bottom: none;
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f1f5f9;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .student-check-item input {
-            width: auto;
-            margin-top: 0;
-            cursor: pointer;
-        }
-
-        .link-anchor {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 800;
-            background: rgba(99, 102, 241, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .link-anchor:hover {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary-dark);
-        }
-
-        .submitter-tag {
-            font-size: 9px;
-            font-weight: 800;
-            color: var(--slate);
-            display: block;
-            margin-top: 4px;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 80px;
-                padding: 30px 10px;
-            }
-
-            .sidebar .logo h2,
-            .sidebar .nav-item span,
-            .sidebar .nav-group-label,
-            .sidebar .role-indicator h4 {
-                display: none;
-            }
-
-            .sidebar .nav-item {
-                justify-content: center;
-                padding: 15px;
-            }
-
-            .main-content {
-                margin-left: 0;
-                border-radius: 0;
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
     </style>
@@ -602,329 +451,244 @@
 
 <body>
 
-    <!-- SYNC ERROR DISPLAY -->
-    <div id="sync-error-banner" class="hidden">
-        <i class="fas fa-exclamation-triangle"></i> DATABASE_ACCESS_DENIED: Critical Sync Error. Check Connection.
+    <div id="canvas-container"></div>
+    <div id="loader">
+        <div class="spinner"></div>
     </div>
 
-    <!-- SELECT PROFILE SCREEN -->
+    <div id="ticker-bar" class="ticker-wrap">
+        <div class="ticker-move">
+            <span><i class="fas fa-shield"></i> SYSTEM STATUS: COMMAND HUB V6.1 DEPLOYED.</span>
+            <span><i class="fas fa-bolt"></i> FACULTY UPDATE: CUMULATIVE POINT ENGINE (100) NOW OPERATIONAL.</span>
+            <span><i class="fas fa-sync"></i> PROTOCOL: UPLOAD REFERENCE PDFS IN TEAM BUILDER FOR NODE SYNC.</span>
+        </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
     <div id="view-login">
         <div class="login-card">
-            <div class="logo" style="justify-content: center; color: var(--dark); margin-bottom: 10px;">
-                <i class="fas fa-user-shield" style="font-size: 3.5rem; color: var(--primary);"></i>
-            </div>
-            <h2 style="font-weight: 900; letter-spacing: -1px;">Mentor Command</h2>
-            <p style="font-size: 11px; color: var(--slate); margin-bottom: 20px;">Synchronizing Faculty Nodes...</p>
-            <div id="login-options-container" class="login-options">
-                <div style="padding: 20px;"><i class="fas fa-circle-notch fa-spin"></i> Initializing Security
-                    Protocol...</div>
-            </div>
+            <i class="fas fa-shield-halved" style="font-size: 4rem; color: var(--primary); margin-bottom: 25px;"></i>
+            <h2 style="font-weight: 900; letter-spacing: -1.5px; font-size: 2.2rem;">Command Node</h2>
+            <p style="font-size: 13px; color: var(--slate); margin-bottom: 35px; font-weight: 600;">Authorized Mentor
+                Identification Required</p>
+            <form id="login-form">
+                <input type="text" id="l-user" placeholder="Mentor Username / Email" required
+                    style="border-radius:40px; padding:18px 25px; margin-bottom:15px;">
+                <input type="password" id="l-pass" placeholder="Authorization Token" required
+                    style="border-radius:40px; padding:18px 25px; margin-bottom:30px;">
+                <button type="submit" class="btn-p"
+                    style="width:100%; height:60px; justify-content:center; border-radius:50px; font-size:12px;">Launch
+                    HUB</button>
+            </form>
+            <p id="login-error" style="color: var(--rose); font-size: 11px; margin-top: 20px; font-weight: 800;"
+                class="hidden"><i class="fas fa-circle-exclamation"></i> ACCESS_DENIED: NODE MISMATCH</p>
         </div>
     </div>
 
     <!-- MAIN PORTAL -->
-    <div id="portal-container" class="app-container hidden">
+    <div id="view-portal" class="hidden">
         <aside class="sidebar">
-            <div class="logo" style="margin-bottom: 40px; padding-left: 15px;">
-                <h2 style="color: #fff; font-weight: 900; letter-spacing: -1px;"><i class="fas fa-shield-halved"
-                        style="color: var(--primary);"></i> SMPS Tech</h2>
-            </div>
-            <nav id="sidebar-nav">
-                <div class="nav-item active" id="nav-dashboard" onclick="App.switchTab('dashboard')"><i
-                        class="fas fa-home"></i> <span>Dashboard</span></div>
-                <div class="nav-item" id="nav-students" onclick="App.switchTab('students')"><i
-                        class="fas fa-user-group"></i> <span>My Students</span></div>
-                <div class="nav-item" id="nav-attendance" onclick="App.switchTab('attendance')"><i
-                        class="fas fa-calendar-check"></i> <span>Attendance Sync</span></div>
-                <div class="nav-item" id="nav-projects" onclick="App.switchTab('projects')"><i
-                        class="fas fa-users-gear"></i> <span>Group Clusters</span></div>
-                <div class="nav-item" id="nav-reports" onclick="App.switchTab('reports')"><i
-                        class="fas fa-file-invoice"></i> <span>Mission Reports</span></div>
-                <div class="nav-item" id="nav-tasks" onclick="App.switchTab('tasks')"><i class="fas fa-list-check"></i>
-                    <span>Student Tasks</span>
-                </div>
-                <div class="nav-item" id="nav-sync" onclick="App.switchTab('sync')"><i class="fas fa-comments"></i>
-                    <span>Sync Hub</span>
-                </div>
-                <div class="nav-item" id="nav-messages" onclick="App.switchTab('messages')"><i class="fas fa-bell"></i>
-                    <span>System Alerts</span>
-                </div>
+            <div class="logo"><i class="fas fa-shield-halved"></i><span>SMPS <b>Command</b></span></div>
+
+            <nav style="flex: 1;">
+                <div class="nav-label">Executive</div>
+                <div onclick="App.switchTab('dashboard')" id="nav-dashboard" class="sidebar-link active"><i
+                        class="fas fa-grid-2"></i> Station Home</div>
+                <div onclick="App.switchTab('attendance')" id="nav-attendance" class="sidebar-link"><i
+                        class="fas fa-calendar-check"></i> Attendance</div>
+                <div onclick="App.switchTab('teambuilder')" id="nav-teambuilder" class="sidebar-link"><i
+                        class="fas fa-users-gear"></i> Team Builder</div>
+
+                <div class="nav-label">Asset Command</div>
+                <div onclick="App.switchTab('assethub')" id="nav-assethub" class="sidebar-link"><i
+                        class="fas fa-magnifying-glass"></i> Node Assets</div>
+                <div onclick="App.switchTab('tasks')" id="nav-tasks" class="sidebar-link"><i
+                        class="fas fa-list-check"></i> Directives</div>
+                <div onclick="App.switchTab('sync')" id="nav-sync" class="sidebar-link"><i class="fas fa-message"></i>
+                    Sync Hub</div>
+                <div onclick="App.switchTab('broadcast')" id="nav-broadcast" class="sidebar-link"><i
+                        class="fas fa-bullhorn"></i> Transmissions</div>
             </nav>
-            <div class="role-indicator"
-                style="margin-top: auto; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                    <div id="u-avatar"
-                        style="width: 36px; height: 36px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff;">
-                        ?</div>
-                    <div style="overflow: hidden;">
-                        <h4 id="u-name"
-                            style="font-size: 12px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            Mentor</h4>
-                        <span id="sync-status-badge" class="badge bg-emerald"
-                            style="font-size: 7px; padding: 2px 6px;">Live Sync</span>
+
+            <div
+                style="margin-top: auto; padding: 20px; background: rgba(255,255,255,0.06); border-radius: 24px; border: 1px solid var(--border);">
+                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                    <div id="u-avatar" class="avatar-circle"
+                        style="width:40px; height:40px; font-size:1.1rem; border-radius:12px;">M</div>
+                    <div style="overflow:hidden;">
+                        <p id="u-name"
+                            style="font-size: 12px; font-weight: 800; color:var(--dark); white-space: nowrap; text-overflow: ellipsis;">
+                            Mentor</p>
+                        <span class="badge bg-e" style="font-size: 7px; padding: 2px 6px;">DATA SYNC ACTIVE</span>
                     </div>
                 </div>
-                <button class="btn btn-outline"
-                    style="width: 100%; color: #fff; background: rgba(255,255,255,0.1); border: none; font-size: 10px;"
-                    onclick="location.reload()">Switch Profile</button>
+                <button onclick="location.reload()"
+                    style="width:100%; background:none; border:1px solid #fee2e2; padding:10px; border-radius:12px; font-size:10px; font-weight:800; cursor:pointer; color:var(--rose);">TERMINATE
+                    SESSION</button>
             </div>
         </aside>
 
-        <main class="main-content">
-            <header class="top-bar">
+        <main class="workspace">
+            <header style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
                 <div>
-                    <h2 id="view-title" style="font-weight: 900; letter-spacing: -1px;">Dashboard</h2>
-                    <p id="ctx-label" style="font-size: 10px; color: var(--primary); font-weight: 800;">
-                        COMMAND_CENTRAL_V6.0</p>
+                    <h2 id="view-title" style="font-size: 2.6rem; font-weight: 900; letter-spacing: -2.5px;">Command
+                        Station</h2>
+                    <p id="live-clock"
+                        style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 5px;">00:00:00 AM
+                    </p>
                 </div>
                 <div style="text-align: right;">
-                    <div id="live-clock" style="font-weight: 900; font-size: 1.2rem;">00:00:00 AM</div>
-                    <div id="live-date" style="font-size: 10px; color: var(--slate); font-weight: 800;">SYNCING...</div>
+                    <span class="badge bg-p" style="padding:8px 16px; border-radius:40px;">CORE_NODE_V6.1</span>
                 </div>
             </header>
 
-            <div class="view-pane">
-                <!-- DASHBOARD -->
-                <div id="tab-dashboard" class="tab-content">
-                    <div class="bento-grid">
-                        <div class="card">
-                            <span class="stat-label">My Students</span>
-                            <div class="stat-val" id="stat-students">0</div>
-                        </div>
-                        <div class="card">
-                            <span class="stat-label">Active Teams</span>
-                            <div class="stat-val" id="stat-projects">0</div>
-                        </div>
-                        <div class="card">
-                            <span class="stat-label">Pending Verify</span>
-                            <div class="stat-val" id="stat-pending" style="color:var(--amber);">0</div>
-                        </div>
-                        <div class="card">
-                            <span class="stat-label">Global Feed</span>
-                            <div class="stat-val" id="stat-feed">0</div>
-                        </div>
+            <!-- DASHBOARD -->
+            <div id="tab-dashboard">
+                <div class="bento-grid">
+                    <div class="card"><span class="info-label">Assigned Nodes</span>
+                        <div class="info-value" id="stat-students">0</div>
                     </div>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px;">
-                        <div class="card" style="justify-content: flex-start; min-height: 300px;">
-                            <h4
-                                style="font-weight:800; margin-bottom:20px; display: flex; align-items: center; gap: 10px;">
-                                <i class="fas fa-list-ul color-primary"></i> Quick Roster
-                            </h4>
-                            <div id="dash-list" style="display:flex; flex-direction:column; gap:12px;">
-                                <p style="font-size: 11px; color: var(--slate);">Connecting to database nodes...</p>
-                            </div>
-                        </div>
-                        <div class="card" style="justify-content: flex-start; min-height: 300px;">
-                            <h4
-                                style="font-weight:800; margin-bottom:20px; display: flex; align-items: center; gap: 10px;">
-                                <i class="fas fa-project-diagram color-primary"></i> Managed Tracks
-                            </h4>
-                            <div id="dash-teams" style="display:flex; flex-direction:column; gap:12px;">
-                                <p style="font-size: 11px; color: var(--slate);">No team assignments detected.</p>
-                            </div>
-                        </div>
+                    <div class="card"><span class="info-label">Active Clusters</span>
+                        <div class="info-value" id="stat-teams">0</div>
+                    </div>
+                    <div class="card"><span class="info-label">Verification Queue</span>
+                        <div class="info-value" id="stat-pending" style="color:var(--amber);">0</div>
+                    </div>
+                    <div class="card"><span class="info-label">Global Directives</span>
+                        <div class="info-value" id="stat-feed">0</div>
                     </div>
                 </div>
-
-                <!-- ATTENDANCE -->
-                <div id="tab-attendance" class="tab-content hidden">
-                    <div style="margin-bottom: 25px;">
-                        <h3 style="font-weight:800;">Real-time Presence Sync</h3>
-                        <p style="font-size: 12px; color: var(--slate);">Authorize student presence logs for the central
-                            ledger.</p>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:28px;">
+                    <div class="card">
+                        <h4 style="font-weight:900; font-size:1rem; margin-bottom:20px; letter-spacing:-0.5px;">Student
+                            Ledger Pulse</h4>
+                        <div id="dash-roster" style="display:flex; flex-direction:column; gap:12px;"></div>
                     </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>SRN</th>
-                                    <th>Student Name</th>
-                                    <th>Sync Time</th>
-                                    <th>Status</th>
-                                    <th>Verification</th>
-                                </tr>
-                            </thead>
-                            <tbody id="attendance-table"></tbody>
-                        </table>
+                    <div class="card">
+                        <h4 style="font-weight:900; font-size:1rem; margin-bottom:20px; letter-spacing:-0.5px;">
+                            Broadcast Activity</h4>
+                        <div id="dash-notifs" style="display:flex; flex-direction:column; gap:12px;"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- PROJECTS (TEAM MAKING ONLY) -->
-                <div id="tab-projects" class="tab-content hidden">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                        <div>
-                            <h3 style="font-weight:800;">Group Cluster Deployment</h3>
-                            <p style="font-size: 12px; color: var(--slate);">Assign student nodes to Track Alpha or Beta
-                                team identities.</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="App.showModal('project')"><i
-                                class="fas fa-users-gear"></i> Create Team Assignment</button>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Track</th>
-                                    <th>Team Identity</th>
-                                    <th>Project Roadmap</th>
-                                    <th>Assigned Nodes</th>
-                                    <th>Control</th>
-                                </tr>
-                            </thead>
-                            <tbody id="project-table"></tbody>
-                        </table>
+            <!-- ATTENDANCE -->
+            <div id="tab-attendance" class="hidden">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SRN</th>
+                                <th>Node Identity</th>
+                                <th>Portal Sync</th>
+                                <th>Status</th>
+                                <th>Verification</th>
+                            </tr>
+                        </thead>
+                        <tbody id="att-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TEAM BUILDER (Separate Section for Groups) -->
+            <div id="tab-teambuilder" class="hidden">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                    <h3 style="font-weight:900; letter-spacing:-1.2px;">Dual-Track Cluster Control</h3>
+                    <button class="btn-p" onclick="App.showModal('project')"><i class="fas fa-plus"></i> Initialize
+                        Cluster</button>
+                </div>
+                <div id="teams-container" style="display:grid; grid-template-columns: 1fr 1fr; gap:28px;"></div>
+            </div>
+
+            <!-- ASSET HUB (Separate Section for viewing all links) -->
+            <div id="tab-assethub" class="hidden">
+                <div class="card" style="margin-bottom: 25px; border-left: 8px solid var(--primary);">
+                    <span class="info-label">Technical Submission Explorer</span>
+                    <p style="font-size:12px; color:var(--slate); margin-bottom:15px;">Select a student node to
+                        aggregate all historical research anchors and directive payloads.</p>
+                    <div style="display:flex; gap:15px; margin-top:10px;">
+                        <select id="asset-student-picker"
+                            style="flex:1; border-radius:40px; padding-left:25px;"></select>
+                        <button onclick="App.exploreAssets()" class="btn-p"
+                            style="border-radius:40px; padding:0 35px;">EXPLORE</button>
                     </div>
                 </div>
-
-                <!-- MISSION REPORTS (INDIVIDUAL SUBMISSIONS) -->
-                <div id="tab-reports" class="tab-content hidden">
-                    <div style="margin-bottom: 25px;">
-                        <h3 style="font-weight:800;">Per-Node Submission Reports</h3>
-                        <p style="font-size: 12px; color: var(--slate);">Monitoring each individual student node's
-                            anchored mission reports.</p>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Student Node</th>
-                                    <th>Track Alpha Mission Report</th>
-                                    <th>Track Beta Mission Report</th>
-                                    <th>Registry Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="reports-table"></tbody>
-                        </table>
+                <div id="asset-results" class="hidden" style="margin-top:40px;">
+                    <h3 id="asset-title" class="info-value"
+                        style="font-size:1.6rem; margin-bottom:25px; letter-spacing:-1px;">Node Assets</h3>
+                    <div id="asset-list-container" style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
                     </div>
                 </div>
+            </div>
 
-                <!-- TASKS -->
-                <div id="tab-tasks" class="tab-content hidden">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                        <div>
-                            <h3 style="font-weight:800;">Student Directives</h3>
-                            <p style="font-size: 12px; color: var(--slate);">Dispatch technical tasks and monitor
-                                completion status.</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="App.showModal('task')"><i
-                                class="fas fa-paper-plane"></i> Dispatch Task</button>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Target Node</th>
-                                    <th>Instruction</th>
-                                    <th>Deadline</th>
-                                    <th>Submission Anchor</th>
-                                    <th>Sync Status</th>
-                                    <th>Control</th>
-                                </tr>
-                            </thead>
-                            <tbody id="task-table"></tbody>
-                        </table>
-                    </div>
+            <!-- DIRECTIVES (TASKS) -->
+            <div id="tab-tasks" class="hidden">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+                    <h3 style="font-weight:900; letter-spacing:-1px;">Instruction Payload Dispatch</h3>
+                    <button class="btn-p" onclick="App.showModal('task')"><i class="fas fa-bolt"></i> Dispatch
+                        Directive</button>
                 </div>
+                <div id="tasks-grid"
+                    style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:24px;"></div>
+            </div>
 
-                <!-- SYNC HUB (CHAT) -->
-                <div id="tab-sync" class="tab-content hidden">
-                    <div class="chat-hub">
-                        <aside class="chat-nav" id="chat-roster">
-                            <!-- Roster of assigned students -->
-                        </aside>
-                        <main class="chat-view">
-                            <div class="chat-header" id="chat-header-name">Select a Student Node</div>
-                            <div class="chat-window" id="chat-window">
-                                <p style="text-align:center; padding-top:100px; color:var(--slate); font-weight:700;">
-                                    Initiate secure sync with student nodes.</p>
-                            </div>
-                            <form id="chat-form" class="chat-input-area hidden">
-                                <input type="text" id="chat-input" placeholder="Transmit technically segment..."
-                                    required>
-                                <button type="submit" class="btn btn-primary"><i
-                                        class="fas fa-paper-plane"></i></button>
-                            </form>
-                        </main>
-                    </div>
+            <!-- SYNC HUB (CHAT) -->
+            <div id="tab-sync" class="hidden">
+                <div class="chat-hub">
+                    <aside class="chat-list" id="chat-roster"></aside>
+                    <main class="chat-main">
+                        <div id="chat-h"
+                            style="padding: 20px 30px; border-bottom: 1px solid var(--border); font-weight: 800; color: var(--primary); font-size:1rem; display:flex; justify-content:space-between; align-items:center;">
+                            <span id="chat-title-node">Support Sync Hub</span>
+                            <span class="badge bg-e" style="font-size:8px;">P2P_STABLE</span>
+                        </div>
+                        <div id="chat-window" class="chat-msgs"></div>
+                        <form id="chat-form"
+                            style="padding: 20px 30px; border-top: 1px solid var(--border); display: flex; gap: 15px;">
+                            <input type="text" id="chat-input" placeholder="Transmit packet..." required
+                                style="flex:1; border-radius:40px; padding:15px 25px;">
+                            <button type="submit" class="btn-p" style="padding:0 35px; border-radius:40px;"><i
+                                    class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </main>
                 </div>
+            </div>
 
-                <!-- MESSAGES / NOTIFICATIONS -->
-                <div id="tab-messages" class="tab-content hidden">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                        <div>
-                            <h3 style="font-weight:800;">Communication Center</h3>
-                            <p style="font-size: 12px; color: var(--slate);">Manage inbound admin reviews and outbound
-                                student broadcasts.</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="App.showModal('compose-notif')"><i
-                                class="fas fa-bullhorn"></i> Compose Alert</button>
-                    </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
-                        <div>
-                            <span class="info-label"
-                                style="font-size: 10px; font-weight: 800; color: var(--slate); text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px;">Inbound:
-                                Admin Reviews</span>
-                            <div id="notif-inbound" style="display: flex; flex-direction: column; gap: 15px;"></div>
-                        </div>
-                        <div>
-                            <span class="info-label"
-                                style="font-size: 10px; font-weight: 800; color: var(--slate); text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px;">Outbound:
-                                My Transmissions</span>
-                            <div id="notif-outbound" style="display: flex; flex-direction: column; gap: 15px;"></div>
+            <!-- BROADCAST -->
+            <div id="tab-broadcast" class="hidden">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+                    <div class="card">
+                        <span class="info-label">Inbound Payloads: Admin Control</span>
+                        <div id="notif-inbound" style="margin-top:20px; display:flex; flex-direction:column; gap:15px;">
                         </div>
                     </div>
-                </div>
-
-                <!-- STUDENTS LIST -->
-                <div id="tab-students" class="tab-content hidden">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                        <div>
-                            <h3 style="font-weight:800;">Assigned Student Registry</h3>
-                            <p style="font-size: 12px; color: var(--slate);">Detailed profile registry of your assigned
-                                academic fleet.</p>
-                        </div>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>SRN</th>
-                                    <th>Full Name</th>
-                                    <th>Branch</th>
-                                    <th>Academic Track</th>
-                                    <th>G-Mail</th>
-                                </tr>
-                            </thead>
-                            <tbody id="student-table"></tbody>
-                        </table>
+                    <div class="card">
+                        <span class="info-label">Outbound: Transmit Mentor Broadcast</span>
+                        <textarea id="b-text" placeholder="Enter directive payload..."
+                            style="height:150px; border-radius:24px;"></textarea>
+                        <button onclick="App.sendBroadcast()" class="btn-p"
+                            style="width:100%; margin-top:20px; height:60px; justify-content:center; border-radius:20px;">Deploy
+                            Transmission</button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- MODAL POPUP -->
-    <div id="modal-backdrop" class="overlay-mask" onclick="if(event.target.id === 'modal-backdrop') App.closeModal()">
-        <div class="login-card" style="max-width:550px; text-align:left;">
-            <div id="modal-inner"></div>
+    <!-- MODAL -->
+    <div id="modal-bg" class="modal-bg" onclick="if(event.target===this) App.closeModal()">
+        <div class="modal-card">
+            <div id="modal-content"></div>
         </div>
     </div>
 
     <!-- FIREBASE SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, collection, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, collection, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBN4o8oj-6DhJb51sGGrcyS8d9SDX7HKWk",
-            authDomain: "students-management-2ec78.firebaseapp.com",
-            projectId: "students-management-2ec78",
-            storageBucket: "students-management-2ec78.firebasestorage.app",
-            messagingSenderId: "649634574508",
-            appId: "1:649634574508:web:d856dbe5bcc112fde0ef09"
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyBN4o8oj-6DhJb51sGGrcyS8d9SDX7HKWk", authDomain: "students-management-2ec78.firebaseapp.com", projectId: "students-management-2ec78", storageBucket: "students-management-2ec78.firebasestorage.app", messagingSenderId: "649634574508", appId: "1:649634574508:web:d856dbe5bcc112fde0ef09" };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -934,313 +698,310 @@
             state: { user: null, students: [], projects: [], tasks: [], notifications: [], chats: [], activeChat: null, currentTab: 'dashboard' },
 
             async init() {
-                // Real-time Clock
+                this.init3D();
                 setInterval(() => {
-                    const clock = document.getElementById('live-clock');
-                    if (clock) clock.innerText = new Date().toLocaleTimeString('en-US', { hour12: true });
+                    document.getElementById('live-clock').innerText = new Date().toLocaleTimeString('en-US', { hour12: true });
                 }, 1000);
-                document.getElementById('live-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
 
-                // Authentication Protocol
-                try {
-                    await signInAnonymously(auth);
-                    onAuthStateChanged(auth, u => {
-                        if (u) this.fetchMentors();
-                    });
-                } catch (e) {
-                    console.error("Auth Exception", e);
-                    document.getElementById('sync-error-banner').classList.remove('hidden');
-                }
-
+                await signInAnonymously(auth);
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('login-form').onsubmit = (e) => this.handleLogin(e);
                 document.getElementById('chat-form').onsubmit = (e) => this.sendChat(e);
                 window.App = this;
             },
 
-            fetchMentors() {
-                const q = collection(db, 'artifacts', appId, 'public', 'data', 'mentors');
-                onSnapshot(q, snap => {
-                    const mentors = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    this.renderLogin(mentors);
-                }, err => {
-                    console.error("Sync Failure: Mentors", err);
-                    document.getElementById('sync-error-banner').classList.remove('hidden');
-                });
+            async handleLogin(e) {
+                e.preventDefault();
+                const u = document.getElementById('l-user').value.trim();
+                const p = document.getElementById('l-pass').value;
+                const btn = e.target.querySelector('button');
+                btn.innerText = 'SYNCING NODE...';
+
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'mentors'), snap => {
+                    const match = snap.docs.find(d => (d.data().email === u || d.data().name === u) && d.data().spec === p);
+                    if (match) {
+                        this.state.user = { id: match.id, ...match.data() };
+                        this.enterPortal();
+                    } else {
+                        document.getElementById('login-error').classList.remove('hidden');
+                        btn.innerText = 'AUTHORIZE HUB';
+                    }
+                }, { once: true });
             },
 
-            renderLogin(mentors) {
-                const container = document.getElementById('login-options-container');
-                if (!container) return;
-
-                if (mentors.length === 0) {
-                    container.innerHTML = '<p style="padding:20px; font-size:12px; font-weight:800; color:var(--crimson);">NO FACULTY NODES DETECTED. CONTACT ADMIN.</p>';
-                    return;
-                }
-
-                container.innerHTML = mentors.map(m => `
-                    <button class="btn-profile" onclick="App.login('${m.name}', '${m.email}')">
-                        <i class="fas fa-id-badge"></i>
-                        <div>
-                            <div style="font-weight: 900;">${m.name}</div>
-                            <div style="font-size: 10px; color: var(--slate); font-weight: 800;">${m.email}</div>
-                        </div>
-                    </button>
-                `).join('');
-            },
-
-            login(name, email) {
-                this.state.user = { name, email: email.toLowerCase() };
+            enterPortal() {
                 document.getElementById('view-login').classList.add('hidden');
-                document.getElementById('portal-container').classList.remove('hidden');
-                document.getElementById('u-name').innerText = name;
-                document.getElementById('u-avatar').innerText = name[0];
+                document.getElementById('view-portal').classList.remove('hidden');
+                document.getElementById('u-name').innerText = this.state.user.name;
+                document.getElementById('u-avatar').innerText = this.state.user.name[0];
                 this.sync();
             },
 
             sync() {
-                const collections = ['students', 'projects', 'tasks', 'notifications', 'chats'];
-                collections.forEach(col => {
+                const targets = ['students', 'projects', 'tasks', 'notifications', 'chats'];
+                targets.forEach(col => {
                     onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', col), snap => {
                         this.state[col] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                         this.render();
-                    }, err => {
-                        console.error(`Sync error: ${col}`, err);
                     });
                 });
             },
 
-            switchTab(id) {
-                this.state.currentTab = id;
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-                const target = document.getElementById(`tab-${id}`);
-                if (target) target.classList.remove('hidden');
-
-                const navBtn = document.getElementById(`nav-${id}`);
-                if (navBtn) navBtn.classList.add('active');
-
-                document.getElementById('view-title').innerText = id.charAt(0).toUpperCase() + id.slice(1).replace('-', ' ');
+            switchTab(t) {
+                this.state.currentTab = t;
+                document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+                document.getElementById(`tab-${t}`).classList.remove('hidden');
+                document.getElementById(`nav-${t}`).classList.add('active');
+                document.getElementById('view-title').innerText = t === 'teambuilder' ? 'Team Builder' : (t === 'broadcast' ? 'Transmissions' : (t === 'assethub' ? 'Asset Hub' : t.charAt(0).toUpperCase() + t.slice(1).replace('hub', ' Hub')));
                 this.render();
             },
 
             render() {
-                const { students, projects, tasks, notifications, user, currentTab } = this.state;
+                const { user, students, projects, tasks, notifications, chats, currentTab } = this.state;
                 if (!user) return;
 
-                const myStudents = students.filter(s => s.mentor?.toLowerCase() === user.email);
-                const myProjects = projects.filter(p => p.mentor?.toLowerCase() === user.email);
+                const myStudents = students.filter(s => s.mentor === user.email);
+                const myProjects = projects.filter(p => p.mentor === user.email);
                 const myTasks = tasks.filter(t => myStudents.some(s => s.id === t.sid || s.srn === t.sid));
 
-                const resolveSubmitter = (nameOrId) => {
-                    const s = students.find(x => x.name === nameOrId || x.id === nameOrId || x.srn === nameOrId);
-                    return s ? `${s.name} (${s.srn})` : nameOrId;
-                };
-
-                // Stats Update
                 document.getElementById('stat-students').innerText = myStudents.length;
-                document.getElementById('stat-projects').innerText = myProjects.length;
+                document.getElementById('stat-teams').innerText = myProjects.length;
                 document.getElementById('stat-pending').innerText = myStudents.filter(s => s.att === 'pending').length;
                 document.getElementById('stat-feed').innerText = notifications.length;
 
                 if (currentTab === 'dashboard') {
-                    document.getElementById('dash-list').innerHTML = myStudents.slice(0, 5).map(s => `
-                        <div style="padding:15px; background:#fff; border-radius:12px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                            <div>
-                                <div style="font-weight:800; font-size:13px;">${s.name}</div>
-                                <div style="font-size:10px; color:var(--slate); font-weight:700;">${s.srn}</div>
-                            </div>
-                            <span class="badge ${s.att === 'verified' ? 'bg-emerald' : (s.att === 'pending' ? 'bg-amber' : 'bg-crimson')}">${s.att || 'offline'}</span>
-                        </div>
-                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No students assigned to your node.</p>';
+                    document.getElementById('dash-roster').innerHTML = myStudents.slice(0, 5).map(s => `
+                        <div style="padding:12px; background:#fff; border-radius:15px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:800; font-size:12px;">${s.name}</span>
+                            <span class="badge ${s.att === 'verified' ? 'bg-e' : 'bg-a'}">${s.att}</span>
+                        </div>`).join('') || '<p class="info-label">No nodes mapped.</p>';
 
-                    document.getElementById('dash-teams').innerHTML = myProjects.slice(0, 3).map(p => `
-                        <div style="padding:15px; background:#fff; border-radius:12px; border:1px dashed var(--primary);">
+                    document.getElementById('dash-teams').innerHTML = myProjects.slice(0, 4).map(p => `
+                        <div style="padding:12px; background:#fff; border-radius:15px; border:1.5px solid var(--border); margin-bottom:8px;">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <div style="font-size:10px; font-weight:800; color:var(--primary); text-transform:uppercase;">${p.teamName}</div>
-                                <span class="badge bg-p" style="font-size:8px;">Track ${p.track || 'A'}</span>
+                                <p style="font-weight:800; font-size:12px;">${p.teamName}</p>
+                                <span class="badge bg-p" style="color:#fff; font-size:8px;">${p.track}</span>
                             </div>
-                            <div style="font-weight:900; font-size:13px; margin-top:4px;">${p.name}</div>
-                        </div>
-                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No active team clusters.</p>';
+                            <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
+                                <span class="info-label" style="margin:0;">Score:</span>
+                                <p style="font-weight:900; font-size:13px; color:var(--primary);">${p.cumulativeScore || 0}/100</p>
+                            </div>
+                        </div>`).join('');
                 }
 
                 if (currentTab === 'attendance') {
-                    document.getElementById('attendance-table').innerHTML = myStudents.map(s => `
-                        <tr>
-                            <td><b>${s.srn}</b></td>
-                            <td>${s.name}</td>
-                            <td>${s.time || '--:--'}</td>
-                            <td><span class="badge ${s.att === 'verified' ? 'bg-emerald' : (s.att === 'pending' ? 'bg-amber' : 'bg-crimson')}">${(s.att || 'offline').toUpperCase()}</span></td>
-                            <td>
-                                <div style="display:flex; gap:10px;">
-                                    <button class="mark-btn mark-btn-yes" onclick="App.setAtt('${s.id}', 'verified')" title="Verify Presence"><i class="fas fa-check"></i></button>
-                                    <button class="mark-btn mark-btn-no" onclick="App.setAtt('${s.id}', 'absent')" title="Mark Absent"><i class="fas fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    `).join('');
+                    document.getElementById('att-table-body').innerHTML = myStudents.map(s => `
+                        <tr><td><b>${s.srn}</b></td><td>${s.name}</td><td>${s.time || '--:--'}</td>
+                        <td><span class="badge ${s.att === 'verified' ? 'bg-e' : 'bg-a'}">${s.att}</span></td>
+                        <td><div style="display:flex; gap:10px;">
+                            <button onclick="App.setAtt('${s.id}','verified')" class="mark-btn btn-yes"><i class="fas fa-check"></i></button>
+                            <button onclick="App.setAtt('${s.id}','absent')" class="mark-btn btn-no"><i class="fas fa-times"></i></button>
+                        </div></td></tr>`).join('');
                 }
 
-                if (currentTab === 'projects') {
-                    document.getElementById('project-table').innerHTML = myProjects.map(p => `
-                        <tr>
-                            <td><span class="badge bg-p">Track ${p.track || 'Alpha'}</span></td>
-                            <td><b>${p.teamName}</b></td>
-                            <td>${p.name}</td>
-                            <td>
-                                <div style="display:flex; flex-wrap:wrap; gap:4px; max-width:250px;">
-                                    ${(p.members || []).map(m => `<span class="badge" style="background:var(--bg); border:1px solid var(--border); font-size:9px;">${m}</span>`).join('')}
+                if (currentTab === 'teambuilder') {
+                    document.getElementById('teams-container').innerHTML = myProjects.map(p => `
+                        <div class="card">
+                            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:20px;">
+                                <div><h4 style="font-weight:900; font-size:1.4rem; letter-spacing:-0.5px;">${p.teamName}</h4><span class="badge bg-p" style="color:#fff;">${p.track}</span></div>
+                                <button onclick="App.deleteItem('projects','${p.id}')" style="background:none; border:none; color:var(--rose); cursor:pointer;"><i class="fas fa-trash-can"></i></button>
+                            </div>
+                            
+                            <p class="info-label" style="margin-bottom:8px;">Track Assignment</p>
+                            <p style="font-size:12px; font-weight:700; color:var(--slate); margin-bottom:20px;">${p.name}</p>
+                            
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                                <div>
+                                    <span class="info-label">Proficiency Score (100)</span>
+                                    <input type="number" id="score-${p.id}" value="${p.cumulativeScore || 0}" min="0" max="100" style="margin-top:5px; height:50px;">
                                 </div>
-                            </td>
-                            <td>
-                                <button class="btn btn-outline" style="padding:8px;" onclick="App.deleteItem('projects','${p.id}')"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `).join('');
+                                <div>
+                                    <span class="info-label">Protocol Reference (PDF)</span>
+                                    <input type="file" id="pdf-file-${p.id}" style="margin-top:5px; height:50px; font-size:10px; padding:10px;" accept=".pdf">
+                                    <p id="pdf-status-${p.id}" style="font-size:9px; font-weight:800; color:var(--emerald); margin-top:5px;">${p.pdfFileName ? 'ACTIVE: ' + p.pdfFileName : 'AWAITING UPLOAD'}</p>
+                                </div>
+                            </div>
+                            
+                            <button onclick="App.updateCluster('${p.id}')" class="btn-p" style="width:100%; margin-top:25px; height:55px; justify-content:center; border-radius:15px;">SYNCHRONIZE TRACK PROGRESS</button>
+                        </div>`).join('') || '<p class="info-label" style="grid-column: span 2; text-align:center; padding:50px;">No active team clusters initialized.</p>';
                 }
 
-                if (currentTab === 'reports') {
-                    document.getElementById('reports-table').innerHTML = myStudents.map(s => {
-                        // Per-person link logic
-                        const alphaProj = projects.find(p => p.track === 'Alpha' && p.members?.includes(s.name));
-                        const betaProj = projects.find(p => p.track === 'Beta' && p.members?.includes(s.name));
-
-                        return `
-                        <tr>
-                            <td><b>${s.name}</b><br><span style="font-size:10px; font-weight:800; color:var(--slate);">${s.srn}</span></td>
-                            <td>
-                                ${alphaProj?.driveLink ?
-                                `<div>
-                                        <a href="${alphaProj.driveLink}" target="_blank" class="link-anchor"><i class="fas fa-link"></i> Alpha Anchor</a>
-                                        <span class="submitter-tag">via ${resolveSubmitter(alphaProj.submittedBy)}</span>
-                                    </div>` :
-                                `<span style="font-size:10px; color:var(--slate); font-weight:700;">Awaiting Node Submission</span>`
-                            }
-                            </td>
-                            <td>
-                                ${betaProj?.driveLink ?
-                                `<div>
-                                        <a href="${betaProj.driveLink}" target="_blank" class="link-anchor"><i class="fas fa-link"></i> Beta Anchor</a>
-                                        <span class="submitter-tag">via ${resolveSubmitter(betaProj.submittedBy)}</span>
-                                    </div>` :
-                                `<span style="font-size:10px; color:var(--slate); font-weight:700;">Awaiting Node Submission</span>`
-                            }
-                            </td>
-                            <td>
-                                <span class="badge ${(alphaProj?.driveLink || betaProj?.driveLink) ? 'bg-emerald' : 'bg-amber'}">
-                                    ${(alphaProj?.driveLink || betaProj?.driveLink) ? 'Synced' : 'Pending'}
-                                </span>
-                            </td>
-                        </tr>`;
-                    }).join('');
+                if (currentTab === 'assethub') {
+                    const picker = document.getElementById('asset-student-picker');
+                    const currentVal = picker.value;
+                    picker.innerHTML = `<option value="">Select Student Node...</option>` + myStudents.map(s => `<option value="${s.id}" ${s.id === currentVal ? 'selected' : ''}>${s.name} (${s.srn})</option>`).join('');
                 }
 
                 if (currentTab === 'tasks') {
-                    document.getElementById('task-table').innerHTML = myTasks.map(t => {
+                    document.getElementById('tasks-grid').innerHTML = myTasks.map(t => {
                         const s = students.find(x => x.id === t.sid || x.srn === t.sid);
-                        const submitterId = t.payload ? (s ? `${s.name} (${s.srn})` : resolveSubmitter(t.submittedBy)) : 'Assigned Student';
-
-                        return `
-                        <tr>
-                            <td><b>${s?.name || t.sid}</b></td>
-                            <td>${t.desc}</td>
-                            <td>${t.due}</td>
-                            <td>
-                                ${t.payload ?
-                                `<div>
-                                        <a href="${t.payload}" target="_blank" class="link-anchor"><i class="fas fa-file-arrow-up"></i> Mission Report</a>
-                                        <span class="submitter-tag">By: ${submitterId}</span>
-                                    </div>` :
-                                `<span style="font-size:10px; color:var(--slate); font-weight:700;">Pending Submission</span>`
-                            }
-                            </td>
-                            <td><span class="badge ${t.status === 'Done' ? 'bg-emerald' : 'bg-amber'}">${t.status}</span></td>
-                            <td>
-                                <button class="btn btn-outline" style="padding:8px;" onclick="App.deleteItem('tasks','${t.id}')"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>`;
-                    }).join('');
+                        return `<div class="card" style="border-left: 6px solid ${t.status === 'Done' ? 'var(--emerald)' : 'var(--amber)'}">
+                            <span class="info-label">${s?.name || 'NODE'}</span>
+                            <h4 style="font-weight:800; font-size:14px; margin-bottom:15px;">${t.desc}</h4>
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span class="badge ${t.status === 'Done' ? 'bg-e' : 'bg-a'}">${t.status}</span>
+                                <small style="font-weight:800; color:var(--slate);">DUE: ${t.due}</small>
+                            </div>
+                            <button onclick="App.deleteItem('tasks','${t.id}')" style="width:100%; margin-top:20px; background:none; border:1px solid #fee2e2; padding:10px; border-radius:12px; font-size:10px; font-weight:800; color:var(--rose); cursor:pointer;">PURGE DIRECTIVE</button>
+                        </div>`;
+                    }).join('') || '<p class="info-label" style="grid-column: span 3; text-align:center; padding:50px;">Directive queue clear.</p>';
                 }
 
                 if (currentTab === 'sync') {
-                    this.renderRoster(myStudents);
+                    document.getElementById('chat-roster').innerHTML = myStudents.map(s => `
+                        <div onclick="App.openChat('${s.id}', '${s.name}')" class="chat-user ${this.state.activeChat === s.id ? 'active' : ''}">
+                            ${s.name}
+                        </div>`).join('');
                     this.renderSyncWindow();
                 }
 
-                if (currentTab === 'messages') {
-                    const inbound = notifications.filter(n => n.senderRole === 'SuperAdmin');
-                    const outbound = notifications.filter(n => n.from === user.name);
-
+                if (currentTab === 'broadcast') {
+                    const inbound = notifications.filter(n => n.senderRole === 'Admin' || n.senderRole === 'Super Admin');
                     document.getElementById('notif-inbound').innerHTML = inbound.map(n => `
-                        <div class="notif-card" style="border-left-color: var(--amber)">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                                <span class="badge" style="background:var(--bg);">Admin Review</span>
-                                <small style="font-weight:800; color:var(--slate); font-size:10px;">${n.time || 'System'}</small>
+                        <div class="card" style="margin-bottom:15px; padding:20px; border-left:4px solid var(--amber);">
+                            <div style="display:flex; justify-content:space-between;">
+                                <span class="badge bg-a">${n.senderRole}</span>
+                                <small style="font-weight:800;">${n.time}</small>
                             </div>
-                            <p style="font-weight:900; font-size:15px; color:var(--dark);">${n.from}</p>
-                            <p style="font-size:13px; color:var(--slate); margin-top:8px; font-weight:600; line-height:1.5;">${n.text}</p>
-                        </div>
-                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No inbound admin reviews detected.</p>';
-
-                    document.getElementById('notif-outbound').innerHTML = outbound.map(n => `
-                        <div class="notif-card" style="border-left-color: var(--primary)">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                                <span class="badge" style="background:var(--bg);">${n.target === 'all' ? 'Public' : 'Private'}</span>
-                                <small style="font-weight:800; color:var(--slate); font-size:10px;">${n.time || 'System'}</small>
-                            </div>
-                            <p style="font-weight:900; font-size:15px; color:var(--dark);">To: ${n.target === 'all' ? 'All Assigned Students' : n.target}</p>
-                            <p style="font-size:13px; color:var(--slate); margin-top:8px; font-weight:600; line-height:1.5;">${n.text}</p>
-                            <div style="text-align:right; margin-top:10px;">
-                                <button onclick="App.deleteItem('notifications', '${n.id}')" style="background:none; border:none; color:var(--crimson); cursor:pointer; font-size:10px; font-weight:800;">RECALL ALERT</button>
-                            </div>
-                        </div>
-                    `).join('') || '<p style="font-size:11px; padding:20px; color:var(--slate);">No outbound student transmissions.</p>';
-                }
-
-                if (currentTab === 'students') {
-                    document.getElementById('student-table').innerHTML = myStudents.map(s => `
-                        <tr>
-                            <td><b>${s.srn}</b></td>
-                            <td>${s.name}</td>
-                            <td>${s.branch || '---'}</td>
-                            <td><span class="badge bg-emerald" style="color:#065F46;">${s.product || 'Standard'}</span></td>
-                            <td style="font-size:12px; color:var(--primary); font-weight:700;">${s.gmail || '---'}</td>
-                        </tr>
-                    `).join('');
+                            <p style="font-weight:800; margin-top:10px;">${n.from}</p>
+                            <p style="font-size:12px; color:var(--slate); margin-top:5px; line-height:1.4;">${n.text}</p>
+                        </div>`).join('') || '<p class="info-label">No command syncs.</p>';
                 }
             },
 
-            // --- Chat Logic ---
-            renderRoster(assignedStudents) {
-                const roster = document.getElementById('chat-roster');
-                if (!roster) return;
-                roster.innerHTML = assignedStudents.map(s => `
-                    <div class="chat-roster-item ${this.state.activeChat === s.id ? 'active' : ''}" onclick="App.openChat('${s.id}', '${s.name}')">
-                        <div style="width:32px; height:32px; background:rgba(255,255,255,0.2); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800;">${s.name[0]}</div>
-                        <div style="overflow:hidden;">
-                            <div style="font-weight:800; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</div>
-                            <div style="font-size:9px; font-weight:600; opacity:0.7;">${s.srn}</div>
+            exploreAssets() {
+                const sid = document.getElementById('asset-student-picker').value;
+                if (!sid) return;
+                const s = this.state.students.find(x => x.id === sid);
+                const taskLinks = this.state.tasks.filter(t => (t.sid === sid || t.sid === s.srn) && t.payload);
+                const projLinks = this.state.projects.filter(p => p.members?.includes(s.name) && p.driveLink);
+
+                document.getElementById('view-title').innerText = `Node Assets: ${s.name}`;
+                document.getElementById('asset-results').classList.remove('hidden');
+
+                let html = '';
+                if (projLinks.length > 0) {
+                    html += `<div class="card" style="grid-column: span 2;"><span class="info-label">Project Technical Deliverables</span>` +
+                        projLinks.map(p => `<div class="asset-item"><a href="${p.driveLink}" target="_blank">${p.driveLink}</a><span class="asset-meta">${p.teamName}</span></div>`).join('') + `</div>`;
+                }
+                if (taskLinks.length > 0) {
+                    html += `<div class="card" style="grid-column: span 2;"><span class="info-label">Task Payload Submissions</span>` +
+                        taskLinks.map(t => `<div class="asset-item"><a href="${t.payload}" target="_blank">${t.payload}</a><span class="asset-meta">${t.desc.slice(0, 40)}...</span></div>`).join('') + `</div>`;
+                }
+                if (html === '') html = '<p class="info-label" style="text-align:center; padding:50px; grid-column: span 2; background:#fff; border-radius:20px; border:1px solid var(--border);">No technical assets synchronized for this node identity.</p>';
+                ui.html('asset-list-container', html);
+            },
+
+            showModal(type) {
+                const bg = document.getElementById('modal-bg');
+                const content = document.getElementById('modal-content');
+                const myStudents = this.state.students.filter(s => s.mentor === this.state.user.email);
+                bg.classList.add('active');
+
+                if (type === 'project') {
+                    content.innerHTML = `<h3>Initialize Team Cluster</h3>
+                        <label class="info-label">Domain Track</label><select id="m-p-track"><option>Track Alpha</option><option>Track Beta</option></select>
+                        <label class="info-label" style="margin-top:10px;">Cluster Identity Name</label><input type="text" id="m-p-team" placeholder="e.g. CYBER_UNIT_01">
+                        <label class="info-label" style="margin-top:10px;">Research Roadmap Title</label><input type="text" id="m-p-name" placeholder="Smart Energy Matrix v6">
+                        <label class="info-label" style="margin-top:10px;">Assign Individual Node Members</label>
+                        <div class="check-list">
+                            ${myStudents.map((s, i) => `
+                                <div class="check-item">
+                                    <input type="checkbox" id="node-${i}" value="${s.name}">
+                                    <label for="node-${i}">${s.name} (${s.srn})</label>
+                                </div>
+                            `).join('')}
                         </div>
-                    </div>
-                `).join('') || '<p style="padding:20px; font-size:10px; font-weight:800; color:var(--slate);">No students assigned.</p>';
+                        <button onclick="App.addProject()" class="btn-p" style="width:100%; margin-top:25px; height:60px; justify-content:center; border-radius:20px;">Deploy Cluster</button>`;
+                } else if (type === 'task') {
+                    content.innerHTML = `<h3>Dispatch Technical Directive</h3>
+                        <label class="info-label">Target Node</label><select id="m-t-sid">${myStudents.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select>
+                        <label class="info-label" style="margin-top:10px;">Instruction Payload</label><textarea id="m-t-desc" placeholder="Details..."></textarea>
+                        <label class="info-label" style="margin-top:10px;">Deadline Time</label><input type="text" id="m-t-due" placeholder="Today 5:00 PM">
+                        <button onclick="App.addTask()" class="btn-p" style="width:100%; margin-top:25px; height:60px; justify-content:center; border-radius:20px;">Transmit Directive</button>`;
+                }
+            },
+
+            closeModal() { document.getElementById('modal-bg').classList.remove('active'); },
+
+            async addProject() {
+                const track = document.getElementById('m-p-track').value;
+                const teamName = document.getElementById('m-p-team').value;
+                const name = document.getElementById('m-p-name').value;
+                const members = Array.from(document.querySelectorAll('.check-item input:checked')).map(c => c.value);
+                if (!name || !teamName || members.length === 0) { alert("Missing cluster parameters."); return; }
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'projects'), {
+                    track, teamName, name, members,
+                    mentor: this.state.user.email,
+                    points: Array(24).fill({ status: 'none' }),
+                    pdfUrl: '',
+                    pdfFileName: '',
+                    cumulativeScore: 0,
+                    driveLink: ''
+                });
+                this.closeModal();
+            },
+
+            async addTask() {
+                const sid = document.getElementById('m-t-sid').value;
+                const desc = document.getElementById('m-t-desc').value;
+                const due = document.getElementById('m-t-due').value;
+                if (!desc) return;
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tasks'), { sid, desc, due, status: 'Pending' });
+                this.closeModal();
+            },
+
+            async updateCluster(projId) {
+                const score = parseInt(document.getElementById(`score-${projId}`).value) || 0;
+                const fileInput = document.getElementById(`pdf-file-${projId}`);
+
+                let updateData = { cumulativeScore: Math.min(100, Math.max(0, score)) };
+
+                if (fileInput.files.length > 0) {
+                    updateData.pdfFileName = fileInput.files[0].name;
+                    // Note: In a real environment, we'd upload to Firebase Storage here.
+                    // For this canvas, we synchronize the file intent.
+                }
+
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'projects', projId), updateData);
+                alert("Cluster Progress Synchronized with Student Nodes.");
+            },
+
+            async setAtt(id, val) {
+                const time = new Date().toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit' });
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'students', id), { att: val, time });
+            },
+
+            async deleteItem(col, id) {
+                if (confirm("Permanently purge this record from technical ledger?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
+            },
+
+            async sendBroadcast() {
+                const text = document.getElementById('b-text').value;
+                if (!text) return;
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'notifications'), {
+                    from: this.state.user.name,
+                    senderRole: 'Mentor',
+                    text,
+                    time: new Date().toLocaleTimeString([], { hour: 12, hour: '2-digit', minute: '2-digit' })
+                });
+                document.getElementById('b-text').value = '';
+                alert("TRANSMISSION_SUCCESS");
             },
 
             openChat(id, name) {
                 this.state.activeChat = id;
-                document.getElementById('chat-header-name').innerText = `Sync Hub: ${name}`;
-                document.getElementById('chat-form').classList.remove('hidden');
+                document.getElementById('chat-target').innerText = name;
+                this.renderSyncWindow();
                 this.render();
             },
 
             renderSyncWindow() {
                 const win = document.getElementById('chat-window');
                 if (!win || !this.state.activeChat) return;
-                const msgs = this.state.chats.filter(c => c.channel === this.state.activeChat);
-                win.innerHTML = msgs.map(m => `
-                    <div class="bubble ${m.sender === 'Mentor' ? 'bubble-me' : 'bubble-them'}">
-                        ${m.text}
-                    </div>
-                `).join('') || '<p style="text-align:center; padding-top:100px; color:var(--slate); font-weight:700;">Initiate secure sync with student node.</p>';
+                const msgs = this.state.chats.filter(c => c.channel === this.state.activeChat || c.channel === this.state.user.id);
+                win.innerHTML = msgs.map(m => `<div class="bubble ${m.sender === 'Mentor' ? 'bubble-me' : 'bubble-them'}">${m.text}</div>`).join('') || '<p class="info-label" style="text-align:center; padding:30px;">Sync established.</p>';
                 win.scrollTop = win.scrollHeight;
             },
 
@@ -1248,178 +1009,26 @@
                 e.preventDefault();
                 const inp = document.getElementById('chat-input');
                 if (!inp.value || !this.state.activeChat) return;
-                const text = inp.value;
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'chats'), { channel: this.state.activeChat, text: inp.value, sender: 'Mentor', timestamp: serverTimestamp() });
                 inp.value = '';
-                try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'chats'), {
-                        channel: this.state.activeChat,
-                        sender: 'Mentor',
-                        text: text,
-                        timestamp: serverTimestamp()
-                    });
-                } catch (e) { console.error("Chat send error", e); }
             },
 
-            showModal(type) {
-                const inner = document.getElementById('modal-inner');
-                const myStudents = this.state.students.filter(s => s.mentor?.toLowerCase() === this.state.user.email);
-                document.getElementById('modal-backdrop').classList.add('active');
-
-                if (type === 'project') {
-                    inner.innerHTML = `
-                        <h3 style="font-weight:900; letter-spacing:-1px;">Track Alpha/Beta Assignment</h3>
-                        <p style="font-size:12px; color:var(--slate); margin-bottom:20px;">Assign students to specialized project clusters for dual-track monitoring.</p>
-                        
-                        <label class="stat-label">Assign To Research Track</label>
-                        <select id="m-p-track">
-                            <option value="Alpha">Track Alpha (Primary Research)</option>
-                            <option value="Beta">Track Beta (Technical Implementation)</option>
-                        </select>
-
-                        <label class="stat-label">Team Identity Name</label>
-                        <input type="text" id="m-p-team" placeholder="e.g. Logic-Track-01">
-                        
-                        <label class="stat-label">Project Roadmap Title</label>
-                        <input type="text" id="m-p-name" placeholder="e.g. Autonomous Node Management">
-                        
-                        <label class="stat-label">Track Lead Node</label>
-                        <select id="m-p-lead">${myStudents.map(s => `<option>${s.name}</option>`).join('')}</select>
-                        
-                        <label class="stat-label">Select Group Members</label>
-                        <div class="student-check-list" id="student-checks">
-                            ${myStudents.map(s => `
-                                <div class="student-check-item">
-                                    <input type="checkbox" name="members" value="${s.name}">
-                                    <span>${s.name} (${s.srn})</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                        
-                        <button class="btn btn-primary" style="width:100%; margin-top:25px; height:55px; justify-content:center;" onclick="App.addProject()">Assign to Group</button>`;
-                } else if (type === 'task') {
-                    inner.innerHTML = `
-                        <h3 style="font-weight:900; letter-spacing:-1px;">Dispatch Directive</h3>
-                        <p style="font-size:12px; color:var(--slate); margin-bottom:20px;">Assign a specific technical task to a student node.</p>
-                        
-                        <label class="stat-label">Select Student Node</label>
-                        <select id="m-t-sid">${myStudents.map(s => `<option value="${s.id}">${s.name} (${s.srn})</option>`).join('')}</select>
-                        
-                        <label class="stat-label">Instruction Payload</label>
-                        <textarea id="m-t-desc" placeholder="Details of technical requirement..." rows="4"></textarea>
-                        
-                        <label class="stat-label">Deadline</label>
-                        <input type="text" id="m-t-due" placeholder="Today by 6:00 PM">
-                        
-                        <button class="btn btn-primary" style="width:100%; margin-top:25px; height:55px; justify-content:center;" onclick="App.addTask()">Transmit Task</button>`;
-                } else if (type === 'compose-notif') {
-                    inner.innerHTML = `
-                        <h3 style="font-weight:900; letter-spacing:-1px;">Compose Student Broadcast</h3>
-                        <p style="font-size:12px; color:var(--slate); margin-bottom:20px;">Transmit a notification to your assigned fleet.</p>
-                        
-                        <label class="stat-label">Broadcast Mode</label>
-                        <select id="m-n-mode" onchange="document.getElementById('m-n-target-wrap').style.display = this.value === 'private' ? 'block' : 'none'">
-                            <option value="public">Global: All My Assigned Students</option>
-                            <option value="private">Individual: Target Specific Student</option>
-                        </select>
-
-                        <div id="m-n-target-wrap" style="display:none;">
-                            <label class="stat-label">Target Student Node</label>
-                            <select id="m-n-target">${myStudents.map(s => `<option value="${s.srn}">${s.name} (${s.srn})</option>`).join('')}</select>
-                        </div>
-
-                        <label class="stat-label">Administrative Payload</label>
-                        <textarea id="m-n-text" placeholder="Enter notification message..." rows="5"></textarea>
-                        
-                        <button class="btn btn-primary" style="width:100%; margin-top:25px; height:55px; justify-content:center;" onclick="App.sendNotification()">Transmit Alert</button>`;
+            init3D() {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.getElementById('canvas-container').appendChild(renderer.domElement);
+                const bubbles = [];
+                for (let i = 0; i < 40; i++) {
+                    const b = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), new THREE.MeshPhongMaterial({ color: 0x4F46E5, transparent: true, opacity: 0.04 }));
+                    b.position.set((Math.random() - 0.5) * 180, (Math.random() - 0.5) * 180, (Math.random() - 0.5) * 180);
+                    b.userData = { v: new THREE.Vector3((Math.random() - 0.5) * 0.03, (Math.random() - 0.5) * 0.03, (Math.random() - 0.5) * 0.03) };
+                    scene.add(b); bubbles.push(b);
                 }
-            },
-
-            closeModal() { document.getElementById('modal-backdrop').classList.remove('active'); },
-
-            async sendNotification() {
-                const mode = document.getElementById('m-n-mode').value;
-                const target = mode === 'public' ? 'all' : document.getElementById('m-n-target').value;
-                const text = document.getElementById('m-n-text').value.trim();
-
-                if (!text) return;
-
-                try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'notifications'), {
-                        from: this.state.user.name,
-                        senderRole: 'Mentor',
-                        text,
-                        target,
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                    });
-                    this.closeModal();
-                    this.notify("Student alert transmitted.");
-                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
-            },
-
-            async addProject() {
-                const teamName = document.getElementById('m-p-team').value.trim();
-                const name = document.getElementById('m-p-name').value.trim();
-                const lead = document.getElementById('m-p-lead').value;
-                const track = document.getElementById('m-p-track').value;
-
-                const memberChecks = document.querySelectorAll('input[name="members"]:checked');
-                const members = Array.from(memberChecks).map(cb => cb.value);
-
-                if (!name || !teamName || members.length === 0) {
-                    this.notify("Fill all fields and select at least one member.");
-                    return;
-                }
-
-                try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'projects'), {
-                        teamName, name, lead, members, track, mentor: this.state.user.email, status: 'Active'
-                    });
-                    this.closeModal();
-                    this.notify("Group cluster deployed.");
-                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
-            },
-
-            async addTask() {
-                const sid = document.getElementById('m-t-sid').value;
-                const desc = document.getElementById('m-t-desc').value.trim();
-                const due = document.getElementById('m-t-due').value.trim();
-                if (!desc) return;
-
-                try {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tasks'), {
-                        sid, desc, due, status: 'Pending', createdAt: serverTimestamp()
-                    });
-                    this.closeModal();
-                    this.notify("Directive Dispatched Successfully.");
-                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
-            },
-
-            async setAtt(id, val) {
-                try {
-                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'students', id), {
-                        att: val,
-                        verifiedBy: this.state.user.name,
-                        lastSync: new Date().toLocaleTimeString()
-                    });
-                    this.notify(`Status updated: ${val.toUpperCase()}`);
-                } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
-            },
-
-            async deleteItem(col, id) {
-                if (confirm("Permanently purge this record?")) {
-                    try {
-                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
-                        this.notify("Record purged.");
-                    } catch (e) { this.notify("SYNC_ERROR: Access Denied."); }
-                }
-            },
-
-            notify(msg) {
-                const n = document.createElement('div');
-                n.style = "position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:var(--dark); color:#fff; padding:15px 30px; border-radius:15px; font-weight:700; font-size:13px; z-index:9999; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.3);";
-                n.innerHTML = `<i class="fas fa-satellite-dish" style="margin-right:12px; color:var(--primary);"></i> ${msg}`;
-                document.body.appendChild(n);
-                setTimeout(() => n.remove(), 3000);
+                scene.add(new THREE.AmbientLight(0xffffff, 0.9)); camera.position.z = 80;
+                const anim = () => { requestAnimationFrame(anim); bubbles.forEach(b => { b.position.add(b.userData.v); if (Math.abs(b.position.x) > 90) b.userData.v.x *= -1; }); renderer.render(scene, camera); };
+                anim();
             }
         };
 
