@@ -4,80 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMPS Tech | Mentor Command Hub</title>
-    <!-- Premium Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    <title>SMPS · Mentor Portal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- 3D Engine -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <style>
-        /* --- THEME VARIABLES - PRO OPTIMIZED --- */
         :root {
-            --primary-light: #6366F1;
-            --primary-dark: #4F46E5;
-            --primary-soft: #818CF8;
-            --primary-glow: rgba(99, 102, 241, 0.25);
-            --bg-light: #F9FAFB;
-            --bg-dark: #111827;
-            --surface-light: #FFFFFF;
-            --surface-dark: #1F2937;
-            --text-light: #1F2937;
-            --text-dark: #F3F4F6;
-            --text-muted-light: #6B7280;
-            --text-muted-dark: #9CA3AF;
-            --border-light: #E5E7EB;
-            --border-dark: #374151;
-            --card-bg-light: #FFFFFF;
-            --card-bg-dark: #1F2937;
-            --sidebar-bg-light: rgba(255, 255, 255, 0.98);
-            --sidebar-bg-dark: rgba(17, 24, 39, 0.98);
-            --hover-light: #F3F4F6;
-            --hover-dark: #374151;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --info: #3B82F6;
-            --accent-1: #8B5CF6;
-            --accent-2: #EC4899;
-
-            --primary: var(--primary-light);
-            --bg: var(--bg-light);
-            --surface: var(--surface-light);
-            --text: var(--text-light);
-            --text-muted: var(--text-muted-light);
-            --border: var(--border-light);
-            --card-bg: var(--card-bg-light);
-            --sidebar-bg: var(--sidebar-bg-light);
-            --hover-bg: var(--hover-light);
-
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --c-bg: #F7F6F3;
+            --c-surface: #FFFFFF;
+            --c-surface2: #F0EEE9;
+            --c-border: #E2DDD6;
+            --c-border2: #CCC8C0;
+            --c-text: #1A1916;
+            --c-text2: #5C5952;
+            --c-text3: #9B9892;
+            --c-primary: #2563EB;
+            --c-primary-soft: rgba(37, 99, 235, 0.1);
+            --c-primary-glow: rgba(37, 99, 235, 0.2);
+            --c-green: #16A34A;
+            --c-green-soft: rgba(22, 163, 74, 0.1);
+            --c-amber: #D97706;
+            --c-amber-soft: rgba(217, 119, 6, 0.1);
+            --c-red: #DC2626;
+            --c-red-soft: rgba(220, 38, 38, 0.1);
+            --c-purple: #7C3AED;
+            --c-purple-soft: rgba(124, 58, 237, 0.1);
+            --c-teal: #0D9488;
+            --c-teal-soft: rgba(13, 148, 136, 0.1);
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, .05);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, .06);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, .08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, .1);
+            --r: 14px;
+            --r-lg: 20px;
+            --r-xl: 28px;
         }
 
         [data-theme="dark"] {
-            --primary: var(--primary-light);
-            --bg: #111827;
-            --surface: #1F2937;
-            --text: #F3F4F6;
-            --text-muted: #9CA3AF;
-            --border: #374151;
-            --card-bg: #1F2937;
-            --sidebar-bg: rgba(17, 24, 39, 0.98);
-            --hover-bg: #374151;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+            --c-bg: #111110;
+            --c-surface: #1C1B19;
+            --c-surface2: #252422;
+            --c-border: #2E2D2A;
+            --c-border2: #3D3C38;
+            --c-text: #F5F4F0;
+            --c-text2: #A8A49E;
+            --c-text3: #6B6760;
+            --c-primary: #3B82F6;
+            --c-primary-soft: rgba(59, 130, 246, 0.12);
+            --c-primary-glow: rgba(59, 130, 246, 0.25);
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, .2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, .3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, .35);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, .4);
         }
 
-        /* --- GLOBAL RESET --- */
         * {
             margin: 0;
             padding: 0;
@@ -85,604 +66,58 @@
             outline: none;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow: hidden;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--c-bg);
+            color: var(--c-text);
             height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        #canvas-container {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: radial-gradient(circle at 20% 30%, var(--bg), var(--surface));
-            opacity: 0.7;
-        }
-
-        /* --- UI ELEMENTS --- */
-        .theme-toggle {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 60px;
-            padding: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--text);
-            transition: 0.3s;
-            margin-left: 15px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-glow);
-            transform: scale(1.05);
-        }
-
-        .theme-toggle i {
-            font-size: 1.2rem;
-            padding: 6px 10px;
-            border-radius: 40px;
-            transition: 0.3s;
-        }
-
-        .theme-toggle .fa-sun {
-            color: #F59E0B;
-        }
-
-        .theme-toggle .fa-moon {
-            color: #6366F1;
-        }
-
-        /* --- PORTAL LAYOUT --- */
-        #view-login {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at top right, var(--bg-dark), var(--bg));
-            z-index: 5000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-card {
-            background: var(--surface);
-            padding: 50px;
-            border-radius: 50px;
-            width: 100%;
-            max-width: 440px;
-            text-align: center;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-xl);
-        }
-
-        #view-portal {
-            display: flex;
-            height: 100vh;
-            position: relative;
-            z-index: 100;
             overflow: hidden;
+            transition: background .3s, color .3s;
         }
 
-        .sidebar {
-            width: 300px;
-            padding: 30px 20px;
-            background: var(--sidebar-bg);
-            backdrop-filter: blur(30px);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            height: 100%;
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+        code,
+        .mono {
+            font-family: 'DM Mono', monospace;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.4rem;
-            letter-spacing: -0.5px;
-            color: var(--text);
-            margin-bottom: 40px;
-            padding-left: 10px;
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
         }
 
-        .logo i {
-            color: var(--primary);
-            font-size: 2rem;
-            filter: drop-shadow(0 4px 6px var(--primary-glow));
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        .nav-label {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 25px 0 10px 15px;
+        ::-webkit-scrollbar-thumb {
+            background: var(--c-border2);
+            border-radius: 99px;
         }
 
-        .sidebar-link {
-            padding: 14px 20px;
-            border-radius: 16px;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 5px;
-            font-size: 0.95rem;
-            border: 1px solid transparent;
-        }
-
-        .sidebar-link:hover {
-            background: var(--hover-bg);
-            color: var(--text);
-            border-color: var(--border);
-        }
-
-        .sidebar-link.active {
-            background: linear-gradient(135deg, var(--primary), var(--accent-1));
-            color: #fff;
-            box-shadow: 0 10px 20px var(--primary-glow);
-        }
-
-        .workspace {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            background: var(--bg);
-        }
-
-        /* --- BENTO & CARDS --- */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            padding: 25px;
-            border-radius: 32px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            border-color: var(--primary);
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .info-label {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .info-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-
-        /* --- ASSET ITEMS --- */
-        .asset-item {
-            padding: 12px 18px;
-            background: var(--bg);
-            border-radius: 18px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            transition: 0.2s;
-            margin-bottom: 8px;
-        }
-
-        .asset-item:hover {
-            border-color: var(--primary);
-            transform: translateX(4px);
-            background: var(--surface);
-        }
-
-        .asset-item a {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            word-break: break-all;
-            flex: 1;
-        }
-
-        .asset-item .del-btn {
-            background: none;
-            border: none;
-            color: var(--danger);
-            cursor: pointer;
-            padding: 5px;
-            opacity: 0.6;
-            transition: 0.2s;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .asset-item .del-btn:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* --- TABLES --- */
-        .table-wrap {
-            background: var(--card-bg);
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            margin-top: 20px;
-            box-shadow: var(--shadow-md);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 18px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            border-bottom: 1.5px solid var(--border);
-            background: var(--surface);
-        }
-
-        td {
-            padding: 16px 20px;
-            font-size: 13px;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border);
-            color: var(--text);
-        }
-
-        /* --- BUTTONS --- */
-        .btn-p {
-            background: linear-gradient(135deg, var(--primary), var(--accent-1));
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 8px 16px var(--primary-glow);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-p:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px var(--primary-glow);
-        }
-
-        .btn-p:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .mark-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            color: #fff;
-            transition: 0.2s;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-yes {
-            background: var(--success);
-        }
-
-        .btn-no {
-            background: var(--danger);
-        }
-
-        /* --- MODAL --- */
-        .modal-bg {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 6000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-bg.active {
-            display: flex;
-        }
-
-        .modal-card {
-            background: var(--surface);
-            width: 100%;
-            max-width: 620px;
-            border-radius: 40px;
-            padding: 40px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-xl);
-            position: relative;
-        }
-
-        /* --- PRO FORMS --- */
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 16px 22px;
-            border-radius: 40px;
-            border: 2.5px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-weight: 600;
-            font-size: 13px;
-            transition: 0.3s;
-            margin-top: 8px;
-            margin-bottom: 15px;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: var(--primary);
-            background: var(--surface);
-            box-shadow: 0 0 0 4px var(--primary-glow);
-        }
-
-        .check-list {
-            background: var(--bg);
-            border: 2.5px solid var(--border);
-            border-radius: 24px;
-            padding: 15px;
-            max-height: 220px;
-            overflow-y: auto;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        .check-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .check-item:last-child {
-            border-bottom: none;
-        }
-
-        .check-item:hover {
-            background: var(--hover-bg);
-            border-radius: 12px;
-        }
-
-        .check-item input {
-            width: 20px;
-            height: 20px;
-            margin: 0;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
-        .check-item label {
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            flex: 1;
-            color: var(--text);
-        }
-
-        /* --- STUDENT PRO CARDS --- */
-        .student-pro-card {
-            background: var(--surface);
-            border-radius: 32px;
-            padding: 26px;
-            border: 1px solid var(--border);
-            transition: 0.3s;
-            position: relative;
-        }
-
-        .student-pro-card:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .student-initials {
-            width: 55px;
-            height: 55px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, var(--primary), var(--accent-1));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 1.3rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .student-info-row {
-            display: flex;
-            gap: 18px;
-            align-items: center;
-            margin-bottom: 22px;
-        }
-
-        .student-meta {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px dashed var(--border);
-        }
-
-        .meta-box {
-            background: var(--bg);
-            padding: 14px;
-            border-radius: 18px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .meta-val {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--primary);
-            display: block;
-        }
-
-        .meta-lab {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- UI UTILS --- */
-        .badge {
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            display: inline-block;
-        }
-
-        .bg-e {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10B981;
-        }
-
-        .bg-a {
-            background: rgba(245, 158, 11, 0.15);
-            color: #F59E0B;
-        }
-
-        .bg-p {
-            background: rgba(99, 102, 241, 0.15);
-            color: #6366F1;
-        }
-
-        .points-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 6px;
-            margin: 15px 0;
-        }
-
-        .point-node {
-            aspect-ratio: 1;
-            border-radius: 10px;
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .point-node.pending {
-            background: var(--warning);
-            border-color: var(--warning);
-            color: white;
-            animation: pulse 1.5s infinite;
-            cursor: pointer;
-        }
-
-        .point-node.approved {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.7;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
+        /* Loader */
         #loader {
             position: fixed;
             inset: 0;
-            background: var(--bg);
-            z-index: 10000;
+            background: var(--c-bg);
+            z-index: 9999;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 16px;
         }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid var(--border);
-            border-top-color: var(--primary);
+        .loader-ring {
+            width: 44px;
+            height: 44px;
+            border: 3px solid var(--c-border);
+            border-top-color: var(--c-primary);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin .7s linear infinite;
         }
 
         @keyframes spin {
@@ -691,850 +126,2549 @@
             }
         }
 
-        /* --- TICKER --- */
-        .ticker-wrap {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 44px;
-            background: var(--surface);
-            backdrop-filter: blur(12px);
-            color: var(--text);
-            z-index: 1100;
-            display: flex;
+        .loader-text {
+            font-size: 12px;
+            color: var(--c-text3);
+            letter-spacing: .05em;
+        }
+
+        /* Utils */
+        .hidden {
+            display: none !important;
+        }
+
+        .badge {
+            display: inline-flex;
             align-items: center;
-            overflow: hidden;
-            font-size: 11px;
-            font-weight: 700;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: 0.5px;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .03em;
+        }
+
+        .badge-blue {
+            background: var(--c-primary-soft);
+            color: var(--c-primary);
+        }
+
+        .badge-green {
+            background: var(--c-green-soft);
+            color: var(--c-green);
+        }
+
+        .badge-amber {
+            background: var(--c-amber-soft);
+            color: var(--c-amber);
+        }
+
+        .badge-red {
+            background: var(--c-red-soft);
+            color: var(--c-red);
+        }
+
+        .badge-purple {
+            background: var(--c-purple-soft);
+            color: var(--c-purple);
+        }
+
+        .badge-teal {
+            background: var(--c-teal-soft);
+            color: var(--c-teal);
+        }
+
+        .lbl {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .05em;
+            color: var(--c-text3);
+            text-transform: uppercase;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--c-primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--c-primary-glow);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--c-text2);
+            border: 1px solid var(--c-border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--c-surface2);
+            color: var(--c-text);
+        }
+
+        .btn-danger {
+            background: var(--c-red-soft);
+            color: var(--c-red);
+            border: 1px solid rgba(220, 38, 38, .2);
+        }
+
+        .btn-danger:hover {
+            background: rgba(220, 38, 38, .15);
+        }
+
+        .btn-success {
+            background: var(--c-green-soft);
+            color: var(--c-green);
+            border: 1px solid rgba(22, 163, 74, .2);
+        }
+
+        .btn-success:hover {
+            background: rgba(22, 163, 74, .15);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: .78rem;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--c-border);
+            border-radius: 10px;
+            background: var(--c-surface);
+            color: var(--c-text);
+            font-family: inherit;
+            font-size: .875rem;
+            transition: .2s;
+        }
+
+        .input:focus {
+            border-color: var(--c-primary);
+            box-shadow: 0 0 0 3px var(--c-primary-glow);
+        }
+
+        select.input {
+            cursor: pointer;
+        }
+
+        textarea.input {
+            resize: vertical;
+        }
+
+        .card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow .2s;
+        }
+
+        .card:hover {
             box-shadow: var(--shadow-md);
         }
 
-        .ticker-move {
+        .divider {
+            height: 1px;
+            background: var(--c-border);
+            margin: 16px 0;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--c-text2);
+            margin-bottom: 6px;
+            letter-spacing: .02em;
+        }
+
+        /* Login */
+        #view-login {
+            min-height: 100vh;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: var(--c-bg);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            padding: 36px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .login-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--c-primary-soft);
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .login-box h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            margin-bottom: 4px;
+        }
+
+        .login-box .sub {
+            font-size: .85rem;
+            color: var(--c-text2);
+            margin-bottom: 28px;
+        }
+
+        #login-error {
+            display: none;
+            padding: 9px 12px;
+            background: var(--c-red-soft);
+            color: var(--c-red);
+            border-radius: 8px;
+            font-size: .82rem;
+            margin-bottom: 14px;
+        }
+
+        /* Portal Shell */
+        #view-portal {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 252px;
+            flex-shrink: 0;
+            background: var(--c-surface);
+            border-right: 1px solid var(--c-border);
+            display: flex;
+            flex-direction: column;
+            padding: 14px 10px;
+            gap: 3px;
+            overflow-y: auto;
+            transition: transform .3s;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 10px 14px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--c-text);
+        }
+
+        .sidebar-logo .logo-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--c-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .85rem;
+            flex-shrink: 0;
+        }
+
+        .nav-group {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            color: var(--c-text3);
+            text-transform: uppercase;
+            padding: 8px 10px 3px;
+            margin-top: 6px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            font-size: .875rem;
+            font-weight: 500;
+            color: var(--c-text2);
+            cursor: pointer;
+            transition: .2s;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--c-surface2);
+            color: var(--c-text);
+        }
+
+        .nav-item.active {
+            background: var(--c-primary-soft);
+            color: var(--c-primary);
+            font-weight: 600;
+        }
+
+        .nav-item .nav-icon {
+            width: 15px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-item .notif-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--c-red);
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid var(--c-border);
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px;
+            border-radius: 10px;
+            background: var(--c-surface2);
+            margin-bottom: 8px;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: var(--c-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .95rem;
+            flex-shrink: 0;
+        }
+
+        /* Workspace */
+        .workspace {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 28px;
+            background: var(--c-bg);
+        }
+
+        .ws-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .ws-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -.03em;
+        }
+
+        .live-clock {
+            font-size: .95rem;
+            font-weight: 600;
+            color: var(--c-primary);
+            font-family: 'DM Mono';
+            margin-top: 2px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-lg);
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: .2s;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-val {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            color: var(--c-text);
+        }
+
+        .stat-lbl {
+            font-size: 11px;
+            color: var(--c-text3);
+            font-weight: 600;
+        }
+
+        /* Grid layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .grid-auto {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        /* Student card */
+        .student-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-lg);
+            padding: 20px;
+            transition: .2s;
+            position: relative;
+        }
+
+        .student-card:hover {
+            border-color: var(--c-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .student-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .student-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--c-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .student-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--c-text);
+        }
+
+        .student-srn {
+            font-size: .75rem;
+            color: var(--c-text3);
+            font-family: 'DM Mono';
+        }
+
+        .student-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .meta-box {
+            background: var(--c-surface2);
+            border-radius: 9px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--c-border);
+        }
+
+        .meta-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--c-primary);
+        }
+
+        .meta-lbl {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--c-text3);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* Project card */
+        .project-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .proj-header {
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--c-border);
+        }
+
+        .proj-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .proj-team {
+            font-size: .82rem;
+            color: var(--c-text2);
+            margin-top: 2px;
+        }
+
+        .proj-body {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 0;
+        }
+
+        .proj-main {
+            padding: 20px 24px;
+        }
+
+        .proj-side {
+            padding: 20px 24px;
+            border-left: 1px solid var(--c-border);
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: var(--c-surface2);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--c-primary);
+            border-radius: 99px;
+            transition: width .5s;
+        }
+
+        .progress-fill.green {
+            background: var(--c-green);
+        }
+
+        .progress-fill.amber {
+            background: var(--c-amber);
+        }
+
+        .score-big {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--c-primary);
+            line-height: 1;
+        }
+
+        /* Milestone grid */
+        .milestones-grid {
+            display: grid;
+            gap: 5px;
+            margin: 12px 0;
+        }
+
+        .m-node {
+            aspect-ratio: 1;
+            border-radius: 7px;
+            border: 1.5px solid var(--c-border);
+            background: var(--c-surface2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--c-text3);
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .m-node:hover {
+            border-color: var(--c-primary);
+            transform: scale(1.1);
+        }
+
+        .m-node.pending {
+            background: var(--c-amber-soft);
+            border-color: var(--c-amber);
+            color: var(--c-amber);
+        }
+
+        .m-node.approved {
+            background: var(--c-green-soft);
+            border-color: var(--c-green);
+            color: var(--c-green);
+        }
+
+        /* Attendance */
+        .calendar-wrap {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            padding: 22px;
+        }
+
+        .cal-month {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .cal-head {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--c-text3);
+            padding: 5px 0;
+        }
+
+        .cal-day {
+            aspect-ratio: 1;
+            border-radius: 7px;
+            background: var(--c-surface2);
+            border: 1px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--c-text2);
+        }
+
+        .cal-day.today {
+            border: 2px solid var(--c-primary);
+            color: var(--c-primary);
+        }
+
+        .cal-day.present {
+            background: var(--c-green-soft);
+            border-color: var(--c-green);
+            color: var(--c-green);
+        }
+
+        .cal-day.absent {
+            background: var(--c-red-soft);
+            border-color: var(--c-red);
+            color: var(--c-red);
+        }
+
+        .cal-day.empty {
+            background: transparent;
+            border-color: transparent;
+        }
+
+        .att-log {
+            padding: 10px 14px;
+            background: var(--c-surface2);
+            border-radius: 9px;
+            border: 1px solid var(--c-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+
+        /* Chat */
+        .chat-shell {
+            display: flex;
+            height: calc(100vh - 130px);
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            overflow: hidden;
+        }
+
+        .chat-list {
+            width: 230px;
+            flex-shrink: 0;
+            border-right: 1px solid var(--c-border);
+            overflow-y: auto;
+        }
+
+        .chat-list-hdr {
+            padding: 14px 16px;
+            font-weight: 700;
+            font-size: .875rem;
+            border-bottom: 1px solid var(--c-border);
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            cursor: pointer;
+            transition: .15s;
+            border-bottom: 1px solid var(--c-border);
+        }
+
+        .chat-item:hover {
+            background: var(--c-surface2);
+        }
+
+        .chat-item.active {
+            background: var(--c-primary-soft);
+        }
+
+        .chat-item .c-av {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .82rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            background: var(--c-surface2);
+            border: 1px solid var(--c-border);
+        }
+
+        .chat-item .c-name {
+            font-size: .855rem;
+            font-weight: 600;
+            color: var(--c-text);
+        }
+
+        .chat-item .c-prev {
+            font-size: .72rem;
+            color: var(--c-text3);
             white-space: nowrap;
-            animation: ticker-scroll 60s linear infinite;
-            gap: 4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        @keyframes ticker-scroll {
-            0% {
-                transform: translateX(100%);
+        .chat-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 13px 18px;
+            border-bottom: 1px solid var(--c-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .chat-msgs {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .msg-bubble {
+            max-width: 65%;
+            padding: 9px 13px;
+            border-radius: 13px;
+            font-size: .855rem;
+            line-height: 1.55;
+            animation: fadeUp .2s ease;
+        }
+
+        .msg-me {
+            align-self: flex-end;
+            background: var(--c-primary);
+            color: #fff;
+            border-bottom-right-radius: 3px;
+        }
+
+        .msg-them {
+            align-self: flex-start;
+            background: var(--c-surface2);
+            border: 1px solid var(--c-border);
+            color: var(--c-text);
+            border-bottom-left-radius: 3px;
+        }
+
+        .msg-time {
+            font-size: 9px;
+            opacity: .6;
+            margin-top: 3px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(7px);
             }
 
-            100% {
-                transform: translateX(-100%);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media screen and (max-width: 768px) {
+        .chat-input-row {
+            padding: 12px 14px;
+            border-top: 1px solid var(--c-border);
+            display: flex;
+            gap: 9px;
+            background: var(--c-surface);
+        }
+
+        .chat-input-row input {
+            flex: 1;
+        }
+
+        /* Resource cards */
+        .res-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
+        }
+
+        .res-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-lg);
+            padding: 18px;
+            cursor: pointer;
+            transition: .2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .res-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--c-primary);
+            opacity: 0;
+            transition: .2s;
+        }
+
+        .res-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--c-primary);
+        }
+
+        .res-card:hover::after {
+            opacity: 1;
+        }
+
+        .res-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            background: var(--c-primary-soft);
+            color: var(--c-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .filter-chip {
+            padding: 5px 14px;
+            border-radius: 99px;
+            font-size: .78rem;
+            font-weight: 600;
+            border: 1.5px solid var(--c-border);
+            background: transparent;
+            color: var(--c-text2);
+            cursor: pointer;
+            transition: .15s;
+        }
+
+        .filter-chip.active,
+        .filter-chip:hover {
+            border-color: var(--c-primary);
+            color: var(--c-primary);
+            background: var(--c-primary-soft);
+        }
+
+        /* Notifications */
+        .notif-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r);
+            margin-bottom: 8px;
+            transition: .15s;
+        }
+
+        .notif-item:hover {
+            border-color: var(--c-border2);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notif-item.unread {
+            border-left: 3px solid var(--c-primary);
+        }
+
+        .notif-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* Leave review */
+        .leave-item {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-lg);
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .leave-info .title {
+            font-weight: 600;
+            font-size: .9rem;
+            margin-bottom: 2px;
+        }
+
+        .leave-info .sub {
+            font-size: .78rem;
+            color: var(--c-text2);
+        }
+
+        /* Task item */
+        .task-item {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-lg);
+            padding: 16px 20px;
+            border-left: 4px solid var(--c-border2);
+            margin-bottom: 10px;
+            transition: .15s;
+        }
+
+        .task-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .task-item.pending {
+            border-left-color: var(--c-amber);
+        }
+
+        .task-item.accepted {
+            border-left-color: var(--c-primary);
+        }
+
+        .task-item.submitted {
+            border-left-color: var(--c-purple);
+        }
+
+        .task-item.done {
+            border-left-color: var(--c-green);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            backdrop-filter: blur(8px);
+            z-index: 8000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: .25s;
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 520px;
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            transform: scale(.95);
+            transition: .25s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.open .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-hdr h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        /* PDF Modal */
+        #pdf-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .85);
+            backdrop-filter: blur(8px);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: .25s;
+        }
+
+        #pdf-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pdf-modal-box {
+            width: 95%;
+            max-width: 1000px;
+            height: 88vh;
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            display: flex;
+            flex-direction: column;
+            transform: scale(.95);
+            transition: .25s;
+        }
+
+        #pdf-modal-overlay.open .pdf-modal-box {
+            transform: scale(1);
+        }
+
+        .pdf-hdr {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--c-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-body {
+            flex: 1;
+            overflow: auto;
+            background: #404040;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px;
+        }
+
+        .pdf-controls {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 14px;
+            background: var(--c-surface);
+            padding: 9px 14px;
+            border-radius: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Sidebar user */
+        .user-name {
+            font-size: .855rem;
+            font-weight: 600;
+            color: var(--c-text);
+        }
+
+        .user-role {
+            font-size: .72rem;
+            color: var(--c-text3);
+        }
+
+        /* Theme btn */
+        .theme-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--c-border);
+            background: var(--c-surface2);
+            color: var(--c-text2);
+            cursor: pointer;
+            font-size: .95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .15s;
+        }
+
+        .theme-btn:hover {
+            background: var(--c-border);
+            color: var(--c-text);
+        }
+
+        /* Broadcast panel */
+        .broadcast-form {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            border-radius: var(--r-xl);
+            padding: 24px;
+            max-width: 580px;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--c-surface);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            border: 1px solid var(--c-border);
+        }
+
+        .data-table th {
+            padding: 12px 16px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--c-text3);
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            border-bottom: 1px solid var(--c-border);
+            background: var(--c-surface2);
+            text-align: left;
+        }
+
+        .data-table td {
+            padding: 13px 16px;
+            font-size: .855rem;
+            border-bottom: 1px solid var(--c-border);
+            color: var(--c-text);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: var(--c-surface2);
+        }
+
+        /* Mobile */
+        #mob-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 700;
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
+            background: var(--c-primary);
+            color: #fff;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+        }
+
+        @media(max-width:900px) {
             .sidebar {
                 position: fixed;
                 left: 0;
                 top: 0;
-                height: 100vh;
-                z-index: 2000;
+                bottom: 0;
+                z-index: 600;
                 transform: translateX(-100%);
-                width: 85%;
+                width: 78%;
+                max-width: 268px;
             }
 
-            .sidebar.active {
+            .sidebar.open {
                 transform: translateX(0);
+                box-shadow: var(--shadow-lg);
             }
 
-            .bento-grid {
+            #mob-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-2,
+            .proj-body {
                 grid-template-columns: 1fr;
             }
 
-            .workspace {
-                padding: 25px;
+            .proj-side {
+                border-left: none;
+                border-top: 1px solid var(--c-border);
             }
+
+            .workspace {
+                padding: 16px;
+            }
+
+            .chat-shell {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .chat-list {
+                width: 100%;
+                height: 80px;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--c-border);
+            }
+        }
+
+        /* Pending badge on tab */
+        .pending-badge {
+            min-width: 18px;
+            height: 18px;
+            border-radius: 99px;
+            background: var(--c-red);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            margin-left: auto;
+        }
+
+        /* Point approval highlight */
+        .m-node.pending {
+            animation: blink 1.5s ease infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .6;
+            }
+        }
+
+        /* Upload area */
+        .upload-area {
+            border: 2px dashed var(--c-border);
+            border-radius: var(--r);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .2s;
+            background: var(--c-surface2);
+        }
+
+        .upload-area:hover {
+            border-color: var(--c-primary);
+            background: var(--c-primary-soft);
+        }
+
+        /* Separator in sidebar */
+        .sidebar-sep {
+            height: 1px;
+            background: var(--c-border);
+            margin: 6px 0;
         }
     </style>
 </head>
 
 <body data-theme="light">
 
-    <div id="canvas-container"></div>
-
+    <!-- Loader -->
     <div id="loader">
-        <div class="spinner"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-text">Syncing Mentor Portal…</div>
     </div>
 
-    <div id="ticker-bar" class="ticker-wrap">
-        <div class="ticker-move">
-            <span><i class="fas fa-shield"></i> SYSTEM STATUS: COMMAND HUB V6.4 ACTIVE</span>
-            <span><i class="fas fa-bolt"></i> NODE SYNC: FULL STUDENT PROFILES INTEGRATED</span>
-            <span><i class="fas fa-sync"></i> RESOURCE HUB: PERSISTENT MULTI-ASSET DISPATCH ENABLED</span>
+    <!-- Mobile button -->
+    <button id="mob-btn" onclick="App.toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+    <!-- PDF Modal -->
+    <div id="pdf-modal-overlay">
+        <div class="pdf-modal-box">
+            <div class="pdf-hdr">
+                <span style="font-weight:700;font-size:.95rem;" id="pdf-title">Document</span>
+                <button class="btn btn-ghost btn-sm" onclick="App.closePDF()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="pdf-body">
+                <div class="pdf-controls">
+                    <button class="btn btn-ghost btn-sm" onclick="App.pdfPrev()" id="pdf-prev">← Prev</button>
+                    <span style="font-size:.82rem;color:var(--c-text2);">Pg <span id="pdf-pg">1</span>/<span
+                            id="pdf-total">1</span></span>
+                    <button class="btn btn-ghost btn-sm" onclick="App.pdfNext()" id="pdf-next">Next →</button>
+                    <button class="btn btn-ghost btn-sm" onclick="App.pdfZoomIn()"><i class="fas fa-plus"></i></button>
+                    <button class="btn btn-ghost btn-sm" onclick="App.pdfZoomOut()"><i
+                            class="fas fa-minus"></i></button>
+                    <button class="btn btn-ghost btn-sm" onclick="App.pdfFitWidth()"><i
+                            class="fas fa-arrows-alt-h"></i></button>
+                </div>
+                <canvas id="pdf-canvas"
+                    style="background:#fff;border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,.3);display:block;"></canvas>
+                <div id="pdf-spin" class="loader-ring" style="display:none;margin-top:40px;"></div>
+            </div>
         </div>
     </div>
 
-    <!-- LOGIN SCREEN -->
+    <!-- Generic Modal -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-hdr">
+                <h3 id="modal-title">Modal</h3>
+                <button class="btn btn-ghost btn-sm" onclick="App.closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Login -->
     <div id="view-login">
-        <div class="login-card">
-            <i class="fas fa-shield-halved" style="font-size: 4rem; color: var(--primary); margin-bottom: 25px;"></i>
-            <h2 style="font-weight: 700; letter-spacing: -1px; font-size: 2.2rem;">Command Node</h2>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 35px; font-weight: 500;">Authorized
-                Mentor Identification Required</p>
+        <div class="login-box">
+            <div class="login-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h2>Mentor Portal</h2>
+            <p class="sub">Sign in to manage your students and projects.</p>
             <form id="login-form">
-                <input type="text" id="l-user" placeholder="Mentor Username / Email" required>
-                <input type="password" id="l-pass" placeholder="Authorization Token" required>
-                <button type="submit" class="btn-p"
-                    style="width:100%; height:60px; justify-content:center; border-radius:50px; font-size:13px;">Launch
-                    HUB</button>
+                <div class="form-group">
+                    <label>Email / Username</label>
+                    <input type="text" id="l-user" class="input" placeholder="mentor@example.com" required>
+                </div>
+                <div class="form-group" style="margin-bottom:20px;">
+                    <label>Password</label>
+                    <input type="password" id="l-pass" class="input" placeholder="Your password" required>
+                </div>
+                <div id="login-error">Incorrect credentials. Please try again.</div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;"
+                    id="login-btn">Sign In <i class="fas fa-arrow-right"></i></button>
             </form>
-            <p id="login-error" style="color: var(--danger); font-size: 12px; margin-top: 20px; font-weight: 600;"
-                class="hidden"><i class="fas fa-circle-exclamation"></i> ACCESS_DENIED: NODE MISMATCH</p>
         </div>
     </div>
 
-    <!-- MAIN PORTAL -->
+    <!-- Portal -->
     <div id="view-portal" class="hidden">
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fas fa-shield-halved"></i><span>SMPS <b>Command</b></span>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-mark"><i class="fas fa-graduation-cap"></i></div>
+                SMPS Mentor
             </div>
 
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 10px; padding-right: 10px;">
-                <div class="theme-toggle" onclick="App.toggleTheme()">
-                    <i class="fas fa-sun"></i>
-                    <i class="fas fa-moon"></i>
-                </div>
-            </div>
+            <div class="nav-group">Main</div>
+            <div class="nav-item active" id="nav-dashboard" onclick="App.tab('dashboard')"><i
+                    class="fas fa-home nav-icon"></i> Dashboard</div>
+            <div class="nav-item" id="nav-students" onclick="App.tab('students')"><i class="fas fa-users nav-icon"></i>
+                My Students</div>
+            <div class="nav-item" id="nav-attendance" onclick="App.tab('attendance')"><i
+                    class="fas fa-calendar-check nav-icon"></i> Attendance</div>
 
-            <nav style="flex: 1;">
-                <div class="nav-label">Executive</div>
-                <div onclick="App.switchTab('dashboard')" id="nav-dashboard" class="sidebar-link active">
-                    <i class="fas fa-grid-2"></i> Station Home
-                </div>
-                <div onclick="App.switchTab('my-students')" id="nav-my-students" class="sidebar-link">
-                    <i class="fas fa-users"></i> My Students
-                </div>
-                <div onclick="App.switchTab('attendance')" id="nav-attendance" class="sidebar-link">
-                    <i class="fas fa-calendar-check"></i> Attendance
-                </div>
-                <div onclick="App.switchTab('teambuilder')" id="nav-teambuilder" class="sidebar-link">
-                    <i class="fas fa-users-gear"></i> Team Builder
-                </div>
+            <div class="nav-group">Projects & Tasks</div>
+            <div class="nav-item" id="nav-projects" onclick="App.tab('projects')"><i
+                    class="fas fa-layer-group nav-icon"></i> Projects <span class="pending-badge hidden"
+                    id="pending-badge">0</span></div>
+            <div class="nav-item" id="nav-tasks" onclick="App.tab('tasks')"><i class="fas fa-list-check nav-icon"></i>
+                Directives</div>
 
-                <div class="nav-label">Asset Command</div>
-                <div onclick="App.switchTab('resources')" id="nav-resources" class="sidebar-link">
-                    <i class="fas fa-book"></i> Resource Library
-                </div>
-                <div onclick="App.switchTab('assethub')" id="nav-assethub" class="sidebar-link">
-                    <i class="fas fa-magnifying-glass"></i> Node Assets
-                </div>
-                <div onclick="App.switchTab('tasks')" id="nav-tasks" class="sidebar-link">
-                    <i class="fas fa-list-check"></i> Directives
-                </div>
-                <div onclick="App.switchTab('sync')" id="nav-sync" class="sidebar-link">
-                    <i class="fas fa-message"></i> Sync Hub
-                </div>
-                <div onclick="App.switchTab('broadcast')" id="nav-broadcast" class="sidebar-link">
-                    <i class="fas fa-bullhorn"></i> Transmissions
-                </div>
-            </nav>
+            <div class="nav-group">Communication</div>
+            <div class="nav-item" id="nav-messages" onclick="App.tab('messages')"><i
+                    class="fas fa-message nav-icon"></i> Messages</div>
+            <div class="nav-item" id="nav-broadcast" onclick="App.tab('broadcast')"><i
+                    class="fas fa-bullhorn nav-icon"></i> Broadcast</div>
+            <div class="nav-item" id="nav-leaves" onclick="App.tab('leaves')"><i
+                    class="fas fa-calendar-times nav-icon"></i> Leave Requests <span class="notif-dot hidden"
+                    id="leave-dot"></span></div>
 
-            <div
-                style="margin-top: auto; padding: 20px; background: var(--surface); border-radius: 24px; border: 1px solid var(--border);">
-                <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
-                    <div id="u-avatar" class="avatar-circle"
-                        style="width:45px; height:45px; background: linear-gradient(135deg, var(--primary), var(--accent-1)); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
-                        M</div>
+            <div class="nav-group">Resources</div>
+            <div class="nav-item" id="nav-resources" onclick="App.tab('resources')"><i
+                    class="fas fa-book-open nav-icon"></i> Resource Library</div>
+
+            <div class="sidebar-bottom">
+                <div class="user-chip">
+                    <div class="avatar" id="u-av">M</div>
                     <div>
-                        <p id="u-name" style="font-size: 13px; font-weight: 700; color: var(--text);">Mentor</p>
-                        <span class="badge bg-e" style="font-size: 8px; padding: 3px 8px;">DATA SYNC ACTIVE</span>
+                        <div class="user-name" id="u-name">Mentor</div>
+                        <div class="user-role" id="u-role">Faculty</div>
                     </div>
+                    <button class="theme-btn" onclick="App.toggleTheme()" id="theme-btn" style="margin-left:auto;"
+                        title="Toggle theme"><i class="fas fa-moon"></i></button>
                 </div>
-                <button onclick="location.reload()"
-                    style="width:100%; background:none; border:1px solid rgba(239,68,68,0.3); padding:12px; border-radius:16px; font-size:11px; font-weight:600; cursor:pointer; color:var(--danger);">TERMINATE
-                    SESSION</button>
+                <button class="btn btn-danger" style="width:100%;justify-content:center;" onclick="location.reload()"><i
+                        class="fas fa-power-off"></i> Sign Out</button>
             </div>
         </aside>
 
-        <main class="workspace">
-            <header style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
-                <div>
-                    <h2 id="view-title" style="font-size: 2.6rem; font-weight: 700; letter-spacing: -1.5px;">Command
-                        Station</h2>
-                    <p id="live-clock"
-                        style="font-size: 1.1rem; font-weight: 600; color: var(--primary); margin-top: 5px;">00:00:00 AM
-                    </p>
-                </div>
-                <div><span class="badge bg-p" style="padding:8px 20px; border-radius:40px;">CORE_NODE_V6.4</span></div>
-            </header>
+        <main class="workspace" id="workspace">
 
             <!-- DASHBOARD -->
             <div id="tab-dashboard">
-                <div class="bento-grid">
-                    <div class="card"><span class="info-label">Assigned Nodes</span>
-                        <div class="info-value" id="stat-students">0</div>
+                <div class="ws-header">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <div class="live-clock" id="live-clock">--:--:-- --</div>
                     </div>
-                    <div class="card"><span class="info-label">Active Clusters</span>
-                        <div class="info-value" id="stat-teams">0</div>
-                    </div>
-                    <div class="card"><span class="info-label">Pending Approvals</span>
-                        <div class="info-value" id="stat-pending" style="color:var(--warning);">0</div>
-                    </div>
-                    <div class="card"><span class="info-label">Global Directives</span>
-                        <div class="info-value" id="stat-feed">0</div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="App.showModal('project')"><i class="fas fa-plus"></i>
+                            New Project</button>
+                        <button class="btn btn-ghost" onclick="App.showModal('task')"><i class="fas fa-bolt"></i> Assign
+                            Task</button>
                     </div>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:28px;">
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-lbl">My Students</div>
+                        <div class="stat-val" id="ds-students">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-lbl">Active Projects</div>
+                        <div class="stat-val" id="ds-projects">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-lbl">Pending Approvals</div>
+                        <div class="stat-val" id="ds-pending" style="color:var(--c-amber);">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-lbl">Leave Requests</div>
+                        <div class="stat-val" id="ds-leaves" style="color:var(--c-purple);">0</div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="gap:18px;">
                     <div class="card">
-                        <h4>Student Ledger Pulse</h4>
-                        <div id="dash-roster" style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                            <div class="lbl">Student Roster</div>
+                            <button class="btn btn-ghost btn-sm" onclick="App.tab('students')">View All →</button>
                         </div>
+                        <div id="dash-roster"></div>
                     </div>
                     <div class="card">
-                        <h4>Pending Approvals</h4>
-                        <div id="dash-pending" style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                            <div class="lbl">Pending Point Approvals</div>
+                            <button class="btn btn-ghost btn-sm" onclick="App.tab('projects')">View All →</button>
                         </div>
+                        <div id="dash-pending-list"></div>
                     </div>
+                </div>
+
+                <div style="margin-top:18px;" class="card">
+                    <div class="lbl" style="margin-bottom:12px;">Recent Leave Requests</div>
+                    <div id="dash-leaves-list"></div>
                 </div>
             </div>
 
-            <!-- MY STUDENTS -->
-            <div id="tab-my-students" class="hidden">
-                <div id="my-students-grid"
-                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+            <!-- STUDENTS -->
+            <div id="tab-students" class="hidden">
+                <div class="ws-header">
+                    <h1><i class="fas fa-users" style="color:var(--c-primary);margin-right:8px;"></i>My Students</h1>
                 </div>
+                <div id="students-grid" class="grid-auto"></div>
             </div>
 
             <!-- ATTENDANCE -->
             <div id="tab-attendance" class="hidden">
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>SRN</th>
-                                <th>Node Identity</th>
-                                <th>Last Sync</th>
-                                <th>Status</th>
-                                <th>Verification</th>
-                            </tr>
-                        </thead>
-                        <tbody id="att-table-body"></tbody>
-                    </table>
+                <div class="ws-header">
+                    <h1><i class="fas fa-calendar-check" style="color:var(--c-primary);margin-right:8px;"></i>Attendance
+                    </h1>
                 </div>
-            </div>
-
-            <!-- TEAM BUILDER -->
-            <div id="tab-teambuilder" class="hidden">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <h3 style="font-weight:700; font-size:1.8rem; letter-spacing:-1px;">Track Cluster Control</h3>
-                    <button class="btn-p" onclick="App.showModal('project')"><i class="fas fa-plus"></i> Initialize
-                        Cluster</button>
-                </div>
-                <div id="teams-container" style="display:grid; grid-template-columns: 1fr 1fr; gap:28px;"></div>
-            </div>
-
-            <!-- RESOURCE LIBRARY -->
-            <div id="tab-resources" class="hidden">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <h3 style="font-weight:700; font-size:1.8rem; letter-spacing:-1px;">Global Resource Library</h3>
-                    <button class="btn-p" onclick="App.showModal('resource')"><i class="fas fa-upload"></i> Upload
-                        Resource</button>
-                </div>
-                <div class="card" style="margin-bottom:30px;">
-                    <span class="info-label">Active Public Assets</span>
-                    <div class="table-wrap" style="margin-top:10px; border-radius:20px;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Source</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="resources-table-body"></tbody>
-                        </table>
+                <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;">
+                    <div>
+                        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+                            <select class="input" id="att-student-picker" onchange="App.renderAttDetail()"
+                                style="max-width:260px;">
+                                <option value="">All Students</option>
+                            </select>
+                            <button class="btn btn-ghost btn-sm"
+                                onclick="App.setAtt(document.getElementById('att-student-picker').value,'verified')"><i
+                                    class="fas fa-check"></i> Mark Present</button>
+                            <button class="btn btn-danger btn-sm"
+                                onclick="App.setAtt(document.getElementById('att-student-picker').value,'absent')"><i
+                                    class="fas fa-times"></i> Mark Absent</button>
+                        </div>
+                        <div class="calendar-wrap">
+                            <div class="cal-month"><i class="fas fa-calendar" style="color:var(--c-primary);"></i><span
+                                    id="cal-lbl">February 2026</span></div>
+                            <div class="cal-grid" id="att-calendar"></div>
+                            <div
+                                style="display:flex;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid var(--c-border);flex-wrap:wrap;">
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <div
+                                        style="width:10px;height:10px;border-radius:2px;background:var(--c-green-soft);border:1px solid var(--c-green);">
+                                    </div><span style="font-size:.75rem;color:var(--c-text2);">Present</span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <div
+                                        style="width:10px;height:10px;border-radius:2px;background:var(--c-red-soft);border:1px solid var(--c-red);">
+                                    </div><span style="font-size:.75rem;color:var(--c-text2);">Absent</span>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <div
+                                        style="width:10px;height:10px;border-radius:2px;border:2px solid var(--c-primary);">
+                                    </div><span style="font-size:.75rem;color:var(--c-text2);">Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:18px;" class="card">
+                            <div class="lbl" style="margin-bottom:10px;">Full Attendance Table</div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>SRN</th>
+                                        <th>Name</th>
+                                        <th>Last Action</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="att-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="lbl" style="margin-bottom:10px;">Daily Logs</div>
+                        <div id="daily-logs-view" style="max-height:500px;overflow-y:auto;"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- ASSET HUB -->
-            <div id="tab-assethub" class="hidden">
-                <div class="card" style="margin-bottom: 25px; border-left: 8px solid var(--primary);">
-                    <span class="info-label">Technical Submission Explorer</span>
-                    <div style="display:flex; gap:15px; margin-top:10px;">
-                        <select id="asset-student-picker"
-                            style="flex:1; border-radius:40px; padding-left:25px;"></select>
-                        <button onclick="App.exploreAssets()" class="btn-p"
-                            style="border-radius:40px; padding:0 35px;">EXPLORE</button>
-                    </div>
+            <!-- PROJECTS -->
+            <div id="tab-projects" class="hidden">
+                <div class="ws-header">
+                    <h1><i class="fas fa-layer-group" style="color:var(--c-primary);margin-right:8px;"></i>Projects</h1>
+                    <button class="btn btn-primary" onclick="App.showModal('project')"><i class="fas fa-plus"></i> New
+                        Project</button>
                 </div>
-                <div id="asset-results" class="hidden" style="margin-top:40px;">
-                    <div id="asset-list-container" style="display:grid; grid-template-columns: 1fr 1fr; gap:24px;">
-                    </div>
-                </div>
+                <div id="projects-container"></div>
             </div>
 
-            <!-- DIRECTIVES -->
+            <!-- TASKS -->
             <div id="tab-tasks" class="hidden">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <h3 style="font-weight:700; font-size:1.8rem;">Directive Payloads</h3>
-                    <button class="btn-p" onclick="App.showModal('task')"><i class="fas fa-bolt"></i> Dispatch
+                <div class="ws-header">
+                    <h1><i class="fas fa-list-check" style="color:var(--c-primary);margin-right:8px;"></i>Directives
+                    </h1>
+                    <button class="btn btn-primary" onclick="App.showModal('task')"><i class="fas fa-bolt"></i> New
                         Directive</button>
                 </div>
-                <div id="tasks-grid"
-                    style="display:grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap:24px;"></div>
+                <div id="tasks-container"></div>
             </div>
 
-            <!-- SYNC HUB -->
-            <div id="tab-sync" class="hidden">
-                <div class="chat-hub">
-                    <aside class="chat-list" id="chat-roster"></aside>
-                    <main class="chat-main">
-                        <div id="chat-h"
-                            style="padding: 20px 30px; border-bottom: 1px solid var(--border); font-weight: 700; color: var(--primary); display:flex; justify-content:space-between; align-items:center;">
-                            <span id="chat-title-node">Support Sync Hub</span>
-                            <span class="badge bg-e">P2P_STABLE</span>
+            <!-- MESSAGES -->
+            <div id="tab-messages" class="hidden">
+                <div class="ws-header">
+                    <h1><i class="fas fa-message" style="color:var(--c-primary);margin-right:8px;"></i>Messages</h1>
+                </div>
+                <div class="chat-shell">
+                    <div class="chat-list">
+                        <div class="chat-list-hdr">Conversations</div>
+                        <div id="chat-contacts-list"></div>
+                    </div>
+                    <div class="chat-body">
+                        <div class="chat-header">
+                            <div style="width:30px;height:30px;border-radius:8px;background:var(--c-primary-soft);color:var(--c-primary);display:flex;align-items:center;justify-content:center;font-size:.82rem;"
+                                id="chat-av">?</div>
+                            <span id="chat-active-name">Select a conversation</span>
+                            <span class="badge badge-green" style="margin-left:auto;font-size:9px;">Secure</span>
                         </div>
-                        <div id="chat-window" class="chat-msgs"></div>
-                        <form id="chat-form"
-                            style="padding: 20px 30px; border-top: 1px solid var(--border); display: flex; gap: 15px; background: var(--surface);">
-                            <input type="text" id="chat-input" placeholder="Transmit packet..." required
-                                style="flex:1; border-radius:40px; padding:15px 25px;">
-                            <button type="submit" class="btn-p" style="padding:0 35px; border-radius:40px;"><i
+                        <div class="chat-msgs" id="chat-messages">
+                            <div
+                                style="text-align:center;color:var(--c-text3);font-size:.855rem;margin:auto;padding:40px;">
+                                Select a conversation to start messaging</div>
+                        </div>
+                        <div class="chat-input-row">
+                            <input type="text" class="input" id="chat-input" placeholder="Type a message…">
+                            <button class="btn btn-primary" onclick="App.sendMsg()" style="padding:9px 14px;"><i
                                     class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </main>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- BROADCAST -->
             <div id="tab-broadcast" class="hidden">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
-                    <div class="card"><span class="info-label">Inbound Admin Signals</span>
-                        <div id="notif-inbound" style="margin-top:20px; display:flex; flex-direction:column; gap:15px;">
+                <div class="ws-header">
+                    <h1><i class="fas fa-bullhorn" style="color:var(--c-primary);margin-right:8px;"></i>Broadcast</h1>
+                </div>
+                <div class="grid-2" style="gap:18px;">
+                    <div class="broadcast-form">
+                        <div class="lbl" style="margin-bottom:12px;">Send Notification to Students</div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="input" id="bc-title" placeholder="Notification title…">
                         </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="input" id="bc-message" rows="4"
+                                placeholder="Write your message…"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Target</label>
+                            <select class="input" id="bc-target">
+                                <option value="all">All My Students</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="App.sendBroadcast()"
+                            style="width:100%;justify-content:center;margin-top:4px;"><i class="fas fa-paper-plane"></i>
+                            Deploy Notification</button>
                     </div>
                     <div class="card">
-                        <span class="info-label">Mentor Broadcast Payload</span>
-                        <textarea id="b-text" placeholder="Enter directive payload..."
-                            style="height:150px; border-radius:24px; padding:20px;"></textarea>
-                        <button onclick="App.sendBroadcast()" class="btn-p"
-                            style="width:100%; margin-top:20px; height:55px; justify-content:center; border-radius:20px;">Deploy
-                            Transmission</button>
+                        <div class="lbl" style="margin-bottom:12px;">Recent Broadcasts</div>
+                        <div id="recent-broadcasts"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- LEAVE REQUESTS -->
+            <div id="tab-leaves" class="hidden">
+                <div class="ws-header">
+                    <h1><i class="fas fa-calendar-times" style="color:var(--c-primary);margin-right:8px;"></i>Leave
+                        Requests</h1>
+                </div>
+                <div id="leaves-container"></div>
+            </div>
+
+            <!-- RESOURCES -->
+            <div id="tab-resources" class="hidden">
+                <div class="ws-header">
+                    <h1><i class="fas fa-book-open" style="color:var(--c-primary);margin-right:8px;"></i>Resource
+                        Library</h1>
+                    <button class="btn btn-primary" onclick="App.showModal('resource')"><i class="fas fa-upload"></i>
+                        Upload Resource</button>
+                </div>
+                <div class="filter-bar" id="res-filter-bar">
+                    <button class="filter-chip active" onclick="App.filterRes('all',this)">All</button>
+                    <button class="filter-chip" onclick="App.filterRes('syllabus',this)">Syllabus</button>
+                    <button class="filter-chip" onclick="App.filterRes('notes',this)">Notes</button>
+                    <button class="filter-chip" onclick="App.filterRes('reference',this)">Reference</button>
+                    <button class="filter-chip" onclick="App.filterRes('pastpapers',this)">Past Papers</button>
+                </div>
+                <div id="resources-grid" class="res-grid"></div>
+            </div>
+
         </main>
     </div>
 
-    <!-- MODAL CONTAINER -->
-    <div id="modal-bg" class="modal-bg" onclick="if(event.target===this) App.closeModal()">
-        <div class="modal-card">
-            <div id="modal-content"></div>
-        </div>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
-    <!-- FIREBASE INTEGRATION -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, collection, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const firebaseConfig = {
+        firebase.initializeApp({
             apiKey: "AIzaSyBN4o8oj-6DhJb51sGGrcyS8d9SDX7HKWk",
             authDomain: "students-management-2ec78.firebaseapp.com",
             projectId: "students-management-2ec78",
             storageBucket: "students-management-2ec78.firebasestorage.app",
             messagingSenderId: "649634574508",
             appId: "1:649634574508:web:d856dbe5bcc112fde0ef09"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = 'smps-v1';
-
-        const ui = {
-            set: (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; },
-            html: (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; },
-            toggle: (id, isVisible) => { const el = document.getElementById(id); if (el) el.classList.toggle('hidden', !isVisible); }
-        };
+        });
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        const PATH = 'artifacts/smps-v1/public/data';
 
         const App = {
-            state: {
-                user: null,
-                students: [],
-                projects: [],
-                tasks: [],
-                notifications: [],
-                chats: [],
-                resources: [],
-                activeChat: null,
-                currentTab: 'dashboard'
+            s: {
+                user: null, students: [], projects: [], tasks: [], notifications: [], resources: [], chats: {},
+                activeChat: null, pdfDoc: null, pdfPage: 1, pdfTotal: 1, pdfScale: 1.4,
+                theme: localStorage.getItem('theme') || 'light', resFilter: 'all', currentTab: 'dashboard'
             },
 
             async init() {
-                this.init3D();
-                const savedTheme = localStorage.getItem('theme') || 'light';
-                document.body.setAttribute('data-theme', savedTheme);
-                this.updateThemeToggle(savedTheme);
+                document.body.setAttribute('data-theme', this.s.theme);
+                this.applyThemeIcon();
+                this.startClock();
+                try { await auth.signInAnonymously(); } catch (e) { }
+                setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1000);
+                document.getElementById('login-form').onsubmit = e => this.handleLogin(e);
+                document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') this.sendMsg(); });
+            },
 
-                setInterval(() => {
+            startClock() {
+                const tick = () => {
                     const el = document.getElementById('live-clock');
-                    if (el) el.innerText = new Date().toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                }, 1000);
-
-                await signInAnonymously(auth);
-                setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1000);
-
-                document.getElementById('login-form').onsubmit = (e) => this.handleLogin(e);
-                document.getElementById('chat-form').onsubmit = (e) => this.sendChat(e);
-                window.App = this;
+                    if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+                };
+                tick(); setInterval(tick, 1000);
             },
 
             toggleTheme() {
-                const currentTheme = document.body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                document.body.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                this.updateThemeToggle(newTheme);
+                this.s.theme = this.s.theme === 'light' ? 'dark' : 'light';
+                document.body.setAttribute('data-theme', this.s.theme);
+                localStorage.setItem('theme', this.s.theme);
+                this.applyThemeIcon();
             },
-
-            updateThemeToggle(theme) {
-                const sunIcon = document.querySelector('.theme-toggle .fa-sun');
-                const moonIcon = document.querySelector('.theme-toggle .fa-moon');
-                if (theme === 'light') { sunIcon.style.opacity = '1'; moonIcon.style.opacity = '0.5'; }
-                else { sunIcon.style.opacity = '0.5'; moonIcon.style.opacity = '1'; }
+            applyThemeIcon() {
+                const icon = this.s.theme === 'dark' ? 'fa-sun' : 'fa-moon';
+                const btn = document.getElementById('theme-btn');
+                if (btn) btn.innerHTML = `<i class="fas ${icon}"></i>`;
             },
 
             async handleLogin(e) {
                 e.preventDefault();
                 const u = document.getElementById('l-user').value.trim();
                 const p = document.getElementById('l-pass').value;
-                const btn = e.target.querySelector('button');
-                btn.innerText = 'SYNCING NODE...';
-
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'mentors'), snap => {
+                const btn = document.getElementById('login-btn');
+                const errEl = document.getElementById('login-error');
+                errEl.style.display = 'none';
+                btn.textContent = 'Signing in…'; btn.disabled = true;
+                try {
+                    const snap = await db.collection(`${PATH}/mentors`).get();
                     const match = snap.docs.find(d => (d.data().email === u || d.data().name === u) && d.data().spec === p);
                     if (match) {
-                        this.state.user = { id: match.id, ...match.data() };
+                        this.s.user = { id: match.id, ...match.data() };
                         this.enterPortal();
                     } else {
-                        document.getElementById('login-error').classList.remove('hidden');
-                        btn.innerText = 'AUTHORIZE HUB';
+                        errEl.style.display = 'block';
                     }
-                }, { once: true });
+                } catch (err) {
+                    errEl.textContent = 'Connection error. Check your internet.';
+                    errEl.style.display = 'block';
+                }
+                btn.textContent = 'Sign In'; btn.disabled = false;
             },
 
             enterPortal() {
                 document.getElementById('view-login').classList.add('hidden');
                 document.getElementById('view-portal').classList.remove('hidden');
-                document.getElementById('u-name').innerText = this.state.user.name;
-                document.getElementById('u-avatar').innerText = this.state.user.name[0];
-                this.sync();
+                const u = this.s.user;
+                document.getElementById('u-name').textContent = u.name || 'Mentor';
+                document.getElementById('u-role').textContent = u.department || 'Faculty';
+                document.getElementById('u-av').textContent = (u.name || 'M')[0].toUpperCase();
+                this.syncAll();
+                this.tab('dashboard');
             },
 
-            sync() {
-                const targets = ['students', 'projects', 'tasks', 'notifications', 'chats', 'resources'];
-                targets.forEach(col => {
-                    onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', col), snap => {
-                        this.state[col] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                        this.render();
+            syncAll() {
+                const cols = ['students', 'projects', 'tasks', 'notifications', 'resources'];
+                cols.forEach(c => {
+                    db.collection(`${PATH}/${c}`).onSnapshot(snap => {
+                        this.s[c] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                        this.onUpdate(c);
                     });
                 });
             },
 
-            switchTab(t) {
-                this.state.currentTab = t;
+            myStudents() {
+                const u = this.s.user;
+                const seen = new Set();
+                return this.s.students.filter(s => {
+                    if ((s.mentor === u.email) && !seen.has(s.srn)) { seen.add(s.srn); return true; }
+                    return false;
+                });
+            },
+            myProjects() { return this.s.projects.filter(p => p.mentor === this.s.user.email); },
+            pendingCount() { return this.myProjects().reduce((sum, p) => sum + (p.points?.filter(x => x.status === 'pending').length || 0), 0); },
+            pendingLeaves() {
+                const ms = this.myStudents();
+                const leaves = [];
+                ms.forEach(s => {
+                    (s.leaves?.requests || []).forEach((r, i) => { if (r.status === 'pending') leaves.push({ student: s, req: r, idx: i }); });
+                });
+                return leaves;
+            },
+
+            onUpdate(col) {
+                const pending = this.pendingCount();
+                const pb = document.getElementById('pending-badge');
+                if (pb) { pb.textContent = pending; pb.classList.toggle('hidden', pending === 0); }
+                const pl = this.pendingLeaves();
+                const ld = document.getElementById('leave-dot');
+                if (ld) ld.classList.toggle('hidden', pl.length === 0);
+                document.getElementById('ds-leaves').textContent = pl.length;
+
+                if (col === 'students') this.refreshAttPicker();
+                const t = this.s.currentTab;
+                if (t === 'dashboard') this.renderDashboard();
+                if (t === 'students' && col === 'students') this.renderStudents();
+                if (t === 'attendance') this.renderAttendance();
+                if (t === 'projects') this.renderProjects();
+                if (t === 'tasks') this.renderTasks();
+                if (t === 'resources') this.renderResources();
+                if (t === 'leaves') this.renderLeaves();
+                if (t === 'broadcast' && col === 'notifications') this.renderBroadcasts();
+            },
+
+            tab(t) {
+                this.s.currentTab = t;
                 document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden'));
-                document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
-                const tabEl = document.getElementById(`tab-${t}`);
-                const navEl = document.getElementById(`nav-${t}`);
-                if (tabEl) tabEl.classList.remove('hidden');
-                if (navEl) navEl.classList.add('active');
-                document.getElementById('view-title').innerText = t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ');
-                this.render();
-            },
-
-            render() {
-                const { user, students, projects, tasks, notifications, resources, currentTab } = this.state;
-                if (!user) return;
-
-                // Ensure unique students based on SRN to fix duplication
-                const myStudentsMap = new Map();
-                students.filter(s => s.mentor === user.email).forEach(s => {
-                    if (!myStudentsMap.has(s.srn)) myStudentsMap.set(s.srn, s);
-                });
-                const myStudents = Array.from(myStudentsMap.values());
-
-                const myProjects = projects.filter(p => p.mentor === user.email);
-                const myTasks = tasks.filter(t => myStudents.some(s => s.id === t.sid || s.srn === t.sid));
-
-                document.getElementById('stat-students').innerText = myStudents.length;
-                document.getElementById('stat-teams').innerText = myProjects.length;
-                document.getElementById('stat-pending').innerText = myProjects.reduce((sum, p) => sum + (p.points?.filter(pt => pt.status === 'pending').length || 0), 0);
-                document.getElementById('stat-feed').innerText = notifications.length;
-
-                if (currentTab === 'dashboard') {
-                    ui.html('dash-roster', myStudents.slice(0, 5).map(s => `<div style="padding:15px; background:var(--surface); border-radius:20px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;"><span style="font-weight:700;">${s.name}</span><span class="badge ${s.att === 'verified' ? 'bg-e' : 'bg-a'}">${s.att || 'offline'}</span></div>`).join(''));
-
-                    const pendingItems = [];
-                    myProjects.forEach(p => {
-                        (p.points || []).forEach((pt, idx) => {
-                            if (pt.status === 'pending') pendingItems.push({ project: p, pointIndex: idx });
-                        });
-                    });
-                    ui.html('dash-pending', pendingItems.slice(0, 5).map(item => `<div style="padding:15px; background:var(--surface); border-radius:20px; border:1px solid var(--border);"><div style="display:flex; justify-content:space-between;"><span class="badge bg-warning">PENDING</span><small>${item.project.teamName}</small></div><p style="font-size:12px; margin-top:8px;">Point ${item.pointIndex + 1} approval requested</p><button onclick="App.approvePoint('${item.project.id}', ${item.pointIndex})" class="btn-p btn-sm" style="width:100%; margin-top:10px;">VERIFY</button></div>`).join('') || '<p class="info-label">Queue clear.</p>');
-                }
-
-                if (currentTab === 'teambuilder') {
-                    ui.html('teams-container', myProjects.map(p => {
-                        const approved = p.points?.filter(pt => pt.status === 'approved').length || 0;
-                        const total = p.totalPoints || p.points?.length || 0;
-                        const teamAssets = p.teamResources || [];
-
-                        return `<div class="card">
-                            <div style="display:flex; justify-content:space-between; align-items:start;">
-                                <h4 style="font-weight:800; font-size:1.3rem;">${p.teamName}</h4>
-                                <button onclick="App.deleteItem('projects','${p.id}')" style="color:var(--danger); background:none; border:none; cursor:pointer; font-size:1rem;"><i class="fas fa-trash-can"></i></button>
-                            </div>
-                            <p class="info-label" style="margin-top:10px;">Objective: ${p.name}</p>
-                            
-                            <div class="progress-track"><div class="progress-fill" style="width: ${(approved / total * 100) || 0}%"></div></div>
-                            <div class="points-grid">${p.points?.map((pt, i) => pt.status === 'pending' ? `<div class="point-node pending" title="Verify Node" onclick="App.approvePoint('${p.id}', ${i})">${i + 1}</div>` : `<div class="point-node ${pt.status}">${i + 1}</div>`).join('')}</div>
-                            
-                            <div style="margin-top:10px; margin-bottom:15px; display:flex; flex-wrap:wrap; gap:6px;">
-                                ${p.members?.map(m => `<span class="badge bg-p" style="font-size:9px;">${m}</span>`).join('') || 'No members'}
-                            </div>
-
-                            <div style="margin-top:10px; padding:15px; background:rgba(99,102,241,0.05); border-radius:24px; border:1.5px dashed var(--primary);">
-                                <span class="info-label">Primary Project Protocol (PDF)</span>
-                                ${p.pdfUrl ? `
-                                    <div class="asset-item" style="background:var(--surface);">
-                                        <a href="${p.pdfUrl}" target="_blank"><i class="fas fa-file-contract"></i> ${p.pdfFileName || 'Primary Spec'}</a>
-                                    </div>
-                                ` : '<p style="font-size:11px; opacity:0.6;">No protocol uploaded.</p>'}
-                                <input type="file" id="main-pdf-${p.id}" accept=".pdf" style="font-size:10px; margin-top:10px;">
-                                <button onclick="App.updateMainProtocol('${p.id}')" class="btn-p btn-sm" style="width:100%; margin-top:8px; height:45px;">INITIALIZE INFO PDF</button>
-                            </div>
-
-                            <div style="margin-top:20px;">
-                                <span class="info-label">Project Technical Resources (${teamAssets.length})</span>
-                                <div id="asset-list-${p.id}">
-                                    ${teamAssets.map((asset, index) => `
-                                        <div class="asset-item">
-                                            <a href="${asset.pdfUrl}" target="_blank"><i class="fas fa-file-pdf"></i> ${asset.title}</a>
-                                            <button onclick="App.removeTeamResource('${p.id}', ${index})" class="del-btn"><i class="fas fa-times"></i></button>
-                                        </div>
-                                    `).join('') || '<p style="font-size:11px; opacity:0.5; text-align:center; padding:10px;">Asset Repository Empty.</p>'}
-                                </div>
-                            </div>
-
-                            <div style="margin-top:auto; border-top:1px solid var(--border); padding-top:20px;">
-                                <span class="info-label">Matrix Configuration</span>
-                                <div style="display:grid; grid-template-columns: 80px 1fr; gap:10px;">
-                                    <input type="number" id="score-${p.id}" value="${total}" title="Grid Complexity">
-                                    <button onclick="App.updateClusterMap('${p.id}')" class="btn-p btn-sm" style="height:48px;">SYNC MATRIX</button>
-                                </div>
-                                <div style="margin-top:10px; padding:15px; background:var(--bg); border-radius:24px;">
-                                    <input type="text" id="asset-title-${p.id}" placeholder="Asset Name (e.g. Phase 1 Schematics)" style="margin-top:0;">
-                                    <input type="file" id="asset-file-${p.id}" accept=".pdf" style="font-size:10px; margin-top:5px;">
-                                    <button onclick="App.addTeamResource('${p.id}')" class="btn-p btn-sm" style="width:100%; margin-top:12px; background:var(--primary); color:white;">DEPLOY SUPPLEMENTARY ASSET</button>
-                                </div>
-                            </div>
-                        </div>`;
-                    }).join(''));
-                }
-
-                if (currentTab === 'my-students') {
-                    ui.html('my-students-grid', myStudents.map(s => {
-                        const studentProjects = projects.filter(p => p.members?.includes(s.name));
-                        return `
-                            <div class="student-pro-card">
-                                <div class="student-info-row">
-                                    <div class="student-initials">${s.name[0]}</div>
-                                    <div style="flex:1; overflow:hidden;">
-                                        <h4 style="font-weight:800; font-size:1.15rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</h4>
-                                        <span style="font-size:11px; font-weight:700; opacity:0.6;">${s.srn}</span>
-                                    </div>
-                                    <div class="badge ${s.att === 'verified' ? 'bg-e' : 'bg-a'}">${s.att || 'offline'}</div>
-                                </div>
-                                
-                                <p class="info-label">Technical Profile</p>
-                                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">
-                                    <span class="badge bg-p" style="border:2px solid var(--primary);">${s.branch || 'EC/CS'}</span>
-                                    <span class="badge bg-p" style="border:2px solid var(--primary);">Semester ${s.semester || '5'}</span>
-                                </div>
-
-                                <div class="student-meta">
-                                    <div class="meta-box">
-                                        <span class="meta-val">${studentProjects.length}</span>
-                                        <span class="meta-lab">Tracks</span>
-                                    </div>
-                                    <div class="meta-box">
-                                        <span class="meta-val">${s.attendanceCount || 0}</span>
-                                        <span class="meta-lab">Logs</span>
-                                    </div>
-                                </div>
-
-                                <div style="margin-top:25px; display:flex; gap:12px;">
-                                    <button onclick="App.openChat('${s.id}', '${s.name}')" class="btn-p btn-sm" style="flex:1.2; padding:14px; font-size:11px; border-radius:18px;">
-                                        <i class="fas fa-message"></i> SYNC NODE
-                                    </button>
-                                    <button onclick="App.viewStudentAssets('${s.id}')" class="btn-p btn-sm" style="flex:1; padding:14px; font-size:11px; border-radius:18px; background:var(--bg); color:var(--primary); border:2.5px solid var(--border);">
-                                        <i class="fas fa-folder-open"></i> ASSETS
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                    }).join('') || '<p class="info-label" style="text-align:center; padding:50px;">No students mapped.</p>');
-                }
-
-                if (currentTab === 'resources') {
-                    ui.html('resources-table-body', resources.map(r => `<tr>
-                        <td><b style="font-weight:700;">${r.title}</b></td>
-                        <td><span class="badge bg-p">${r.category}</span></td>
-                        <td>${r.uploadedBy || 'Academic Node'}</td>
-                        <td><button onclick="App.deleteItem('resources', '${r.id}')" class="mark-btn btn-no"><i class="fas fa-trash-can"></i></button></td>
-                    </tr>`).join('') || '<tr><td colspan="4" style="text-align:center; padding:30px; opacity:0.6;">Library Repository Offline.</td></tr>');
-                }
-
-                if (currentTab === 'attendance') {
-                    ui.html('att-table-body', myStudents.map(s => `<tr><td><b style="font-weight:800;">${s.srn}</b></td><td>${s.name}</td><td>${s.time || '--'}</td><td><span class="badge ${s.att === 'verified' ? 'bg-e' : 'bg-a'}">${s.att || 'offline'}</span></td><td><div style="display:flex; gap:8px;"><button onclick="App.setAtt('${s.id}','verified')" class="mark-btn btn-yes"><i class="fas fa-check"></i></button> <button onclick="App.setAtt('${s.id}','absent')" class="mark-btn btn-no"><i class="fas fa-times"></i></button></div></td></tr>`).join(''));
-                }
-            },
-
-            async updateMainProtocol(projId) {
-                const fileIn = document.getElementById(`main-pdf-${projId}`);
-                if (!fileIn.files[0]) return;
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    try {
-                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'projects', projId), {
-                            pdfUrl: e.target.result,
-                            pdfFileName: fileIn.files[0].name
-                        });
-                        alert("Primary Protocol PDF Synchronized.");
-                    } catch (err) {
-                        console.error(err);
-                        alert("Upload Error: File size likely exceeds Firestore document limits (1MB). Please use a smaller PDF.");
-                    }
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                document.getElementById(`tab-${t}`)?.classList.remove('hidden');
+                document.getElementById(`nav-${t}`)?.classList.add('active');
+                if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+                const r = {
+                    dashboard: () => this.renderDashboard(),
+                    students: () => this.renderStudents(),
+                    attendance: () => this.renderAttendance(),
+                    projects: () => this.renderProjects(),
+                    tasks: () => this.renderTasks(),
+                    messages: () => this.renderMessages(),
+                    broadcast: () => this.renderBroadcasts(),
+                    leaves: () => this.renderLeaves(),
+                    resources: () => this.renderResources(),
                 };
-                reader.readAsDataURL(fileIn.files[0]);
+                r[t]?.();
             },
 
-            async addTeamResource(projId) {
-                const fileIn = document.getElementById(`asset-file-${projId}`);
-                const titleIn = document.getElementById(`asset-title-${projId}`);
-                const proj = this.state.projects.find(p => p.id === projId);
-                if (!fileIn.files[0] || !titleIn.value) { alert("Deployment Error: Asset Name & Payload PDF Required."); return; }
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    try {
-                        const newAsset = { title: titleIn.value, pdfUrl: e.target.result, uploadedAt: new Date().toISOString() };
-                        const teamResources = [...(proj.teamResources || []), newAsset];
-                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'projects', projId), { teamResources });
-                        fileIn.value = ''; titleIn.value = ''; alert("Technical Resource Dispatched.");
-                    } catch (err) {
-                        alert("Sync Error: The PDF payload is too large for this data node.");
-                    }
-                };
-                reader.readAsDataURL(fileIn.files[0]);
+            toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); },
+
+            // ─── DASHBOARD ───
+            renderDashboard() {
+                const ms = this.myStudents(), mp = this.myProjects();
+                document.getElementById('ds-students').textContent = ms.length;
+                document.getElementById('ds-projects').textContent = mp.length;
+                document.getElementById('ds-pending').textContent = this.pendingCount();
+
+                // Roster
+                const rEl = document.getElementById('dash-roster');
+                rEl.innerHTML = ms.length ? ms.slice(0, 6).map(s => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:var(--c-surface2);border:1px solid var(--c-border);border-radius:9px;margin-bottom:7px;">
+        <div style="display:flex;align-items:center;gap:9px;">
+          <div class="avatar" style="width:30px;height:30px;font-size:.82rem;">${s.name[0]}</div>
+          <div><div style="font-weight:600;font-size:.875rem;">${s.name}</div><div style="font-size:.72rem;color:var(--c-text3);font-family:DM Mono;">${s.srn}</div></div>
+        </div>
+        <span class="badge ${s.att === 'verified' ? 'badge-green' : s.att === 'absent' ? 'badge-red' : 'badge-amber'}">${s.att || 'offline'}</span>
+      </div>`).join('') : '<p style="font-size:.82rem;color:var(--c-text3);">No students assigned.</p>';
+
+                // Pending approvals
+                const pItems = [];
+                mp.forEach(p => { (p.points || []).forEach((pt, i) => { if (pt.status === 'pending') pItems.push({ p, i }); }); });
+                document.getElementById('dash-pending-list').innerHTML = pItems.length ? pItems.slice(0, 5).map(({ p, i }) => `
+      <div style="padding:11px 14px;background:var(--c-amber-soft);border:1px solid rgba(217,119,6,.3);border-radius:9px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-weight:600;font-size:.855rem;">${p.teamName || p.name}</div><div style="font-size:.72rem;color:var(--c-text3);">Milestone ${i + 1}</div></div>
+        <button class="btn btn-success btn-sm" onclick="App.approvePoint('${p.id}',${i})"><i class="fas fa-check"></i> Approve</button>
+      </div>`).join('') : '<p style="font-size:.82rem;color:var(--c-text3);">No pending approvals.</p>';
+
+                // Leave requests
+                const leaves = this.pendingLeaves();
+                document.getElementById('dash-leaves-list').innerHTML = leaves.length ? leaves.slice(0, 4).map(({ student, req, idx }) => `
+      <div class="leave-item">
+        <div class="leave-info">
+          <div class="title">${student.name} — ${req.type === 'sick' ? 'Sick' : 'Normal'} Leave</div>
+          <div class="sub">${req.from || ''}${req.to && req.to !== req.from ? ' – ' + req.to : ''} · ${req.reason || 'No reason'}</div>
+        </div>
+        <div style="display:flex;gap:7px;">
+          <button class="btn btn-success btn-sm" onclick="App.reviewLeave('${student.id}',${idx},'approved')"><i class="fas fa-check"></i> Approve</button>
+          <button class="btn btn-danger btn-sm" onclick="App.reviewLeave('${student.id}',${idx},'rejected')"><i class="fas fa-times"></i> Reject</button>
+        </div>
+      </div>`).join('') : '<p style="font-size:.82rem;color:var(--c-text3);">No pending leave requests.</p>';
             },
 
-            async removeTeamResource(projId, index) {
-                if (!confirm("Purge technical asset?")) return;
-                const proj = this.state.projects.find(p => p.id === projId);
-                const teamResources = [...(proj.teamResources || [])];
-                teamResources.splice(index, 1);
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'projects', projId), { teamResources });
+            // ─── STUDENTS ───
+            renderStudents() {
+                const ms = this.myStudents();
+                const el = document.getElementById('students-grid');
+                if (!ms.length) { el.innerHTML = '<div class="card"><p style="text-align:center;padding:40px;color:var(--c-text3);">No students assigned.</p></div>'; return; }
+                el.innerHTML = ms.map(s => {
+                    const sproj = this.myProjects().filter(p => p.members?.includes(s.name) || p.members?.includes(s.srn));
+                    const logs = s.logs || {};
+                    const logCount = Object.keys(logs).length;
+                    return `<div class="student-card">
+        <div class="student-head">
+          <div class="student-avatar">${s.name[0]}</div>
+          <div>
+            <div class="student-name">${s.name}</div>
+            <div class="student-srn">${s.srn}</div>
+            <div style="margin-top:4px;"><span class="badge ${s.att === 'verified' ? 'badge-green' : s.att === 'absent' ? 'badge-red' : 'badge-amber'}">${s.att || 'offline'}</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;">
+          <span class="badge badge-blue">${s.branch || '---'}</span>
+          ${s.product ? `<span class="badge badge-purple">${s.product}</span>` : ''}
+        </div>
+        <div class="student-meta">
+          <div class="meta-box"><div class="meta-val">${sproj.length}</div><div class="meta-lbl">Projects</div></div>
+          <div class="meta-box"><div class="meta-val">${logCount}</div><div class="meta-lbl">Log Days</div></div>
+          <div class="meta-box"><div class="meta-val">${s.leaves?.sick || 0}/5</div><div class="meta-lbl">Sick Leave</div></div>
+          <div class="meta-box"><div class="meta-val">${s.leaves?.normal || 0}/2</div><div class="meta-lbl">Norm. Leave</div></div>
+        </div>
+        <div class="student-actions">
+          <button class="btn btn-ghost btn-sm" style="flex:1;" onclick="App.openChatWith('${s.id}','${s.name.replace(/'/g, "\\'")}')"><i class="fas fa-message"></i> Message</button>
+          <button class="btn btn-primary btn-sm" style="flex:1;" onclick="App.tab('attendance');App.selectAttStudent('${s.id}')"><i class="fas fa-calendar-check"></i> Attendance</button>
+        </div>
+      </div>`;
+                }).join('');
             },
 
-            async updateClusterMap(projId) {
-                const newTotal = parseInt(document.getElementById(`score-${projId}`).value);
-                const proj = this.state.projects.find(p => p.id === projId);
-                let newPoints = [...(proj.points || [])];
-                if (newTotal > newPoints.length) for (let i = newPoints.length; i < newTotal; i++) newPoints.push({ status: 'none' });
-                else if (newTotal < newPoints.length) newPoints = newPoints.slice(0, newTotal);
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'projects', projId), { points: newPoints, totalPoints: newTotal });
-                alert("Cluster Matrix Re-calibrated.");
+            // ─── ATTENDANCE ───
+            refreshAttPicker() {
+                const sel = document.getElementById('att-student-picker');
+                if (!sel) return;
+                const cur = sel.value;
+                const ms = this.myStudents();
+                sel.innerHTML = '<option value="">All Students</option>' + ms.map(s => `<option value="${s.id}">${s.name} (${s.srn})</option>`).join('');
+                sel.value = cur;
             },
 
-            async addResource() {
-                const title = document.getElementById('r-title').value;
-                const category = document.getElementById('r-cat').value;
-                const fileIn = document.getElementById('r-file');
-                if (!title || !fileIn.files[0]) { alert("Library Deployment: Identity & Payload Required."); return; }
-
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    try {
-                        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'resources'), {
-                            title, category, pdfUrl: e.target.result,
-                            uploadedBy: this.state.user.name, date: new Date().toISOString()
-                        });
-                        alert("Global Library Synchronized.");
-                        this.closeModal();
-                    } catch (err) {
-                        alert("Transmission Error: Node memory limit reached. Try a smaller file.");
-                    }
-                };
-                reader.readAsDataURL(fileIn.files[0]);
+            selectAttStudent(id) {
+                const sel = document.getElementById('att-student-picker');
+                if (sel) { sel.value = id; this.renderAttDetail(); }
             },
 
-            async approvePoint(pid, idx) {
-                const proj = this.state.projects.find(p => p.id === pid);
-                const points = [...proj.points];
-                points[idx] = { status: 'approved' };
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'projects', pid), { points });
+            renderAttendance() {
+                this.refreshAttPicker();
+                this.renderAttCalendar();
+                this.renderAttTable();
+                this.renderAttDetail();
+            },
+
+            renderAttCalendar() {
+                const year = 2026, month = 1;
+                const days = new Date(year, month + 1, 0).getDate();
+                const firstDay = new Date(year, month, 1).getDay();
+                const today = new Date();
+                const sid = document.getElementById('att-student-picker')?.value;
+                const student = sid ? this.s.students.find(s => s.id === sid) : null;
+                const logs = student?.logs || {};
+                let html = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(d => `<div class="cal-head">${d}</div>`).join('');
+                for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+                for (let i = 1; i <= days; i++) {
+                    const dk = `2026-02-${String(i).padStart(2, '0')}`;
+                    const isToday = today.getFullYear() === 2026 && today.getMonth() === 1 && today.getDate() === i;
+                    const status = sid ? (logs[dk]?.in ? 'present' : '') : ''
+                    html += `<div class="cal-day ${isToday ? 'today' : ''} ${status}">${i}</div>`;
+                }
+                document.getElementById('att-calendar').innerHTML = html;
+            },
+
+            renderAttDetail() {
+                this.renderAttCalendar();
+                const sid = document.getElementById('att-student-picker')?.value;
+                const student = sid ? this.s.students.find(s => s.id === sid) : null;
+                const logs = student?.logs || {};
+                const keys = Object.keys(logs).sort().reverse();
+                document.getElementById('daily-logs-view').innerHTML = keys.length ? keys.map(dk => `
+      <div class="att-log">
+        <div class="mono" style="font-size:.78rem;">${dk}</div>
+        <div style="font-size:.75rem;color:var(--c-text2);">${logs[dk].in || '--'} → ${logs[dk].out || '--'}</div>
+      </div>`).join('') : '<p style="font-size:.82rem;color:var(--c-text3);">No logs for this student.</p>';
+            },
+
+            renderAttTable() {
+                const ms = this.myStudents();
+                document.getElementById('att-table-body').innerHTML = ms.map(s => `
+      <tr>
+        <td class="mono" style="font-size:.78rem;">${s.srn}</td>
+        <td><b>${s.name}</b></td>
+        <td style="font-size:.78rem;color:var(--c-text3);">${s.time || '--'}</td>
+        <td><span class="badge ${s.att === 'verified' ? 'badge-green' : s.att === 'absent' ? 'badge-red' : 'badge-amber'}">${s.att || 'offline'}</span></td>
+        <td><div style="display:flex;gap:6px;">
+          <button onclick="App.setAtt('${s.id}','verified')" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
+          <button onclick="App.setAtt('${s.id}','absent')" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>
+        </div></td>
+      </tr>`).join('');
             },
 
             async setAtt(id, val) {
-                const student = this.state.students.find(s => s.id === id);
-                const currentCount = student?.attendanceCount || 0;
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'students', id), {
+                if (!id) return;
+                const s = this.s.students.find(x => x.id === id);
+                const count = s?.attendanceCount || 0;
+                await db.doc(`${PATH}/students/${id}`).update({
                     att: val,
-                    time: new Date().toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit' }),
-                    attendanceCount: val === 'verified' ? currentCount + 1 : currentCount
+                    time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+                    attendanceCount: val === 'verified' ? count + 1 : count
                 });
+                this.toast('Attendance updated!', 'success');
             },
 
-            async deleteItem(col, id) { if (confirm("Permanently purge record from technical ledger?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id)); },
+            // ─── PROJECTS ───
+            renderProjects() {
+                const mp = this.myProjects();
+                const el = document.getElementById('projects-container');
+                if (!mp.length) { el.innerHTML = '<div class="card"><p style="text-align:center;padding:40px;color:var(--c-text3);">No projects yet. Create one!</p></div>'; return; }
+                el.innerHTML = mp.map(p => {
+                    const pts = p.points || [];
+                    const total = p.totalPoints || pts.length || 0;
+                    const approved = pts.filter(x => x.status === 'approved').length;
+                    const pending = pts.filter(x => x.status === 'pending').length;
+                    const pct = total > 0 ? Math.round((approved / total) * 100) : 0;
+                    const cols = Math.min(12, Math.ceil(Math.sqrt(total)) || 8);
+                    const teamRes = p.teamResources || [];
+                    return `<div class="project-card">
+        <div class="proj-header">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div class="proj-title">${p.name || 'Unnamed'}</div>
+              <div class="proj-team">Team: ${p.teamName || 'Solo'} · ${p.track || ''}</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              ${pending > 0 ? `<span class="badge badge-amber"><i class="fas fa-clock"></i> ${pending} pending</span>` : ''}
+              <div style="text-align:right;"><div class="score-big">${pct}</div><div class="lbl">Score</div></div>
+              <button onclick="App.deleteItem('projects','${p.id}')" class="btn btn-danger btn-sm" style="padding:7px 10px;"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+            ${(p.members || []).map(m => `<span class="badge badge-blue">${m}</span>`).join('')}
+          </div>
+          <div class="progress-bar" style="margin-top:10px;"><div class="progress-fill ${pct >= 80 ? 'green' : pct >= 50 ? 'amber' : ''}" style="width:${pct}%;"></div></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-main">
+            <div class="lbl" style="margin-bottom:8px;">Milestones — click pending to approve</div>
+            <div class="milestones-grid" style="grid-template-columns:repeat(${cols},1fr);">
+              ${Array(total).fill(0).map((_, i) => `<div class="m-node ${pts[i]?.status || ''}" onclick="App.approvePoint('${p.id}',${i})" title="Milestone ${i + 1} — ${pts[i]?.status || 'none'}">${i + 1}</div>`).join('')}
+            </div>
+            <div style="margin-top:14px;">
+              <div class="lbl" style="margin-bottom:6px;">Adjust Milestone Count</div>
+              <div style="display:flex;gap:8px;">
+                <input type="number" class="input" id="pts-${p.id}" value="${total}" style="width:90px;">
+                <button class="btn btn-ghost btn-sm" onclick="App.updateMilestoneCount('${p.id}')">Update</button>
+              </div>
+            </div>
+            ${p.driveLink ? `<div style="margin-top:12px;"><div class="lbl" style="margin-bottom:6px;">Student Submission</div><a href="${p.driveLink}" target="_blank" class="btn btn-ghost btn-sm"><i class="fas fa-external-link-alt"></i> View Link</a></div>` : ''}
+          </div>
+          <div class="proj-side">
+            <div class="lbl" style="margin-bottom:10px;"><i class="fas fa-file-pdf" style="margin-right:4px;"></i>Primary Protocol PDF</div>
+            ${p.pdfUrl ? `
+              <div onclick="App.openPDF('${p.pdfUrl}','${(p.name || '').replace(/'/g, "\\'")} — Document')" style="cursor:pointer;padding:18px;border:1.5px dashed var(--c-border);border-radius:10px;text-align:center;transition:.2s;" onmouseover="this.style.borderColor='var(--c-primary)'" onmouseout="this.style.borderColor='var(--c-border)'">
+                <i class="fas fa-file-pdf" style="font-size:1.8rem;color:var(--c-red);margin-bottom:7px;"></i>
+                <div style="font-size:.82rem;font-weight:600;">${p.pdfFileName || 'View Document'}</div>
+                <div style="font-size:.72rem;color:var(--c-text3);margin-top:3px;">Click to open</div>
+              </div>` :
+                            `<div style="padding:18px;border:1.5px dashed var(--c-border);border-radius:10px;text-align:center;opacity:.5;">
+                <i class="fas fa-lock" style="font-size:1.8rem;color:var(--c-text3);margin-bottom:7px;"></i>
+                <div style="font-size:.78rem;color:var(--c-text3);">No document yet</div>
+              </div>`}
+            <label class="upload-area" style="margin-top:10px;display:block;" title="Upload PDF">
+              <input type="file" accept=".pdf" id="main-pdf-${p.id}" style="display:none;" onchange="App.uploadMainPDF('${p.id}')">
+              <i class="fas fa-upload" style="color:var(--c-primary);margin-right:6px;"></i>
+              <span style="font-size:.78rem;font-weight:600;">Upload/Replace PDF</span>
+            </label>
 
-            showModal(type) {
-                const bg = document.getElementById('modal-bg');
-                const content = document.getElementById('modal-content');
-                bg.classList.add('active');
-                if (type === 'resource') {
-                    content.innerHTML = `<h3>Deploy Hub Resource</h3>
-                        <label class="info-label">Resource Identity</label><input type="text" id="r-title" placeholder="e.g. Unit-5 Roadmap">
-                        <label class="info-label">Classification</label><select id="r-cat"><option value="syllabus">Syllabus</option><option value="notes">Lecture Notes</option><option value="reference">Reference Material</option><option value="pastpapers">Past Papers</option></select>
-                        <label class="info-label">PDF Payload</label><input type="file" id="r-file" accept=".pdf">
-                        <button onclick="App.addResource()" class="btn-p" style="width:100%; margin-top:20px; height:55px;">SYNC TO HUB</button>`;
-                } else if (type === 'project') {
-                    // Logic to ensure unique student names for checkboxes based on SRN
-                    const uniqueStudentsMap = new Map();
-                    this.state.students.filter(s => s.mentor === this.state.user.email).forEach(s => {
-                        if (!uniqueStudentsMap.has(s.srn)) uniqueStudentsMap.set(s.srn, s);
-                    });
-                    const mentorStudents = Array.from(uniqueStudentsMap.values());
-
-                    content.innerHTML = `
-                        <h3 style="margin-bottom:10px;">Initialize Node Cluster</h3>
-                        <p style="font-size:12px; opacity:0.7; margin-bottom:25px;">Define technical track parameters and assign node members (Unique nodes only).</p>
-                        
-                        <label class="info-label">Research Track Domain</label>
-                        <select id="m-p-track"><option>Track Alpha (Electronics)</option><option>Track Beta (Cloud/CS)</option><option>Track Gamma (Research Core)</option></select>
-                        
-                        <label class="info-label">Cluster Identity (e.g. NEO_AI_01)</label>
-                        <input type="text" id="m-p-team" placeholder="Unique Cluster Name">
-                        
-                        <label class="info-label">Core Roadmap Objective</label>
-                        <input type="text" id="m-p-name" placeholder="Research Project Title">
-                        
-                        <label class="info-label">Initial Matrix Points (Grid Complexity)</label>
-                        <input type="number" id="m-p-total-points" value="24" min="1" max="200">
-                        
-                        <label class="info-label">Assign Exclusive Node Members</label>
-                        <div class="check-list">
-                            ${mentorStudents.map((s, i) => `
-                                <div class="check-item">
-                                    <input type="checkbox" id="node-${i}" value="${s.name}" class="student-checkbox">
-                                    <label for="node-${i}">${s.name} (${s.srn})</label>
-                                </div>
-                            `).join('') || '<p style="font-size:11px; padding:20px;">No nodes assigned to your command.</p>'}
-                        </div>
-                        
-                        <button onclick="App.addProject()" class="btn-p" style="width:100%; margin-top:10px; height:55px; justify-content:center;">DEPLOY NODE CLUSTER</button>`;
-                } else if (type === 'task') {
-                    content.innerHTML = `<h3>Dispatch Directive</h3>
-                        <label class="info-label">Target Node</label><select id="m-t-sid">${this.state.students.filter(s => s.mentor === this.state.user.email).map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select>
-                        <label class="info-label">Instruction Payload</label><textarea id="m-t-desc" placeholder="Detail directive parameters..." style="height:100px;"></textarea>
-                        <label class="info-label">Deadline Time</label><input type="text" id="m-t-due" placeholder="e.g. 15:00 Monday">
-                        <button onclick="App.addTask()" class="btn-p" style="width:100%; margin-top:20px; height:55px;">TRANSMIT</button>`;
-                }
+            <div style="margin-top:16px;">
+              <div class="lbl" style="margin-bottom:8px;">Technical Resources (${teamRes.length})</div>
+              <div id="team-res-${p.id}">
+                ${teamRes.map((r, i) => `
+                  <div style="display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--c-surface2);border:1px solid var(--c-border);border-radius:8px;margin-bottom:6px;">
+                    <a href="${r.pdfUrl}" target="_blank" style="flex:1;font-size:.78rem;color:var(--c-primary);font-weight:600;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><i class="fas fa-file-pdf" style="margin-right:4px;"></i>${r.title}</a>
+                    <button onclick="App.removeTeamRes('${p.id}',${i})" style="background:none;border:none;color:var(--c-red);cursor:pointer;font-size:.85rem;"><i class="fas fa-times"></i></button>
+                  </div>`).join('') || '<p style="font-size:.75rem;color:var(--c-text3);">No resources yet.</p>'}
+              </div>
+              <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;">
+                <input type="text" class="input" id="res-title-${p.id}" placeholder="Resource name…" style="font-size:.8rem;">
+                <label class="upload-area" style="display:block;" title="Upload resource PDF">
+                  <input type="file" accept=".pdf" id="res-file-${p.id}" style="display:none;">
+                  <i class="fas fa-paperclip" style="color:var(--c-primary);margin-right:5px;"></i>
+                  <span style="font-size:.75rem;font-weight:600;">Attach PDF</span>
+                </label>
+                <button class="btn btn-primary btn-sm" onclick="App.addTeamRes('${p.id}')"><i class="fas fa-upload"></i> Deploy Resource</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+                }).join('');
             },
 
-            async addProject() {
-                const track = document.getElementById('m-p-track').value;
-                const teamName = document.getElementById('m-p-team').value;
-                const name = document.getElementById('m-p-name').value;
-                const totalPoints = parseInt(document.getElementById('m-p-total-points').value) || 24;
-                const members = Array.from(document.querySelectorAll('.student-checkbox:checked')).map(c => c.value);
-
-                if (!teamName || !name || members.length === 0) { alert("Initialization Failure: Parameters Incomplete."); return; }
-
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'projects'), {
-                    track, teamName, name, mentor: this.state.user.email,
-                    members, points: Array(totalPoints).fill({ status: 'none' }),
-                    totalPoints, teamResources: [], pdfUrl: '', pdfFileName: ''
-                });
-                this.closeModal();
+            async approvePoint(pid, idx) {
+                const p = this.s.projects.find(x => x.id === pid); if (!p) return;
+                const pts = [...(p.points || [])];
+                while (pts.length <= idx) pts.push({ status: 'none' });
+                // Toggle: none→pending→approved
+                const cur = pts[idx]?.status || 'none';
+                if (cur === 'approved') return; // already approved
+                pts[idx] = { status: 'approved', updated: new Date().toISOString() };
+                await db.doc(`${PATH}/projects/${pid}`).update({ points: pts });
+                this.toast('Milestone approved!', 'success');
             },
 
-            async addTask() {
-                const sid = document.getElementById('m-t-sid').value;
-                const desc = document.getElementById('m-t-desc').value;
-                const due = document.getElementById('m-t-due').value;
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tasks'), { sid, desc, due, status: 'Pending' });
-                this.closeModal();
+            async updateMilestoneCount(pid) {
+                const newTotal = parseInt(document.getElementById(`pts-${pid}`)?.value) || 24;
+                const p = this.s.projects.find(x => x.id === pid); if (!p) return;
+                let pts = [...(p.points || [])];
+                if (newTotal > pts.length) for (let i = pts.length; i < newTotal; i++) pts.push({ status: 'none' });
+                else pts = pts.slice(0, newTotal);
+                await db.doc(`${PATH}/projects/${pid}`).update({ points: pts, totalPoints: newTotal });
+                this.toast('Milestones updated!', 'success');
             },
 
-            async sendBroadcast() {
-                const text = document.getElementById('b-text').value;
-                if (!text) return;
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'notifications'), { from: this.state.user.name, senderRole: 'Mentor', text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-                document.getElementById('b-text').value = '';
-                alert("Technical Transmission Sent.");
-            },
-
-            closeModal() { document.getElementById('modal-bg').classList.remove('active'); },
-            openChat(id, name) { this.state.activeChat = id; this.renderSyncWindow(); this.switchTab('sync'); },
-            renderSyncWindow() { document.getElementById('chat-window').innerHTML = '<p class="info-label" style="text-align:center;">Secure P2P Sync Hub Established.</p>'; },
-            async sendChat(e) { e.preventDefault(); document.getElementById('chat-input').value = ''; },
-            viewStudentAssets(id) { document.getElementById('asset-student-picker').value = id; this.exploreAssets(); this.switchTab('assethub'); },
-            exploreAssets() {
-                const sid = document.getElementById('asset-student-picker').value;
-                if (!sid) return;
-                const student = this.state.students.find(s => s.id === sid);
-                const taskLinks = this.state.tasks.filter(t => (t.sid === sid || t.sid === student?.srn) && t.payload);
-                const projLinks = this.state.projects.filter(p => p.members?.includes(student?.name) && p.driveLink);
-                let html = '';
-                if (projLinks.length) html += `<div class="card" style="grid-column: span 2;"><span class="info-label">Project Technical Submissions</span>${projLinks.map(p => `<div class="asset-item"><a href="${p.driveLink}" target="_blank">${p.teamName}: Anchor Link</a></div>`).join('')}</div>`;
-                if (taskLinks.length) html += `<div class="card" style="grid-column: span 2;"><span class="info-label">Directive Payload Links</span>${taskLinks.map(t => `<div class="asset-item"><a href="${t.payload}" target="_blank">${t.desc.slice(0, 40)}...</a></div>`).join('')}</div>`;
-                ui.html('asset-list-container', html || '<p class="info-label" style="text-align:center; grid-column:span 2; padding:40px;">No technical assets synchronized for this node.</p>');
-                document.getElementById('asset-results').classList.remove('hidden');
-            },
-
-            init3D() {
-                const scene = new THREE.Scene();
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                document.getElementById('canvas-container').appendChild(renderer.domElement);
-                const bubbles = [];
-                for (let i = 0; i < 40; i++) {
-                    const b = new THREE.Mesh(new THREE.SphereGeometry(0.8, 32, 32), new THREE.MeshPhongMaterial({ color: 0x6366F1, transparent: true, opacity: 0.08 }));
-                    b.position.set((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200);
-                    b.userData.v = new THREE.Vector3((Math.random() - 0.5) * 0.02, (Math.random() - 0.5) * 0.02, (Math.random() - 0.5) * 0.02);
-                    scene.add(b); bubbles.push(b);
-                }
-                scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-                camera.position.z = 100;
-                const animate = () => {
-                    requestAnimationFrame(animate);
-                    bubbles.forEach(b => {
-                        b.position.add(b.userData.v);
-                        if (Math.abs(b.position.x) > 100) b.userData.v.x *= -1;
-                        if (Math.abs(b.position.y) > 100) b.userData.v.y *= -1;
-                        if (Math.abs(b.position.z) > 100) b.userData.v.z *= -1;
-                    });
-                    renderer.render(scene, camera);
+            uploadMainPDF(pid) {
+                const fileIn = document.getElementById(`main-pdf-${pid}`);
+                if (!fileIn?.files[0]) return;
+                const r = new FileReader();
+                r.onload = async e => {
+                    try {
+                        await db.doc(`${PATH}/projects/${pid}`).update({ pdfUrl: e.target.result, pdfFileName: fileIn.files[0].name });
+                        this.toast('Protocol PDF uploaded!', 'success');
+                    } catch (err) { this.toast('File too large for Firestore (>1MB). Try a smaller PDF.', 'error'); }
                 };
-                animate();
+                r.readAsDataURL(fileIn.files[0]);
+            },
+
+            async addTeamRes(pid) {
+                const ti = document.getElementById(`res-title-${pid}`);
+                const fi = document.getElementById(`res-file-${pid}`);
+                const p = this.s.projects.find(x => x.id === pid);
+                if (!ti?.value || !fi?.files[0]) { this.toast('Provide a name and PDF.', 'error'); return; }
+                const r = new FileReader();
+                r.onload = async e => {
+                    try {
+                        const teamResources = [...(p.teamResources || []), { title: ti.value, pdfUrl: e.target.result, uploadedAt: new Date().toISOString() }];
+                        await db.doc(`${PATH}/projects/${pid}`).update({ teamResources });
+                        ti.value = ''; fi.value = '';
+                        this.toast('Resource deployed!', 'success');
+                    } catch (err) { this.toast('File too large.', 'error'); }
+                };
+                r.readAsDataURL(fi.files[0]);
+            },
+
+            async removeTeamRes(pid, idx) {
+                if (!confirm('Remove this resource?')) return;
+                const p = this.s.projects.find(x => x.id === pid);
+                const teamResources = [...(p.teamResources || [])];
+                teamResources.splice(idx, 1);
+                await db.doc(`${PATH}/projects/${pid}`).update({ teamResources });
+            },
+
+            async deleteItem(col, id) {
+                if (!confirm('Delete this item?')) return;
+                await db.doc(`${PATH}/${col}/${id}`).delete();
+                this.toast('Deleted.', 'success');
+            },
+
+            // ─── TASKS ───
+            renderTasks() {
+                const ms = this.myStudents();
+                const sids = ms.map(s => s.id);
+                const myTasks = this.s.tasks.filter(t => sids.includes(t.sid) || t.assignedBy === this.s.user.name);
+                const el = document.getElementById('tasks-container');
+                if (!myTasks.length) { el.innerHTML = '<div class="card"><p style="text-align:center;padding:40px;color:var(--c-text3);">No directives yet.</p></div>'; return; }
+                el.innerHTML = myTasks.map(t => {
+                    const s = this.s.students.find(x => x.id === t.sid || x.srn === t.sid);
+                    const statusMap = { 'pending': 'badge-amber', 'accepted': 'badge-blue', 'submitted': 'badge-purple', 'done': 'badge-green', 'Pending': 'badge-amber' };
+                    return `<div class="task-item ${(t.status || 'pending').toLowerCase()}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+          <div style="flex:1;">
+            <div style="font-weight:600;font-size:.95rem;margin-bottom:3px;">${t.desc || t.title || 'Task'}</div>
+            <div style="font-size:.78rem;color:var(--c-text3);">Assigned to: ${s?.name || 'Unknown'} · Due: ${t.due || 'No deadline'}</div>
+          </div>
+          <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;">
+            <span class="badge ${statusMap[t.status || 'pending'] || 'badge-amber'}">${t.status || 'pending'}</span>
+            ${t.submitLink ? `<a href="${t.submitLink}" target="_blank" class="btn btn-ghost btn-sm"><i class="fas fa-external-link-alt"></i> View</a>` : ''}
+            ${t.status === 'submitted' ? `<button class="btn btn-success btn-sm" onclick="App.closeTask('${t.id}')"><i class="fas fa-check"></i> Mark Done</button>` : ''}
+            <button onclick="App.deleteItem('tasks','${t.id}')" class="btn btn-danger btn-sm" style="padding:6px 9px;"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      </div>`;
+                }).join('');
+            },
+
+            async closeTask(tid) {
+                await db.doc(`${PATH}/tasks/${tid}`).update({ status: 'done' });
+                this.toast('Task marked as done!', 'success');
+            },
+
+            // ─── MESSAGES ───
+            renderMessages() {
+                const ms = this.myStudents();
+                const contacts = [
+                    ...ms.map(s => ({ id: s.id, name: s.name, av: s.name[0], role: 'Student' })),
+                    { id: 'admin', name: 'Admin', av: 'A', role: 'Administrator' }
+                ];
+                document.getElementById('chat-contacts-list').innerHTML = contacts.map(c => `
+      <div class="chat-item ${this.s.activeChat === c.id ? 'active' : ''}" onclick="App.openChat('${c.id}','${c.name.replace(/'/g, "\\'")}','${c.av}')">
+        <div class="c-av" style="${c.id === 'admin' ? 'background:var(--c-purple-soft);color:var(--c-purple);' : ''}">${c.av}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="c-name">${c.name}</div>
+          <div class="c-prev">${c.role}</div>
+        </div>
+      </div>`).join('');
+            },
+
+            openChat(id, name, av) {
+                this.s.activeChat = id;
+                document.getElementById('chat-active-name').textContent = name;
+                document.getElementById('chat-av').textContent = av;
+                document.querySelectorAll('.chat-item').forEach(el => el.classList.remove('active'));
+                event?.currentTarget?.classList.add('active');
+                if (this._chatUnsub) this._chatUnsub();
+                const q = db.collection(`${PATH}/messages`).where('channel', '==', id).orderBy('createdAt', 'asc').limitToLast(50);
+                this._chatUnsub = q.onSnapshot(snap => this._showMsgs(snap.docs.map(d => ({ id: d.id, ...d.data() }))), () => this._showMsgs([]));
+            },
+
+            openChatWith(id, name) {
+                this.tab('messages');
+                setTimeout(() => this.openChat(id, name, name[0]), 200);
+            },
+
+            _showMsgs(msgs) {
+                const u = this.s.user;
+                const el = document.getElementById('chat-messages');
+                if (!msgs.length) { el.innerHTML = '<div style="text-align:center;color:var(--c-text3);font-size:.855rem;margin:auto;padding:40px;">No messages yet.</div>'; return; }
+                el.innerHTML = msgs.map(m => {
+                    const isMe = m.senderId === u.id || m.senderRole === 'mentor';
+                    const t = m.createdAt?.toDate ? m.createdAt.toDate().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '';
+                    return `<div class="msg-bubble ${isMe ? 'msg-me' : 'msg-them'}">${m.text || ''}<div class="msg-time">${t}</div></div>`;
+                }).join('');
+                el.scrollTop = el.scrollHeight;
+            },
+
+            async sendMsg() {
+                const inp = document.getElementById('chat-input');
+                const text = inp.value.trim();
+                if (!text || !this.s.activeChat) return;
+                inp.value = '';
+                const u = this.s.user;
+                await db.collection(`${PATH}/messages`).add({
+                    channel: this.s.activeChat, text,
+                    senderId: u.id || u.email, senderName: u.name || 'Mentor', senderRole: 'mentor',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            },
+
+            // ─── BROADCAST ───
+            async sendBroadcast() {
+                const title = document.getElementById('bc-title').value.trim();
+                const msg = document.getElementById('bc-message').value.trim();
+                if (!title || !msg) { this.toast('Fill in title and message.', 'error'); return; }
+                await db.collection(`${PATH}/notifications`).add({
+                    type: 'mentor', title, message: msg,
+                    from: this.s.user.name, senderRole: 'Mentor',
+                    time: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
+                    unread: true, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                document.getElementById('bc-title').value = '';
+                document.getElementById('bc-message').value = '';
+                this.toast('Notification sent to students!', 'success');
+            },
+
+            renderBroadcasts() {
+                const mine = this.s.notifications.filter(n => n.from === this.s.user?.name || n.senderRole === 'Mentor').slice().reverse();
+                document.getElementById('recent-broadcasts').innerHTML = mine.slice(0, 8).map(n => `
+      <div style="padding:12px;background:var(--c-surface2);border:1px solid var(--c-border);border-radius:10px;margin-bottom:8px;">
+        <div style="font-weight:600;font-size:.875rem;margin-bottom:2px;">${n.title || 'Notification'}</div>
+        <div style="font-size:.78rem;color:var(--c-text2);">${n.message || n.text || ''}</div>
+        <div style="font-size:.72rem;color:var(--c-text3);margin-top:5px;">${n.time || ''}</div>
+      </div>`).join('') || '<p style="font-size:.82rem;color:var(--c-text3);">No broadcasts sent yet.</p>';
+            },
+
+            // ─── LEAVE REVIEW ───
+            renderLeaves() {
+                const allLeaves = [];
+                this.myStudents().forEach(s => {
+                    (s.leaves?.requests || []).forEach((r, i) => allLeaves.push({ s, r, i }));
+                });
+                const el = document.getElementById('leaves-container');
+                if (!allLeaves.length) { el.innerHTML = '<div class="card"><p style="text-align:center;padding:40px;color:var(--c-text3);">No leave requests.</p></div>'; return; }
+                // Group by status
+                const pending = allLeaves.filter(x => x.r.status === 'pending');
+                const reviewed = allLeaves.filter(x => x.r.status !== 'pending');
+                let html = '';
+                if (pending.length) {
+                    html += `<div class="lbl" style="margin-bottom:10px;color:var(--c-amber);">Pending Review (${pending.length})</div>`;
+                    html += pending.map(({ s, r, i }) => `
+        <div class="leave-item">
+          <div class="leave-info">
+            <div class="title">${s.name} — ${r.type === 'sick' ? 'Sick Leave' : 'Normal Leave'}</div>
+            <div class="sub">${r.from || ''} to ${r.to || r.from || ''} · Reason: ${r.reason || 'None'}</div>
+          </div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;">
+            <button class="btn btn-success btn-sm" onclick="App.reviewLeave('${s.id}',${i},'approved')"><i class="fas fa-check"></i> Approve</button>
+            <button class="btn btn-danger btn-sm" onclick="App.reviewLeave('${s.id}',${i},'rejected')"><i class="fas fa-times"></i> Reject</button>
+          </div>
+        </div>`).join('');
+                }
+                if (reviewed.length) {
+                    html += `<div class="divider"></div><div class="lbl" style="margin-bottom:10px;">Reviewed</div>`;
+                    html += reviewed.slice().reverse().map(({ s, r, i }) => `
+        <div class="leave-item" style="opacity:.7;">
+          <div class="leave-info">
+            <div class="title">${s.name} — ${r.type === 'sick' ? 'Sick Leave' : 'Normal Leave'}</div>
+            <div class="sub">${r.from || ''} to ${r.to || r.from || ''}</div>
+          </div>
+          <span class="badge ${r.status === 'approved' ? 'badge-green' : 'badge-red'}">${r.status}</span>
+        </div>`).join('');
+                }
+                el.innerHTML = html;
+            },
+
+            async reviewLeave(studentId, idx, decision) {
+                const s = this.s.students.find(x => x.id === studentId);
+                if (!s) return;
+                const leaves = JSON.parse(JSON.stringify(s.leaves || { sick: 0, normal: 0, requests: [] }));
+                if (!leaves.requests[idx]) return;
+                leaves.requests[idx].status = decision;
+                if (decision === 'approved') {
+                    const type = leaves.requests[idx].type;
+                    leaves[type] = (leaves[type] || 0) + 1;
+                }
+                await db.doc(`${PATH}/students/${studentId}`).update({ leaves });
+                this.toast(`Leave ${decision}!`, decision === 'approved' ? 'success' : 'error');
+            },
+
+            // ─── RESOURCES ───
+            renderResources() {
+                const res = this.s.resources;
+                const filtered = this.s.resFilter === 'all' ? res : res.filter(r => r.category === this.s.resFilter);
+                document.getElementById('resources-grid').innerHTML = filtered.map(r => `
+      <div class="res-card" onclick="App.openPDF('${r.pdfUrl || ''}','${(r.title || '').replace(/'/g, "\\'")}')">
+        <div class="res-icon"><i class="fas fa-file-pdf"></i></div>
+        <div style="font-weight:600;font-size:.9rem;margin-bottom:4px;">${r.title || 'Untitled'}</div>
+        <div style="font-size:.78rem;color:var(--c-text2);margin-bottom:10px;line-height:1.5;">${r.description || ''}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--c-border);font-size:10px;color:var(--c-text3);">
+          <span class="badge badge-blue">${r.category || 'general'}</span>
+          <span>${r.uploadedBy || 'Faculty'}</span>
+        </div>
+        <button onclick="event.stopPropagation();App.deleteItem('resources','${r.id}')" style="position:absolute;top:10px;right:10px;background:none;border:none;color:var(--c-text3);cursor:pointer;font-size:.8rem;opacity:0;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0"><i class="fas fa-trash"></i></button>
+      </div>`).join('') || '<p style="color:var(--c-text3);font-size:.85rem;">No resources found.</p>';
+            },
+
+            filterRes(cat, el) {
+                this.s.resFilter = cat;
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                el?.classList.add('active');
+                this.renderResources();
+            },
+
+            // ─── MODALS ───
+            showModal(type) {
+                document.getElementById('modal-overlay').classList.add('open');
+                const ms = this.myStudents();
+
+                if (type === 'project') {
+                    document.getElementById('modal-title').textContent = 'Create New Project';
+                    document.getElementById('modal-body').innerHTML = `
+        <div class="form-group"><label>Track / Category</label>
+          <select class="input" id="m-track"><option>Track Alpha (Electronics)</option><option>Track Beta (Cloud/CS)</option><option>Track Gamma (Research)</option></select></div>
+        <div class="form-group"><label>Team Name</label><input type="text" class="input" id="m-team" placeholder="e.g. NEO_AI_01"></div>
+        <div class="form-group"><label>Project Title</label><input type="text" class="input" id="m-pname" placeholder="Research project title"></div>
+        <div class="form-group"><label>Milestone Count</label><input type="number" class="input" id="m-pts" value="24" min="1" max="200"></div>
+        <div class="form-group">
+          <label>Assign Members</label>
+          <div style="background:var(--c-surface2);border:1.5px solid var(--c-border);border-radius:10px;padding:10px;max-height:200px;overflow-y:auto;">
+            ${ms.map((s, i) => `<label style="display:flex;align-items:center;gap:8px;padding:8px;cursor:pointer;font-size:.875rem;"><input type="checkbox" id="mc-${i}" value="${s.name}" style="width:16px;height:16px;accent-color:var(--c-primary);">${s.name} (${s.srn})</label>`).join('') || '<p style="font-size:.78rem;color:var(--c-text3);">No students assigned to you.</p>'}
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;" onclick="App.createProject()"><i class="fas fa-plus"></i> Create Project</button>`;
+                }
+                else if (type === 'task') {
+                    document.getElementById('modal-title').textContent = 'Assign Directive';
+                    document.getElementById('modal-body').innerHTML = `
+        <div class="form-group"><label>Assign To</label>
+          <select class="input" id="t-sid">${ms.map(s => `<option value="${s.id}">${s.name} (${s.srn})</option>`).join('')}</select></div>
+        <div class="form-group"><label>Task Description</label><textarea class="input" id="t-desc" rows="3" placeholder="Detailed instructions…"></textarea></div>
+        <div class="form-group"><label>Deadline</label><input type="text" class="input" id="t-due" placeholder="e.g. Friday 5 PM"></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;" onclick="App.createTask()"><i class="fas fa-bolt"></i> Dispatch</button>`;
+                }
+                else if (type === 'resource') {
+                    document.getElementById('modal-title').textContent = 'Upload Resource';
+                    document.getElementById('modal-body').innerHTML = `
+        <div class="form-group"><label>Title</label><input type="text" class="input" id="r-title" placeholder="Resource title"></div>
+        <div class="form-group"><label>Description</label><input type="text" class="input" id="r-desc" placeholder="Brief description"></div>
+        <div class="form-group"><label>Category</label>
+          <select class="input" id="r-cat"><option value="syllabus">Syllabus</option><option value="notes">Notes</option><option value="reference">Reference</option><option value="pastpapers">Past Papers</option></select></div>
+        <div class="form-group"><label>PDF File</label><input type="file" class="input" id="r-file" accept=".pdf" style="padding:8px;"></div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;" onclick="App.uploadResource()"><i class="fas fa-upload"></i> Upload</button>`;
+                }
+            },
+
+            closeModal() { document.getElementById('modal-overlay').classList.remove('open'); },
+
+            async createProject() {
+                const track = document.getElementById('m-track').value;
+                const team = document.getElementById('m-team').value;
+                const name = document.getElementById('m-pname').value;
+                const total = parseInt(document.getElementById('m-pts').value) || 24;
+                const members = Array.from(document.querySelectorAll('[id^="mc-"]:checked')).map(c => c.value);
+                if (!team || !name || !members.length) { this.toast('Fill all fields and select members.', 'error'); return; }
+                await db.collection(`${PATH}/projects`).add({
+                    track, teamName: team, name, mentor: this.s.user.email,
+                    members, points: Array(total).fill({ status: 'none' }), totalPoints: total, teamResources: [], pdfUrl: '', pdfFileName: ''
+                });
+                this.closeModal();
+                this.toast('Project created!', 'success');
+                this.tab('projects');
+            },
+
+            async createTask() {
+                const sid = document.getElementById('t-sid').value;
+                const desc = document.getElementById('t-desc').value;
+                const due = document.getElementById('t-due').value;
+                if (!desc) { this.toast('Enter a description.', 'error'); return; }
+                await db.collection(`${PATH}/tasks`).add({ sid, desc, due, status: 'pending', assignedBy: this.s.user.name, assignedAt: firebase.firestore.FieldValue.serverTimestamp() });
+                this.closeModal();
+                this.toast('Directive dispatched!', 'success');
+            },
+
+            async uploadResource() {
+                const title = document.getElementById('r-title').value;
+                const desc = document.getElementById('r-desc').value;
+                const cat = document.getElementById('r-cat').value;
+                const fi = document.getElementById('r-file');
+                if (!title || !fi.files[0]) { this.toast('Provide title and PDF.', 'error'); return; }
+                const r = new FileReader();
+                r.onload = async e => {
+                    try {
+                        await db.collection(`${PATH}/resources`).add({ title, description: desc, category: cat, pdfUrl: e.target.result, uploadedBy: this.s.user.name, uploadedAt: new Date().toISOString().split('T')[0] });
+                        this.closeModal();
+                        this.toast('Resource uploaded!', 'success');
+                    } catch (err) { this.toast('File too large for Firestore. Try a smaller PDF.', 'error'); }
+                };
+                r.readAsDataURL(fi.files[0]);
+            },
+
+            // ─── PDF ───
+            async openPDF(url, title) {
+                if (!url) { this.toast('No document available.', 'error'); return; }
+                document.getElementById('pdf-title').textContent = title || 'Document';
+                document.getElementById('pdf-modal-overlay').classList.add('open');
+                document.getElementById('pdf-spin').style.display = 'block';
+                document.getElementById('pdf-canvas').style.display = 'none';
+                this.s.pdfPage = 1; this.s.pdfScale = 1.4;
+                try {
+                    this.s.pdfDoc = await pdfjsLib.getDocument(url).promise;
+                    this.s.pdfTotal = this.s.pdfDoc.numPages;
+                    document.getElementById('pdf-total').textContent = this.s.pdfTotal;
+                    await this.renderPDFPage();
+                } catch (e) { this.toast('Could not load document.', 'error'); }
+                document.getElementById('pdf-spin').style.display = 'none';
+                document.getElementById('pdf-canvas').style.display = 'block';
+            },
+            async renderPDFPage() {
+                if (!this.s.pdfDoc) return;
+                const page = await this.s.pdfDoc.getPage(this.s.pdfPage);
+                const vp = page.getViewport({ scale: this.s.pdfScale });
+                const c = document.getElementById('pdf-canvas');
+                c.width = vp.width; c.height = vp.height;
+                await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+                document.getElementById('pdf-pg').textContent = this.s.pdfPage;
+                document.getElementById('pdf-prev').disabled = this.s.pdfPage <= 1;
+                document.getElementById('pdf-next').disabled = this.s.pdfPage >= this.s.pdfTotal;
+            },
+            pdfNext() { if (this.s.pdfPage < this.s.pdfTotal) { this.s.pdfPage++; this.renderPDFPage(); } },
+            pdfPrev() { if (this.s.pdfPage > 1) { this.s.pdfPage--; this.renderPDFPage(); } },
+            pdfZoomIn() { this.s.pdfScale += 0.2; this.renderPDFPage(); },
+            pdfZoomOut() { if (this.s.pdfScale > 0.4) { this.s.pdfScale -= 0.2; this.renderPDFPage(); } },
+            pdfFitWidth() { const w = document.getElementById('pdf-canvas').parentElement.clientWidth - 40; this.s.pdfScale = w / 595; this.renderPDFPage(); },
+            closePDF() { document.getElementById('pdf-modal-overlay').classList.remove('open'); this.s.pdfDoc = null; },
+
+            // ─── TOAST ───
+            toast(msg, type = 'info') {
+                const t = document.createElement('div');
+                t.style.cssText = `position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:10px;font-size:.855rem;font-weight:600;z-index:99999;animation:fadeUp .25s ease;box-shadow:0 4px 20px rgba(0,0,0,.15);font-family:'DM Sans',sans-serif;`;
+                t.style.background = type === 'success' ? 'var(--c-green)' : type === 'error' ? 'var(--c-red)' : 'var(--c-primary)';
+                t.style.color = '#fff';
+                t.textContent = msg;
+                document.body.appendChild(t);
+                setTimeout(() => t.remove(), 3000);
             }
         };
 
         window.App = App;
-        window.onload = () => App.init();
+        document.addEventListener('DOMContentLoaded', () => App.init());
+        document.getElementById('pdf-modal-overlay').addEventListener('click', function (e) { if (e.target === this) App.closePDF(); });
+        document.getElementById('modal-overlay').addEventListener('click', function (e) { if (e.target === this) App.closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { App.closePDF(); App.closeModal(); } });
     </script>
 </body>
 
